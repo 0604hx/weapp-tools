@@ -1,0 +1,20 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/daily/fetusWeight/fetus-weight"
+    ],
+    "window": {
+        "backgroundTextStyle": "dark",
+        "navigationBarBackgroundColor": "#f8f8f8",
+        "navigationBarTitleText": "集成工具集",
+        "navigationBarTextStyle": "black",
+        "enablePullDownRefresh": false
+    },
+    "sitemapLocation": "sitemap.json",
+    "useExtendedLib": {},
+    "usingComponents": {
+        "van-button":"@vant/weapp/button/index",
+        "tag": "/miniprogram_npm/@vant/weapp/tag/index",
+        "section": "./components/section/section"
+    }
+}

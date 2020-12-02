@@ -1,0 +1,57 @@
+<view class="">
+    <van-panel title="填写数值" desc="测算结果仅供参考" use-footer-slot>
+        <van-cell-group>
+            <van-field title-width="120px" type="digit" input-align="right" label-class="" model:value="{{ bpd }}" label="双顶径/BPD">
+                <view slot="right-icon">厘米</view>
+            </van-field>
+            <van-field title-width="120px" type="digit" input-align="right" label-class="" model:value="{{ ac }}" label="腹围/AC">
+                <view slot="right-icon">厘米</view>
+            </van-field>
+            <van-field title-width="120px" type="digit" input-align="right" label-class="" model:value="{{ fl }}" label="股骨长/FL">
+                <view slot="right-icon">厘米</view>
+            </van-field>
+            <van-cell title="计算方式" is-link value="{{method.name}}" bind:click="onMethodShow" />
+        </van-cell-group>
+
+        <view slot="footer">
+            <van-button type="info" block bind:click="configure">开始测算</van-button>
+        </view>
+    </van-panel>
+
+    <section title="图例" padding>
+        <image src="https://bkimg.cdn.bcebos.com/pic/9f2f070828381f30a35a75e4aa014c086e06f038" mode="widthFix" class="w100"></image>
+    </section>
+</view>
+
+<van-action-sheet
+    cancel-text="取消"
+    show="{{ methodShow }}"
+    actions="{{ methods }}"
+    bind:cancel="onMethodShow"
+    bind:select="onMethodSelect"
+/>
+
+<van-popup
+    show="{{ resultShow }}"
+    position="bottom" closeable custom-style="height: 400px;" bind:close="configure">
+    <view class="content mt20" wx:if="{{resultShow}}">
+        <text class="b">测算体重：{{weight}}</text> 克
+        <!-- <view> 孕周约为 <text class="b">{{week}}</text></view> -->
+        <view class="c mt20">
+            <van-circle value="{{ M.value(week) }}" stroke-width="12" layer-color="#eee" text="孕周{{week}}" />
+        </view>
+        <view class="mt20" style="font-size: 30rpx; color:#666;">
+            <view>算法说明</view>
+            <tag>{{method.name}}</tag> {{method.summary}}
+        </view>
+        
+        <view class="h mt10">注意：此结果仅供参考，请以医院检查结果为准，祝一切顺利</view>
+    </view>
+</van-popup>
+
+<wxs module="M">
+    module.exports.value = function(week){
+        var w = parseInt(week)
+        return Math.floor((w>16?w:16)/40 * 100)
+    }
+</wxs>

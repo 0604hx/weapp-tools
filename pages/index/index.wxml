@@ -1,0 +1,8 @@
+<view class="">
+    <van-panel title="日常工具" desc="日常生活涉及的工具">
+        <van-grid>
+            <van-grid-item icon="friends-o" url="/pages/daily/fetusWeight/fetus-weight" text="胎儿体重测算" badge="New" />
+            <van-grid-item icon="photo-o" text="文字" dot />
+        </van-grid>
+    </van-panel>
+</view>

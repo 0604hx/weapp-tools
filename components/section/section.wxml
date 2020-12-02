@@ -1,0 +1,4 @@
+<view class="van-clearfix {{ padding ? 'section_padding' : '' }}">
+  <view wx:if="{{ title }}" class="section_title">{{ title }}</view>
+  <slot />
+</view>

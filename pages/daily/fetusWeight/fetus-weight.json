@@ -1,0 +1,14 @@
+{
+    "navigationBarTitleText": "胎儿体重测算",
+    "usingComponents": {
+        "van-panel": "@vant/weapp/panel/index",
+        "van-field": "@vant/weapp/field/index",
+        "van-cell-group": "@vant/weapp/cell-group/index",
+        "van-cell": "@vant/weapp/cell/index",
+        "van-row": "@vant/weapp/row/index",
+        "van-col": "@vant/weapp/col/index",
+        "van-popup": "@vant/weapp/popup/index",
+        "van-action-sheet": "@vant/weapp/action-sheet/index",
+        "van-circle": "@vant/weapp/circle/index"
+    }
+}
