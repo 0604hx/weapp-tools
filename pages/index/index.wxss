@@ -19,3 +19,8 @@
 .usermotto {
   margin-top: 200px;
 }
+
+.indexIcon .van-icon--image, .indexDiv .van-icon__image {
+    width: 1.4em !important;
+    height: 1.4em !important;
+}

@@ -1,8 +1,18 @@
-<view class="">
+<view class="indexDiv">
     <van-panel title="日常工具" desc="日常生活涉及的工具">
         <van-grid>
-            <van-grid-item icon="friends-o" url="/pages/daily/fetusWeight/fetus-weight" text="胎儿体重测算" badge="New" />
-            <van-grid-item icon="photo-o" text="文字" dot />
+            <!--icon-class="indexIcon"-->
+            <van-grid-item icon="{{ M.url('胎儿') }}" url="/pages/daily/fetusWeight/fetus-weight" text="胎儿体重测算" badge="New" />
+            <van-grid-item icon="{{ M.url('美术图片') }}" text="HEIC转换" dot />
         </van-grid>
     </van-panel>
 </view>
+
+<wxs module="M">
+    /**
+    使用阿里云OSS图标资源
+    */
+    module.exports.url = function(name, suffix){
+        return 'https://nerve-images.oss-cn-shenzhen.aliyuncs.com/public/icon/'+name+'.'+(suffix?suffix:"png")
+    }
+</wxs>
