@@ -3,7 +3,13 @@
         <van-grid>
             <!--icon-class="indexIcon"-->
             <van-grid-item icon="{{ M.url('胎儿') }}" url="/pages/daily/fetusWeight/fetus-weight" text="胎儿体重测算" badge="New" />
-            <van-grid-item icon="{{ M.url('美术图片') }}" text="HEIC转换" dot />
+            <van-grid-item icon="{{ M.url('美术图片') }}" bind:click="todo" text="HEIC转换" dot />
+        </van-grid>
+    </van-panel>
+    <van-panel title="其他" desc="">
+        <van-grid>
+            <van-grid-item icon="{{ M.url('反馈') }}" bind:click="todo" text="意见反馈" dot />
+            <van-grid-item icon="{{ M.url('github') }}" bind:click="github" text="查看源码" />
         </van-grid>
     </van-panel>
 </view>

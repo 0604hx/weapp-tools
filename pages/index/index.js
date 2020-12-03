@@ -1,4 +1,5 @@
-//index.js
+const util = require("../../utils/util")
+
 //获取应用实例
 const app = getApp()
 
@@ -51,5 +52,15 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+
+  github (){
+      wx.setClipboardData({
+          data: "https://github.com/0604hx/weapp-tools",
+          success: res=> util.ok("网址已复制")
+      })
+  },
+  todo (){
+      util.warn("功能开发中，敬请期待")
   }
 })

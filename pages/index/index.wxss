@@ -24,3 +24,13 @@
     width: 1.4em !important;
     height: 1.4em !important;
 }
+.van-panel .van-cell__title {
+    font-size: 1.1em;
+    font-weight: 600;
+}
+.van-panel .van-cell__label {
+    font-weight: 400;
+}
+.indexDiv .van-grid-item__icon+.van-grid-item__text {
+    padding-top: 5px;
+}
