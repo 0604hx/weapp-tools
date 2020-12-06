@@ -8,7 +8,8 @@
         "navigationBarBackgroundColor": "#f8f8f8",
         "navigationBarTitleText": "集成工具集",
         "navigationBarTextStyle": "black",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": false,
+        "restartStrategy": "homePageAndLatestPage"
     },
     "sitemapLocation": "sitemap.json",
     "useExtendedLib": {},

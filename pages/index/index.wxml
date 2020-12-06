@@ -1,15 +1,9 @@
 <view class="indexDiv">
-    <van-panel title="日常工具" desc="日常生活涉及的工具">
+    <van-panel wx:for="{{ tools }}" wx:for-item="tool" wx:for-index="toolIndex" wx:key="toolIndex" 
+        title="{{tool.name}}" desc="{{tool.summary}}">
         <van-grid>
-            <!--icon-class="indexIcon"-->
-            <van-grid-item icon="{{ M.url('胎儿') }}" url="/pages/daily/fetusWeight/fetus-weight" text="胎儿体重测算" badge="New" />
-            <van-grid-item icon="{{ M.url('美术图片') }}" bind:click="todo" text="HEIC转换" dot />
-        </van-grid>
-    </van-panel>
-    <van-panel title="其他" desc="">
-        <van-grid>
-            <van-grid-item icon="{{ M.url('反馈') }}" bind:click="todo" text="意见反馈" dot />
-            <van-grid-item icon="{{ M.url('github') }}" bind:click="github" text="查看源码" />
+            <van-grid-item wx:for="{{tool.items}}" icon="{{ M.url(item.icon) }}" wx:key="index" bind:click="{{item.onClick}}"
+                url="{{item.url}}" text="{{item.name}}" badge="{{item.tip}}" dot="{{item.dot}}" />
         </van-grid>
     </van-panel>
 </view>
