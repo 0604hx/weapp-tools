@@ -24,7 +24,8 @@ Page({
                 name:"其他", summary:"",
                 items:[
                     { name:"意见反馈", icon:"反馈", onClick:"todo", dot: true},
-                    { name:"查看源码", icon:"github", onClick:"github"},
+                    { name:"查看源码", icon:"github", onClick:"github", dot: true},
+                    { name:"关于我们", icon:"关于", url:"/pages/about/about"}
                 ]
             }
         ]
@@ -66,12 +67,7 @@ Page({
         })
     },
 
-    github() {
-        wx.setClipboardData({
-            data: "https://github.com/0604hx/weapp-tools",
-            success: res => util.ok("网址已复制")
-        })
-    },
+    github: app.copyGit,
     todo() {
         util.warn("功能开发中，敬请期待")
     },

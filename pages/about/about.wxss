@@ -1,0 +1,6 @@
+.van-cell2 {
+    background: #eaeaea !important;
+    background-color: #eaeaea !important;
+    color: #555555;
+    font-weight: bold;
+}

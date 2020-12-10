@@ -66,7 +66,6 @@ module.exports = {
         return pos!=-1? filename.substring(pos+1): ""
     },
 
-
     /**
      * 显示普通的提示信息
      * @param {*} title 

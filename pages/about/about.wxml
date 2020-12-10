@@ -1,0 +1,19 @@
+<view class="">
+    <van-panel title="开源及使用说明">
+        <view class="content">
+            此工具合集仅为方便个人日常生活工作，代码完全开源托管在 <tag bindtap="github" type="primary" size="large">GitHub</tag>。
+            任何人可以免费使用并分享，本程序绝不私自保存您的数据。
+        </view>
+    </van-panel>
+    
+    <van-panel title="特别提醒">
+        <text class="content">测算类工具可能存在一定偏差，仅供参考。</text>
+    </van-panel>
+
+    <van-panel title="关注公众号">
+        <view class="content c">
+            <image style="width:240px; height:240px;" src="https://nerve-images.oss-cn-shenzhen.aliyuncs.com/public/qrcode-wandoushuju.jpg"></image>
+            <view class="h">识别二维码关注公众号查阅相关博文</view>
+        </view>
+    </van-panel>
+</view>

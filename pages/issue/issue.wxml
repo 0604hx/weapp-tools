@@ -1,0 +1,24 @@
+<view>
+    <van-panel title="意见标题">
+        <van-field model:value="{{ title }}" border="{{ true }}" custom-style="background:#fcfcfc;" />
+    </van-panel>
+
+    <van-panel title="描述信息" desc="详细的描述能让我们更好理解">
+        <van-field
+            model:value="{{ detail }}"
+            type="textarea"
+            placeholder="请输入详细内容"
+            autosize = "{{ {maxHeight:180, minHeight:100} }}" custom-style="background:#fcfcfc;"
+            border="{{ true }}"
+        />
+    </van-panel>
+
+    <view class="mt20 c">
+        <view class="icon-btn" style="margin:0px auto;">
+            <van-button bind:click="onSave" plain size="large" loading="{{working}}" loading-size="140rpx"
+                 round type="info">
+                <van-icon name="checked" size="140rpx" />
+            </van-button>
+        </view>
+    </view>
+</view>

@@ -1,4 +1,5 @@
-//app.js
+const util = require("./utils/util")
+
 App({
     onLaunch: function () {
         // 展示本地存储能力
@@ -37,6 +38,15 @@ App({
         console.debug(`页面显示`, e)
     },
     globalData: {
-        userInfo: null
+        userInfo: null,
+        git: "https://github.com/0604hx/weapp-tools",
+        color: ""
+    },
+
+    copyGit (){
+        wx.setClipboardData({
+            data: this.globalData.git,
+            success: res => util.ok("网址已复制")
+        })
     }
 })

@@ -1,7 +1,9 @@
 {
     "pages": [
         "pages/index/index",
-        "pages/daily/fetusWeight/fetus-weight"
+        "pages/daily/fetusWeight/fetus-weight",
+        "pages/about/about",
+        "pages/issue/issue"
     ],
     "window": {
         "backgroundTextStyle": "dark",
@@ -14,7 +16,7 @@
     "sitemapLocation": "sitemap.json",
     "useExtendedLib": {},
     "usingComponents": {
-        "van-button":"@vant/weapp/button/index",
+        "van-button": "@vant/weapp/button/index",
         "tag": "/miniprogram_npm/@vant/weapp/tag/index",
         "section": "./components/section/section"
     }

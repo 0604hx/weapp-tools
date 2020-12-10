@@ -24,6 +24,12 @@
     width: 100%;
     z-index: 9;
 }
+.icon-btn .van-button--large {
+    height: 140rpx;
+}
+.icon-btn button {
+    border: 0px !important;
+}
 .c {
     text-align: center;
 }
