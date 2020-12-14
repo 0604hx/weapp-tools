@@ -38,20 +38,25 @@ let guessWeek = w=>{
 }
 Page({
     data: {
-        bpd: "",
-        ac:"",
-        fl:"",
-
         resultShow: false,
         methodShow: false,
+
+        subjects: [
+            { key:"bpd", text:"双顶径/BPD" },
+            { key:"ac", text:"腹围/AC"},
+            { key:"fl", text:"股骨长/FL"}
+        ],
+        inputs: {},
         //算法类别
         methods: [
             { 
                 name:"双顶径算法", summary:"仅使用双顶径 BPD 进行计算，公式为：900*BPD-5200g",
-                func: (bpd)=> 900*bpd - 5200
+                func: (bpd)=> 900*bpd - 5200,
+                input: ['bpd']
             },
             {
                 name:"多元算法", summary:"双顶径、腹围、股骨长多参数计算，公式为：1.07*BPD^3+0.3*AC^2*FL",
+                input: ['bpd', 'ac', 'fl'],
                 func: (bpd, ac, fl)=> 1.07*bpd**3 + 0.3*ac**2*fl
             }
         ],
@@ -70,15 +75,25 @@ Page({
         let method = e.detail
         this.setData({method})
     },
+    onInput (e){
+        let inputs = this.data.inputs
+        inputs[e.target.dataset.key] = e.detail
+        this.setData({inputs})
+    },
     configure (e){
         if(this.data.resultShow===true) return this.setData({resultShow: false})
 
-        //检测 bpd 输入，应在 0 到 12cm之间
-        let {bpd, ac, fl, method} = this.data
+        let { method } = this.data
         if(!method || !method.func) return util.warn(`请选择计算方式`)
-        if(!bpd || bpd<0 || bpd>12) return util.error(`双顶径应在0到12厘米之间`, '输入错误')
 
-        let weight = method.func( bpd, ac, fl ).toFixed(1)
+        let userInputs = method.input.map(k=> this.data.inputs[k])
+        //检测 bpd 输入，应在 0 到 12cm之间
+        if(method.input.indexOf("bpd")>-1){
+            let { bpd } = this.data.inputs
+            if(!bpd || bpd<0 || bpd>12) return util.error(`双顶径应在0到12厘米之间`, '输入错误')
+        }
+        
+        let weight = method.func(...userInputs).toFixed(1)
         let week = guessWeek(weight)
 
         console.debug(`${method.name} 计算结果：${weight} 孕周${week}`)

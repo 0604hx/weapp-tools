@@ -1,16 +1,11 @@
 <view class="">
     <van-panel title="填写数值" desc="测算结果仅供参考" use-footer-slot>
         <van-cell-group>
-            <van-field title-width="120px" type="digit" input-align="right" label-class="" model:value="{{ bpd }}" label="双顶径/BPD">
-                <view slot="right-icon">厘米</view>
-            </van-field>
-            <van-field title-width="120px" type="digit" input-align="right" label-class="" model:value="{{ ac }}" label="腹围/AC">
-                <view slot="right-icon">厘米</view>
-            </van-field>
-            <van-field title-width="120px" type="digit" input-align="right" label-class="" model:value="{{ fl }}" label="股骨长/FL">
-                <view slot="right-icon">厘米</view>
-            </van-field>
             <van-cell title="计算方式" is-link value="{{method.name}}" bind:click="onMethodShow" />
+            <van-field wx:for="{{subjects}}"  label="{{item.text}}" wx:key="index" wx:if="{{ M.isShow(method.input, item.key) }}"
+                bind:change="onInput" data-key="{{item.key}}" title-width="120px" type="digit" input-align="right" >
+                <view slot="right-icon">厘米</view>
+            </van-field>
         </van-cell-group>
 
         <view slot="footer">
@@ -53,5 +48,8 @@
     module.exports.value = function(week){
         var w = parseInt(week)
         return Math.floor((w>16?w:16)/40 * 100)
+    }
+    module.exports.isShow = function(arr, key){
+        return arr && arr.indexOf(key)>-1
     }
 </wxs>
