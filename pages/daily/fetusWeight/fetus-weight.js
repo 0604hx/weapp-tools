@@ -44,7 +44,8 @@ Page({
         subjects: [
             { key:"bpd", text:"双顶径/BPD" },
             { key:"ac", text:"腹围/AC"},
-            { key:"fl", text:"股骨长/FL"}
+            { key:"fl", text:"股骨长/FL"},
+            { key:"hc", text:"头围/HC"}
         ],
         inputs: {},
         //算法类别
@@ -58,6 +59,16 @@ Page({
                 name:"多元算法", summary:"双顶径、腹围、股骨长多参数计算，公式为：1.07*BPD^3+0.3*AC^2*FL",
                 input: ['bpd', 'ac', 'fl'],
                 func: (bpd, ac, fl)=> 1.07*bpd**3 + 0.3*ac**2*fl
+            },
+            { 
+                name:"头围算法", summary:"仅使用头围 HC 进行计算，公式为：260.69×HC-4973.72g",
+                func: (hc)=> 260.69*hc - 4973.72,
+                input: ['hc']
+            },
+            { 
+                name:"腹围算法", summary:"仅使用腹围 AC 进行计算，公式为：171.48×AC-2686.60g",
+                func: (ac)=> 171.48*ac-2686.60,
+                input: ['ac']
             }
         ],
         method: {},
