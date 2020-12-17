@@ -1,4 +1,9 @@
 <view class="indexDiv">
+    <!-- 如果只是展示用户头像昵称，可以使用 <open-data /> 组件 -->
+    <!-- 
+        <open-data type="userAvatarUrl"></open-data>
+        <open-data type="userNickName"></open-data> 
+    -->
     <van-panel wx:for="{{ tools }}" wx:for-item="tool" wx:for-index="toolIndex" wx:key="toolIndex" 
         title="{{tool.name}}" desc="{{tool.summary}}">
         <van-grid>
