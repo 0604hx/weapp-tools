@@ -1,5 +1,7 @@
 const util = require("./utils/util")
 
+let cloudInited = false
+
 App({
     onLaunch: function () {
         // 展示本地存储能力
@@ -49,6 +51,33 @@ App({
         wx.setClipboardData({
             data: this.globalData.git,
             success: res => util.ok("网址已复制")
+        })
+    },
+    /**
+     * 调用云函数
+     * @param {*} name         云函数名称
+     * @param {*} data          参数
+     * @param {*} callBack 
+     */
+    callCloud  (name, data, callBack){
+        if(!cloudInited) {
+            wx.cloud.init()
+            cloudInited = true
+            console.debug(`初始化云开发环境...`)
+        }
+    
+        console.debug(`开始执行云函数调用 name=${name} ...`)
+        wx.cloud.callFunction({
+            name,
+            data,
+            success: (res)=>{
+                console.debug(`来自云函数${name}的调用结果：`, res.result)
+                callBack(res.result)
+            },
+            fail: err=>{
+                console.error("云函数调用失败", err.errCode, err.errMsg)
+                console.log(err)
+            }
         })
     }
 })

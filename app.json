@@ -1,4 +1,5 @@
 {
+    "cloud": true,
     "pages": [
         "pages/index/index",
         "pages/daily/fetusWeight/fetus-weight",

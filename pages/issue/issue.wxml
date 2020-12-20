@@ -4,7 +4,7 @@
     />
     <van-panel>
         <van-cell slot="header" title="意见标题">
-            <van-icon name="question-o" size="20px" dot />
+            <van-icon name="question-o" bind:click="toHistory" size="20px" dot />
         </van-cell>
         <van-field model:value="{{ title }}" border="{{ true }}" custom-style="background:#fcfcfc;" />
     </van-panel>
@@ -28,3 +28,29 @@
         </view>
     </view>
 </view>
+
+<van-popup
+    show="{{ historyShow }}"
+    position="bottom" closeable custom-style="height: 80%" bind:close="toHistory">
+    <view class="content mt20">
+        <view class="c" wx:if="{{ !historyLoaded }}">
+            <van-loading  size="60px" vertical>加载中...</van-loading>
+        </view>
+        <view wx:else>
+            <view class="b">您共发布{{issues.length}}条意见</view>
+            <van-collapse value="{{ activeNames }}" bind:change="onIssueSelect">
+                <van-collapse-item wx:for="{{ issues }}" wx:key="index" name="{{index}}" label="{{item.createOn}}">
+                    <view slot="title">
+                        <tag wx:if="{{ item.reply }}" type="primary">有回复</tag>
+                        {{item.title}}
+                    </view>
+                    {{item.detail}}
+                    <view wx:if="{{item.reply}}" class="mt10" style="border-top:1px dashed #dadada;">
+                        <view>{{item.replyOn}} 回复</view>
+                        <rich-text class="h">{{ item.reply }}</rich-text>
+                    </view>
+                </van-collapse-item>
+            </van-collapse>
+        </view>
+    </view>
+</van-popup>

@@ -23,7 +23,7 @@ Page({
             {
                 name:"其他", summary:"",
                 items:[
-                    { name:"意见反馈", icon:"反馈", onClick:"todo", dot: true},
+                    { name:"意见反馈", icon:"反馈", url:"/pages/issue/issue", dot: true},
                     { name:"查看源码", icon:"github", onClick:"github", dot: true},
                     { name:"关于我们", icon:"关于", url:"/pages/about/about"}
                 ]
