@@ -65,6 +65,16 @@ module.exports = {
         let pos = filename.lastIndexOf('.')
         return pos!=-1? filename.substring(pos+1): ""
     },
+    /**
+     * 将 source 数据覆盖到 target 中（只覆盖 target 有的属性）
+     * @param {*} target 
+     * @param {*} source 
+     */
+    copyTo (target, source){
+        Object.keys(target).forEach(k=>{
+            target[k] = source[k]
+        })
+    },
 
     /**
      * 显示普通的提示信息

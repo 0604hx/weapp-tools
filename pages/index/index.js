@@ -5,7 +5,8 @@ const app = getApp()
 
 Page({
     data: {
-        motto: 'Hello World',
+        appName: app.globalData.appName,
+        statusBarHeight: app.globalData.statusBarHeight,
         userInfo: {},
         hasUserInfo: false,
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -16,15 +17,16 @@ Page({
             {
                 name:"日常工具", summary:"日常生活涉及的工具",
                 items:[
-                    { name:"胎儿体重测算", icon:"胎儿", url:"/pages/daily/fetusWeight/fetus-weight", tip:"New", dot: false},
-                    { name:"HEIC转换", icon:"美术图片", onClick:"todo", dot: true},
+                    { name:"胎儿体重测算", icon:"胎儿", url:"/pages/daily/fetusWeight/fetus-weight", dot: true},
+                    { name:"密码本", icon:"密码", url:"/pages/daily/password/password", tip:"New"},
+                    // { name:"HEIC转换", icon:"美术图片", onClick:"todo", dot: true},
                 ]
             },
             {
                 name:"其他", summary:"",
                 items:[
                     { name:"意见反馈", icon:"反馈", url:"/pages/issue/issue", dot: true},
-                    { name:"查看源码", icon:"github", onClick:"github", dot: true},
+                    { name:"查看源码", icon:"github", onClick:"github"},
                     { name:"关于我们", icon:"关于", url:"/pages/about/about"}
                 ]
             }
@@ -62,6 +64,9 @@ Page({
     github: app.copyGit,
     todo() {
         util.warn("功能开发中，敬请期待")
+    },
+    toSetting (){
+        app.jumpTo("setting/setting")
     },
     //处理版本更新，热启动时调用
     doWithUpdate() {

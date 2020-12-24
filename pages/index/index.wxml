@@ -1,3 +1,18 @@
+<!--自定义顶部状态栏-->
+<view class="nav" style="padding-top:{{statusBarHeight}}px; background:#FFC835;opacity: 1;">
+    <view style="color:white;font-size:20px; padding:5px;display: flex;">
+        <view style="width:100px; padding-left:8px;" class="l">
+            <view class="avatar">
+                <open-data type="userAvatarUrl"></open-data>
+            </view>
+            <!-- <van-icon size="26px" color="white" name="user-circle-o" /> -->
+            <!-- <van-icon size="26px" color="white" name="setting-o" bind:click="toSetting" style="margin-left:10px" /> -->
+        </view>
+        <view style="flex:1" class="c">{{ appName }}</view>
+        <view style="width:100px"></view>
+    </view>
+</view>
+
 <view class="indexDiv">
     <!-- 如果只是展示用户头像昵称，可以使用 <open-data /> 组件 -->
     <!-- 

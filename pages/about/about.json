@@ -1,7 +1,6 @@
 {
     "navigationBarTitleText": "关于我们",
     "usingComponents": {
-        "van-panel": "@vant/weapp/panel/index",
-        "tag": "@vant/weapp/tag/index"
+        "van-panel": "@vant/weapp/panel/index"
     }
 }

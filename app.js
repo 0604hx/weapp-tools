@@ -4,18 +4,6 @@ let cloudInited = false
 
 App({
     onLaunch: function () {
-        // 展示本地存储能力
-        var logs = wx.getStorageSync('logs') || []
-        logs.unshift(Date.now())
-        wx.setStorageSync('logs', logs)
-
-        // 登录
-        wx.login({
-            success: res => {
-                // 发送 res.code 到后台换取 openId, sessionKey, unionId
-                console.debug(`LOGIN SUCCESS`, res)
-            }
-        })
         // 获取用户信息，本工具集暂不需要用户登录
         // wx.getSetting({
         //     success: res => {
@@ -38,15 +26,28 @@ App({
         //     }
         // })
     },
-    onShow (e){
-        console.debug(`页面显示`, e)
-    },
     globalData: {
+        appName: "集成工具集",
+        statusBarHeight:wx.getSystemInfoSync()['statusBarHeight'],
         userInfo: null,
         git: "https://github.com/0604hx/weapp-tools",
         color: ""
     },
 
+    /*
+    ================================================================================
+    START 定义全局方法
+    ================================================================================
+    */
+    jumpTo(url, ps = {}) {
+        let path = url.indexOf("/pages") == 0 ? url : `/pages/${url}`
+        if (ps && typeof (ps) == 'object') {
+            path += "?" + Object.keys(ps).map(k => `${k}=${ps[k]}`).join("&")
+        }
+        wx.navigateTo({
+            url: path
+        })
+    },
     copyGit (){
         wx.setClipboardData({
             data: this.globalData.git,

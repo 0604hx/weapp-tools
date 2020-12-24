@@ -1,3 +1,10 @@
+/* 
+vant-weapp 颜色
+primary（绿）   #07c160
+info（蓝）      #1989fa
+warning（橙）   #ff976a
+danger（红）    #ee0a24
+*/
 @import "/resources/iconfont.wxss";
 
 .container {
@@ -20,7 +27,7 @@
     position: fixed;
     flex-direction: column;
     align-items: center;
-    bottom: 15rpx;
+    bottom: 15px;
     width: 100%;
     z-index: 9;
 }
@@ -39,6 +46,12 @@
 .r {
     text-align: right;
 }
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
 .h {
     font-weight: 400;
     font-size: 14px;
@@ -53,9 +66,15 @@
 .mt20 {
     margin-top: 20px;
 }
+.mb20 {
+    margin-bottom: 20px;
+}
 .content {
     padding: var(--cell-vertical-padding,5px) var(--cell-horizontal-padding,16px);
 }
 .w100 {
     width: 100%;
+}
+.ml10 {
+    margin-left: 10px;
 }
