@@ -31,7 +31,7 @@ App({
         statusBarHeight:wx.getSystemInfoSync()['statusBarHeight'],
         userInfo: null,
         git: "https://github.com/0604hx/weapp-tools",
-        color: ""
+        color: "#FFC835"
     },
 
     /*

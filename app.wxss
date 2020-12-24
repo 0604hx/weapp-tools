@@ -17,11 +17,11 @@ danger（红）    #ee0a24
   box-sizing: border-box;
 } 
 
-/* page {
-    --button-primary-background-color: #8c0776;
-    --button-primary-border-color: #8c0776;
-    --tag-primary-color: #8c0776;
-} */
+page {
+    --button-primary-background-color: #FFC835;
+    --button-primary-border-color: #FFC835;
+    --tag-primary-color: #FFC835;
+}
 .flexBtn {
     display: flex;
     position: fixed;

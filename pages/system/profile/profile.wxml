@@ -1,0 +1,30 @@
+<!--自定义顶部状态栏-->
+<view class="nav" style="padding-top:30%; background:{{color}};opacity: 1;">
+    <view style="color:white;font-size:20px; padding:5px;display: flex;">
+        <view style="width:100px; padding-left:8px;" class="l">
+            <view class="avatar">
+                <open-data type="userAvatarUrl"></open-data>
+            </view>
+        </view>
+        <view style="flex:1" class="c"></view>
+        <view style="width:100px"></view>
+    </view>
+</view>
+
+<view class="mt20">
+    <van-cell-group>
+        <van-cell icon="points" title="本地存储" value="Storage/本地文件" is-link />
+        <van-cell icon="setting" title="设置" is-link />
+        <van-cell icon="question-o" title="关于" is-link />
+    </van-cell-group>
+</view>
+
+<view class="mt20">
+    <van-cell-group>
+        <van-cell icon="lock" title="管理员入口" value="内容" is-link />
+    </van-cell-group>
+</view>
+
+<view class="flexBtn h">
+    版本号 0.0.2
+</view>

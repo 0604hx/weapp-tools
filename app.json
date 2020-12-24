@@ -5,7 +5,9 @@
         "pages/daily/fetusWeight/fetus-weight",
         "pages/about/about",
         "pages/issue/issue",
-        "pages/daily/password/password"
+        "pages/daily/password/password",
+        "pages/system/profile/profile",
+        "pages/system/setting/setting"
     ],
     "window": {
         "backgroundTextStyle": "dark",

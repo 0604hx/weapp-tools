@@ -22,7 +22,7 @@
     <view class="mt20 c">
         <view class="icon-btn" style="margin:0px auto;">
             <van-button bind:click="onSave" plain size="large" loading="{{working}}" loading-size="140rpx"
-                 round type="info">
+                 round type="primary">
                 <van-icon name="checked" size="140rpx" />
             </van-button>
         </view>

@@ -7,6 +7,8 @@ Page({
     data: {
         appName: app.globalData.appName,
         statusBarHeight: app.globalData.statusBarHeight,
+        color: app.globalData.color,
+
         userInfo: {},
         hasUserInfo: false,
         canIUse: wx.canIUse('button.open-type.getUserInfo'),

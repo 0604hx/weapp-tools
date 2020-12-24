@@ -89,8 +89,11 @@ Page({
     },
     _updateItemsAndHide (items){
         //同步到本地缓存
-        store.toStorage("", items)
-        this.setData({items, pwdShow: false})
+        this.setData({working: true})
+
+        store.toStorage("", items, ()=>{
+            this.setData({items, pwdShow: false, working: false})
+        })
     },
     /**
      * 保存密码，流程：
@@ -102,6 +105,8 @@ Page({
      */
     onSave (){
         let { index, site, name, mima, type, items } = this.data
+        if(!( site && name))    return util.warn(`平台及登录账号不能为空`)
+
         let item = { site, name, mima, type }
         if(index >= 0){
             items[index] = item
