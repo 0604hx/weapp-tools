@@ -3,7 +3,9 @@
     <view style="color:white;font-size:20px; padding:5px;display: flex;">
         <view style="width:100px; padding-left:8px;" class="l">
             <view class="avatar">
-                <open-data type="userAvatarUrl"></open-data>
+                <navigator url="/pages/system/profile/profile">
+                    <open-data type="userAvatarUrl"></open-data>
+                </navigator>
             </view>
             <!-- <van-icon size="26px" color="white" name="user-circle-o" /> -->
             <!-- <van-icon size="26px" color="white" name="setting-o" bind:click="toSetting" style="margin-left:10px" /> -->
@@ -15,10 +17,6 @@
 
 <view class="indexDiv">
     <!-- 如果只是展示用户头像昵称，可以使用 <open-data /> 组件 -->
-    <!-- 
-        <open-data type="userAvatarUrl"></open-data>
-        <open-data type="userNickName"></open-data> 
-    -->
     <van-panel wx:for="{{ tools }}" wx:for-item="tool" wx:for-index="toolIndex" wx:key="toolIndex" 
         title="{{tool.name}}" desc="{{tool.summary}}">
         <van-grid>

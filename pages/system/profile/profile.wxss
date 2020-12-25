@@ -1,3 +1,16 @@
 page {
     background-color: #f1f2f3;
 }
+
+.loginBtn {
+    width: auto;
+    height: 32px;
+    font-size: 28rpx;
+    padding: 5px;
+    background: white;
+}
+
+.profile-nav .avatar {
+    width: 120px;
+    height: 120px;
+}

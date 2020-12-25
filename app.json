@@ -7,7 +7,8 @@
         "pages/issue/issue",
         "pages/daily/password/password",
         "pages/system/profile/profile",
-        "pages/system/setting/setting"
+        "pages/system/setting/setting",
+        "pages/system/storage/storage"
     ],
     "window": {
         "backgroundTextStyle": "dark",

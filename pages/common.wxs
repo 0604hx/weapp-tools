@@ -1,10 +1,10 @@
 /**
     格式化文件大小，参数为字节
     */
-   module.exports.filesize = function(size){
+   module.exports.filesize = function(size, fixed=2){
     var G=0, M=0, KB=0
     size >= (1 << 30) && (G = (size / (1 << 30)).toFixed(2))
-    size >= (1 << 20) && (size < (1 << 30)) && (M = (size / (1 << 20)).toFixed(2))
-    size >= (1 << 10) && (size < (1 << 20)) && (KB = (size / (1 << 10)).toFixed(2))
+    size >= (1 << 20) && (size < (1 << 30)) && (M = (size / (1 << 20)).toFixed(fixed))
+    size >= (1 << 10) && (size < (1 << 20)) && (KB = (size / (1 << 10)).toFixed(fixed))
     return G>0 ? G+' G' : M>0 ? M+' M' : KB>0 ? KB+' KB' : size+' B'
 }

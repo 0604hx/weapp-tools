@@ -64,9 +64,7 @@ Page({
     },
 
     github: app.copyGit,
-    todo() {
-        util.warn("功能开发中，敬请期待")
-    },
+    todo: app.todo,
     toSetting (){
         app.jumpTo("setting/setting")
     },

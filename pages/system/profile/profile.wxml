@@ -1,30 +1,44 @@
 <!--自定义顶部状态栏-->
-<view class="nav" style="padding-top:30%; background:{{color}};opacity: 1;">
+<view class="profile-nav" style="padding-top:30%; background:{{color}};opacity: 1;border-bottom:2px solid white">
     <view style="color:white;font-size:20px; padding:5px;display: flex;">
-        <view style="width:100px; padding-left:8px;" class="l">
-            <view class="avatar">
-                <open-data type="userAvatarUrl"></open-data>
-            </view>
+        <view style="width:70px; padding-left:8px;" class="l">
+            <van-icon wx:if="{{ !hasUserInfo }}" size="52px" name="question" />
+            <image wx:else class="avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
         </view>
-        <view style="flex:1" class="c"></view>
-        <view style="width:100px"></view>
+        <view style="flex:1">
+            <!-- <button class="loginBtn" wx:if="{{ !hasUserInfo }}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">点我登录</button> -->
+            <van-button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bind:getuserinfo="getUserInfo" size="small" plain>
+                点此登录
+            </van-button>
+            <block wx:else>
+                <image class="avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+            </block>
+        </view>
     </view>
 </view>
 
 <view class="mt20">
     <van-cell-group>
-        <van-cell icon="points" title="本地存储" value="Storage/本地文件" is-link />
-        <van-cell icon="setting" title="设置" is-link />
-        <van-cell icon="question-o" title="关于" is-link />
+        <van-cell icon="points" title="本地存储" value="Storage/本地文件" is-link url="/pages/system/storage/storage" />
+        <van-cell icon="setting-o" title="设置" value="云参数/数据备份" is-link url="/pages/system/setting/setting" />
+        <van-cell icon="question-o" title="关于" value="查看源码" is-link url="/pages/about/about" />
     </van-cell-group>
 </view>
 
 <view class="mt20">
     <van-cell-group>
-        <van-cell icon="lock" title="管理员入口" value="内容" is-link />
+        <van-cell icon="home-o" title="返回首页" is-link url="/pages/index/index" link-type="redirectTo" />
+    </van-cell-group>
+</view>
+
+<view class="mt20">
+    <van-cell-group>
+        <van-cell icon="lock" title="管理员入口" bind:click="todo" is-link>
+            <tag type="danger" plain>需授权</tag>
+        </van-cell>
     </van-cell-group>
 </view>
 
 <view class="flexBtn h">
-    版本号 0.0.2
+    版本号 {{version}}
 </view>

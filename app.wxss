@@ -31,6 +31,13 @@ page {
     width: 100%;
     z-index: 9;
 }
+.avatar {
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid white;
+}
 .icon-btn .van-button--large {
     height: 140rpx;
 }

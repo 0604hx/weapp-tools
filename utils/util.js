@@ -47,6 +47,9 @@ module.exports = {
     getDateTime(date = new Date()) {
         return formatDateOrTime(date) + " " + formatDateOrTime(date, 1)
     },
+    formatTimestamp(timestamp){
+        return this.getDateTime(new Date(timestamp>10**13? timestamp : timestamp*1000))
+    },
     /**
      * 日期格式为 yyyy年MM月dd日
      */
@@ -73,6 +76,40 @@ module.exports = {
     copyTo (target, source){
         Object.keys(target).forEach(k=>{
             target[k] = source[k]
+        })
+    },
+    isImageType (fileType){
+        return ["png", "jpg", "jpeg", "gif", "bmp"].indexOf(fileType)>=0
+    },
+    /**
+     * 打开文档
+     * 如果是图片则使用 wx.previewImage （不支持带中文的图片预览=.=）
+     * 否则尝试使用 wx.openDocument
+     * 
+     * @param {*} filePath 
+     */
+    openFile (filePath, fileType){
+        console.debug(`打开文件`, filePath)
+        fileType = fileType || this.suffix(filePath).toLowerCase()
+        if(this.isImageType(fileType)){
+            wx.previewImage({
+              urls: [encodeURI(filePath)],
+              fail: e=> console.error(`预览图片失败：`, e)
+            })
+            return
+        }
+        
+        wx.openDocument({
+            fileType,
+            filePath,
+            fail: e=>{
+                console.debug(`打开文件(${filePath})失败：`, e)
+                let msg = e.errMsg
+                if(msg.indexOf("filetype not supported")){
+                    msg = `不支持查看${fileType}类型的文件`
+                }
+                this.error(msg, "文件预览失败")
+            }
         })
     },
 

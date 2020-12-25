@@ -1,0 +1,12 @@
+{
+    "navigationBarTitleText": "本地存储",
+    "enablePullDownRefresh": true,
+    "usingComponents": {
+        "van-circle": "@vant/weapp/circle/index",
+        "van-panel": "@vant/weapp/panel/index",
+        "van-cell": "@vant/weapp/cell/index",
+        "van-cell-group": "@vant/weapp/cell-group/index",
+        "van-loading": "@vant/weapp/loading/index",
+        "van-popup": "@vant/weapp/popup/index"
+    }
+}
