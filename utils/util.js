@@ -69,6 +69,13 @@ module.exports = {
         return pos!=-1? filename.substring(pos+1): ""
     },
     /**
+     * 判断 text 是否为 JSON 数组
+     * @param {*} text 
+     */
+    isJSONArrayText (text){
+        return  !!text && text[0] == '[' && text[text.length-1]==']'
+    },
+    /**
      * 将 source 数据覆盖到 target 中（只覆盖 target 有的属性）
      * @param {*} target 
      * @param {*} source 

@@ -35,7 +35,6 @@ Page({
         ]
     },
     setUserInfo (userInfo){
-        console.debug(`用户信息`, userInfo)
         this.setData({userInfo, hasUserInfo: true})
     },
     loadUserInfo (){
@@ -45,7 +44,6 @@ Page({
             // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
             // 所以此处加入 callback 以防止这种情况
             app.userInfoReadyCallback = res => {
-                console.debug(`userInfoReadyCallback`, res)
                 this.setUserInfo(res.userInfo)
             }
         } else {
@@ -60,7 +58,7 @@ Page({
         }
     },
     onLoad: function () {
-        // this.loadUserInfo()  
+        this.loadUserInfo()  
     },
 
     github: app.copyGit,

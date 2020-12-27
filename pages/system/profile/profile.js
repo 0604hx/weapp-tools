@@ -1,3 +1,5 @@
+const util = require("../../../utils/util")
+
 const app = getApp()
 
 let getVersion = ()=>{
@@ -15,13 +17,26 @@ Page({
         color: app.globalData.color,
         version: getVersion()
     },
+    onLoad (){
+        app.userInfoReadyCallback = this.onUserInfoLoaded
+        if(app.globalData.userInfo && app.globalData.userInfo.nickName)
+            this.onUserInfoLoaded(app.globalData)
+    },
     todo: app.todo,
     getUserInfo: function (e) {
         console.log(e)
-        app.globalData.userInfo = e.detail.userInfo
+        let { detail } = e
+        if(detail.userInfo){
+            this.onUserInfoLoaded(detail)
+            app.globalData.userInfo = detail.userInfo
+        }else if(detail.errMsg && detail.errMsg.indexOf("auth deny")){
+            util.warn(`用户拒绝授权`)
+        }
+    },
+    onUserInfoLoaded (res){
         this.setData({
-            userInfo: e.detail.userInfo,
+            userInfo: res.userInfo,
             hasUserInfo: true
         })
-    },
+    }
 })

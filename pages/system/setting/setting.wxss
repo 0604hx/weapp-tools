@@ -1,1 +1,6 @@
-/* pages/system/setting/setting.wxss */
+.settingDiv .van-cell-group__title {
+    background: #eaeaea;
+    color: #555555;
+    padding: 10px;
+    font-weight: bold;
+}

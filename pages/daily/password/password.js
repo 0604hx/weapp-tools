@@ -1,7 +1,10 @@
 const store = require("../../../utils/store/index")
 const util = require("../../../utils/util")
+const { aes } = require("../../../utils/secret")
+
 // 赋值到 wx 方便调试
 // wx.store = store
+wx.aes = aes
 
 let createPwd = ()=> {
     return {type: 0, site:"", name:"", mima:""}
@@ -27,13 +30,6 @@ let fixColor = items=>{
     })
 }
 
-let loadData = cb=>{
-    store.fromStorage("", items=>{
-        fixColor(items)
-        cb(items)
-    })
-}
-
 Page({
     data: {
         //=========== 常量 ===========
@@ -51,14 +47,49 @@ Page({
         site:"",
         name:"",
         mima:"",
-        items:[]
+        items:[],
+
+        //=========== 数据加密 ===========
+        lockShow:"",
+        lockKey: "",
+        needReload: false
     },
     onLoad: function (options) {
-        loadData(items=> this.setData({items}))
+        this._loadData()
     },
     onPullDownRefresh: function () {
         wx.stopPullDownRefresh()
         this.setData({searchShow: true})
+    },
+    _loadData (){
+        store.fromStorage("", data=>{
+            let items = undefined
+            //如果以 [ 开头就是明文
+            if(util.isJSONArrayText(data)){
+                items = JSON.parse(data)
+            }else {
+                let needToInputPwd = true
+                if(this.data.lockKey){
+                    //尝试加密
+                    let rawText = aes.decrypt(this.data.lockKey, data)
+                    if(util.isJSONArrayText(rawText)){
+                        items = JSON.parse(rawText)
+                        needToInputPwd = false
+                    }
+                }
+
+                if(needToInputPwd){
+                    this.setData({needReload: true})
+                    this.toLock()
+                    return util.warn(`请输入查看密码`)
+                }
+            }
+    
+            if(Array.isArray(items)){
+                fixColor(items)
+                this.setData({ items })
+            }
+        })
     },
     onSearch (e){
         if(!e || !e.detail) return this.setData({searchShow: false})
@@ -87,12 +118,23 @@ Page({
         update[field] = v
         this.setData(update)
     },
-    _updateItemsAndHide (items){
+    _updateItemsAndHide (items, cb){
+        if(items == undefined)
+            items = this.data.items
+        
         //同步到本地缓存
         this.setData({working: true})
 
-        store.toStorage("", items, ()=>{
+        let data = JSON.stringify(items)
+        if(this.data.lockKey && items.length){
+            //加密
+            data = aes.encrypt(this.data.lockKey, data)
+            console.debug(`检测到存在秘钥且数据不为空，数据将加密：`, data)
+        }
+
+        store.toStorage("", data, ()=>{
             this.setData({items, pwdShow: false, working: false})
+            !cb || cb()
         })
     },
     /**
@@ -123,5 +165,25 @@ Page({
 
             this._updateItemsAndHide(items)
         })
+    },
+    toLock (){
+        let { lockShow } = this.data
+        if(lockShow)    return this.setData({ lockShow: false })
+
+        this.setData({ lockShow: true })
+    },
+    /**
+     * 输入密码后回调
+     * 此时需要更新数据（如果有密码则先加密）
+     * @param {*} e 
+     */
+    onLockPwdSet (e){
+        console.log(e, this.data.lockKey)
+        let { needReload, lockKey } = this.data
+        // 如果是需要重新加载数据
+        if(needReload == true) return this._loadData()
+
+        // 此时为加密数据
+        this._updateItemsAndHide(()=> util.ok(`数据加密成功，请妥善保管密码`))
     }
 })

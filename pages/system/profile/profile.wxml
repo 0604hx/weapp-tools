@@ -1,18 +1,23 @@
 <!--自定义顶部状态栏-->
-<view class="profile-nav" style="padding-top:30%; background:{{color}};opacity: 1;border-bottom:2px solid white">
+<view class="profile-nav" style="background:{{color}};">
     <view style="color:white;font-size:20px; padding:5px;display: flex;">
         <view style="width:70px; padding-left:8px;" class="l">
-            <van-icon wx:if="{{ !hasUserInfo }}" size="52px" name="question" />
+            <van-icon wx:if="{{ !hasUserInfo }}" size="56px" name="question" />
             <image wx:else class="avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
         </view>
         <view style="flex:1">
-            <!-- <button class="loginBtn" wx:if="{{ !hasUserInfo }}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">点我登录</button> -->
-            <van-button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bind:getuserinfo="getUserInfo" size="small" plain>
-                点此登录
-            </van-button>
-            <block wx:else>
-                <image class="avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-            </block>
+            <view wx:if="{{!hasUserInfo}}">
+                <van-button open-type="getUserInfo" bind:getuserinfo="getUserInfo" size="small" plain>
+                    点此登录
+                </van-button>
+                <view class="tip">授权登录后体验更丰富功能</view>
+            </view>
+            <view wx:else style="padding-left:20px">
+                <view class="nick">
+                    {{ userInfo.nickName }}
+                    <text class="tip ml20">欢迎您</text>
+                </view>
+            </view>
         </view>
     </view>
 </view>

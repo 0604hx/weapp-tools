@@ -6,7 +6,8 @@ const FILE_SUFFIX = wx.getSystemInfoSync().platform == "devtools"?"-DEV":""
  * @param {*} e 
  */
 let defFailAct = e=>{
-    util.confirm("执行失败", e?(e.message? e.message: e):"操作执行失败，请检查后重试或联系管理员", false)
+    console.debug("执行出错",  e)
+    util.confirm("执行失败", e?(e.errMsg? e.errMsg: e):"操作执行失败，请检查后重试或联系管理员")
 }
 
 /**
@@ -48,7 +49,7 @@ module.exports = {
     /**
      * 从 storage 加载数据
      * @param {*} key 
-     * @param {*} onOk 
+     * @param {*} onOk  注意：若storage不存在，不执行该方法
      */
     fromStorage (key, onOk){
         key = buildKey(key)
