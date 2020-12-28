@@ -10,7 +10,10 @@
             <!-- <van-icon size="26px" color="white" name="user-circle-o" /> -->
             <!-- <van-icon size="26px" color="white" name="setting-o" bind:click="toSetting" style="margin-left:10px" /> -->
         </view>
-        <view style="flex:1" class="c">{{ appName }}</view>
+        <view style="flex:1" class="c">
+            {{ appName }}
+            <view style="font-size:11px;margin-top:2px;">点击左侧头像进入个人首页</view>
+        </view>
         <view style="width:100px"></view>
     </view>
 </view>

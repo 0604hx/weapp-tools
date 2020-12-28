@@ -3,10 +3,14 @@
  */
 const CryptoJS = require("./plugins/CryptoJS")
 const md5 = require("./plugins/md5.min")
-wx.md5 = md5
 
 const SALT = "WeappTools2020"                     //加密加盐
 
+/**
+ * AES 功能
+ * 密钥为任意长度字符串（支持中文）
+ * 密钥生成规则： md5("原始密钥+盐")
+ */
 let aes = {
     iv: CryptoJS.enc.Utf8.parse('0604hxWeappTools'),
     buildKey (originText){

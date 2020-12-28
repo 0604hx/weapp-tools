@@ -1,10 +1,12 @@
 const store = require("../../../utils/store/index")
 const util = require("../../../utils/util")
-const { aes } = require("../../../utils/secret")
+const { aes, md5 } = require("../../../utils/secret")
 
 // 赋值到 wx 方便调试
 // wx.store = store
-wx.aes = aes
+// wx.aes = aes
+wx.util = util
+
 
 let createPwd = ()=> {
     return {type: 0, site:"", name:"", mima:""}
@@ -29,6 +31,14 @@ let fixColor = items=>{
             v.color = category.color
     })
 }
+
+/*
+用于加解密数据的密钥，保存到临时文件中
+考虑到可能持久化密钥，这里进行 md5 加密
+*/
+let aesKey = ""
+
+let tmpItems = []
 
 Page({
     data: {
@@ -69,31 +79,56 @@ Page({
                 items = JSON.parse(data)
             }else {
                 let needToInputPwd = true
-                if(this.data.lockKey){
-                    //尝试加密
-                    let rawText = aes.decrypt(this.data.lockKey, data)
-                    if(util.isJSONArrayText(rawText)){
-                        items = JSON.parse(rawText)
-                        needToInputPwd = false
+                if(aesKey){
+                    //尝试解密
+                    try{
+                        let rawText = aes.decrypt(aesKey, data)
+                        if(util.isJSONArrayText(rawText)){
+                            items = JSON.parse(rawText)
+                            needToInputPwd = false
+                        }
+                    }catch(decryptE){
+                        console.error(`解密数据出错：`, decryptE.message)
                     }
                 }
 
                 if(needToInputPwd){
+                    if(!this.data.lockShow){
+                        //此处设置延迟执行，否则将出现 dialog 错误
+                        setTimeout(this.toLock, 200)
+                    }
                     this.setData({needReload: true})
-                    this.toLock()
                     return util.warn(`请输入查看密码`)
                 }
             }
     
             if(Array.isArray(items)){
+                if(this.data.keyword){
+                    items = items.filter(v=> `${v.site}${v.name}`.indexOf(this.data.keyword)>-1)
+                    console.debug(`筛选：`, this.data.keyword, items)
+                }
                 fixColor(items)
                 this.setData({ items })
             }
         })
     },
     onSearch (e){
-        if(!e || !e.detail) return this.setData({searchShow: false})
-        console.debug(`搜索`, e.detail)
+        let { keyword } = this.data
+        let needRefresh = false
+        if(!e || !e.detail){
+            needRefresh = !!keyword
+            keyword = ""
+            this.setData({searchShow: false})
+        }
+        else{
+            needRefresh = keyword != e.detail
+            keyword = e.detail
+            console.debug(`搜索`, e.detail)
+        }
+        
+        this.setData({ keyword })
+        if(needRefresh)
+            this._loadData()
     },
     onTypeSelect (e){
         this.setData({type: parseInt(e.detail.value)})
@@ -126,10 +161,10 @@ Page({
         this.setData({working: true})
 
         let data = JSON.stringify(items)
-        if(this.data.lockKey && items.length){
+        console.log(aesKey, items)
+        if(aesKey && items.length){
             //加密
-            data = aes.encrypt(this.data.lockKey, data)
-            console.debug(`检测到存在秘钥且数据不为空，数据将加密：`, data)
+            data = aes.encrypt(aesKey, data)
         }
 
         store.toStorage("", data, ()=>{
@@ -166,7 +201,7 @@ Page({
             this._updateItemsAndHide(items)
         })
     },
-    toLock (){
+    toLock (e){
         let { lockShow } = this.data
         if(lockShow)    return this.setData({ lockShow: false })
 
@@ -178,12 +213,12 @@ Page({
      * @param {*} e 
      */
     onLockPwdSet (e){
-        console.log(e, this.data.lockKey)
         let { needReload, lockKey } = this.data
+        aesKey = !!lockKey? md5(lockKey): ""
         // 如果是需要重新加载数据
         if(needReload == true) return this._loadData()
 
         // 此时为加密数据
-        this._updateItemsAndHide(()=> util.ok(`数据加密成功，请妥善保管密码`))
+        this._updateItemsAndHide(undefined, ()=> util.ok(`数据加密成功，请妥善保管密码`))
     }
 })

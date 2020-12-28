@@ -36,7 +36,7 @@
     </van-cell-group>
 </view>
 
-<view class="mt20">
+<view class="mt20" wx:if="{{ hasUserInfo }}">
     <van-cell-group>
         <van-cell icon="lock" title="管理员入口" bind:click="todo" is-link>
             <tag type="danger" plain>需授权</tag>

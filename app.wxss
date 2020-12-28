@@ -17,11 +17,42 @@ danger（红）    #ee0a24
   box-sizing: border-box;
 } 
 
+/*
+--------------------------------------------------------------------
+自定义颜色主题
+*/
 page {
     --button-primary-background-color: #FFC835;
     --button-primary-border-color: #FFC835;
     --tag-primary-color: #FFC835;
 }
+radio .wx-radio-input {
+    height: 40rpx;
+    width: 40rpx;
+    border-radius: 50%;
+    border: 2rpx solid #999;
+    background: transparent;
+}
+radio .wx-radio-input.wx-radio-input-checked::before {
+    border-radius: 50%;
+    /* 圆角 */
+    width: 48rpx;
+    /* 选中对勾后，对勾背景的大小，不要超过背景的尺寸 */
+    height: 48rpx;
+    /* 选中对勾后，对勾背景的大小，不要超过背景的尺寸 */
+    line-height: 46rpx;
+    text-align: center;
+    font-size: 48rpx;
+    /* 对勾大小 30rpx */
+    color: #fff;
+    /* 对勾颜色 白色 */
+    background: #FFC835;
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+}
+/*
+--------------------------------------------------------------------
+*/
 .flexBtn {
     display: flex;
     position: fixed;

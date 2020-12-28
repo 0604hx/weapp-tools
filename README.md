@@ -1,6 +1,10 @@
 # 小程序工具集
 > 基于微信小程序的各种简单工具合集
 
+## 开源地址   (*欢迎 Star ~ ~  (￣▽￣)*)
+GitHub: [https://github.com/0604hx/weapp-tools](https://github.com/0604hx/weapp-tools)  
+Gitee:  [https://gitee.com/0604hx/weapp-tools](https://gitee.com/0604hx/weapp-tools)
+
 ## 工具目录
 
 **日常生活类**
@@ -31,3 +35,16 @@
 ## 首页预览
 
 ![首页](documents/screen/index.png)
+
+## 附录
+
+### project.config.json 配置说明
+
+**packOptions.ignore**
+> 详见：[项目配置文件](https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html)
+
+```json
+"ignore": [
+    {"type": "suffix", "value": ".md"}
+]
+```

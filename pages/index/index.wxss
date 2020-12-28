@@ -40,8 +40,8 @@
 }
 
 .nav .avatar {
-    width: 60rpx;
-    height: 60rpx;
+    width: 75rpx;
+    height: 75rpx;
     border-radius: 50%;
     overflow: hidden;
     border: 2px solid white;
