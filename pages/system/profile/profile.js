@@ -28,7 +28,8 @@ Page({
         let { detail } = e
         if(detail.userInfo){
             this.onUserInfoLoaded(detail)
-            app.globalData.userInfo = detail.userInfo
+            
+            app.afterLogin(detail.userInfo)
         }else if(detail.errMsg && detail.errMsg.indexOf("auth deny")){
             util.warn(`用户拒绝授权`)
         }

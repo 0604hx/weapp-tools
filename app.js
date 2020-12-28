@@ -1,4 +1,5 @@
 const util = require("./utils/util")
+const account = require("./utils/account")
 
 let cloudInited = false
 
@@ -23,9 +24,8 @@ App({
                      */
                     wx.getUserInfo({
                         success: res => {
-                            console.debug(`scope.userInfo SUCCESS`, res.userInfo.nickName)
                             // 可以将 res 发送给后台解码出 unionId
-                            this.globalData.userInfo = res.userInfo
+                            this.afterLogin(res.userInfo)
 
                             // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
                             // 所以此处加入 callback 以防止这种情况
@@ -44,7 +44,8 @@ App({
         statusBarHeight:wx.getSystemInfoSync()['statusBarHeight'],
         userInfo: null,
         git: "https://github.com/0604hx/weapp-tools",
-        color: "#FFC835"
+        color: "#FFC835",
+        account: {}
     },
 
     /*
@@ -69,6 +70,20 @@ App({
     },
     todo() {
         util.warn("功能开发中，敬请期待")
+    },
+    /**
+     * 登录成功后调用
+     * 1、userInfo 赋值到 globalData 中
+     * 2、调用云函数记录登录信息
+     * @param {*} userInfo 
+     */
+    afterLogin (userInfo){
+        console.debug(`getUserInfo SUCCESS`, userInfo.nickName)
+        this.globalData.userInfo = userInfo
+
+        account.dealWithLogin(userInfo, d=> {
+            this.globalData.account = d
+        })
     },
     /**
      * 调用云函数

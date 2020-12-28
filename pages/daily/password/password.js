@@ -105,7 +105,6 @@ Page({
             if(Array.isArray(items)){
                 if(this.data.keyword){
                     items = items.filter(v=> `${v.site}${v.name}`.indexOf(this.data.keyword)>-1)
-                    console.debug(`筛选：`, this.data.keyword, items)
                 }
                 fixColor(items)
                 this.setData({ items })
