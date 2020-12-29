@@ -1,6 +1,26 @@
 .settingDiv .van-cell-group__title {
-    background: #eaeaea;
+    background: #f4f4f4;
     color: #555555;
     padding: 10px;
-    font-weight: bold;
+    font-weight: 200;
+}
+.settingDiv .group {
+    background: #eaeaea;
+    border-bottom: 1px solid #fefefe;
+    padding:10px;
+    font-weight: 300;
+}
+.settingDiv .group .h {
+    margin-left: 10px;
+    font-weight: 200;
+    font-size: 12px;
+}
+.settingDiv {
+    margin-bottom: 80px;
+}
+.switch .van-cell__value.van-cell__value {
+    max-height: 24px !important;
+}
+.switch .van-cell__title.van-cell__title {
+    color:#646566;
 }

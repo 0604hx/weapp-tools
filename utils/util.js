@@ -48,7 +48,7 @@ module.exports = {
         return formatDateOrTime(date) + " " + formatDateOrTime(date, 1)
     },
     formatTimestamp(timestamp){
-        return this.getDateTime(new Date(timestamp>10**13? timestamp : timestamp*1000))
+        return this.getDateTime(new Date(timestamp>10**12? timestamp : timestamp*1000))
     },
     /**
      * 日期格式为 yyyy年MM月dd日

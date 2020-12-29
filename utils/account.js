@@ -1,7 +1,8 @@
+const util = require("./util")
+
 /**
  * 
  */
-let CACHE_MIN = 
 let STATE = "account.state"
 
 module.exports = {
@@ -21,11 +22,13 @@ module.exports = {
                 { action:"login",  brand: sys.brand, model: sys.model, system: sys.system, lastOn: time },
                 userInfo
             )
-            getApp().callCloud(
+            let app = getApp()
+            let cacheMinutes = app.globalData.isDev? 24*60: 60        //开发模式下为 24 小时
+            app.callCloud(
                 'account', 
                 info,
                 data=>{
-                    data.expire = time + 30*60*1000     //缓存半小时
+                    data.expire = time + cacheMinutes*60*1000     //缓存半小时
                     wx.setStorage({
                       data,
                       key: STATE,
@@ -34,5 +37,7 @@ module.exports = {
                 }
             )
         }
+        else
+            console.debug(`用户信息于 ${util.formatTimestamp(state.expire)} 过期，本次跳过...`)
     }
 }

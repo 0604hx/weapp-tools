@@ -48,7 +48,8 @@ App({
         git: "https://github.com/0604hx/weapp-tools",
         color: "#FFC835",
         account: {},
-        systemInfo
+        systemInfo,
+        isDev: systemInfo.brand == 'devtools'
     },
 
     /*
