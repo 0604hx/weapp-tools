@@ -1,6 +1,7 @@
 /**
  * 
  */
+let CACHE_MIN = 
 let STATE = "account.state"
 
 module.exports = {

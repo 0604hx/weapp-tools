@@ -3,6 +3,8 @@ const account = require("./utils/account")
 
 let cloudInited = false
 
+let systemInfo = wx.getSystemInfoSync()
+
 App({
     onLaunch: function () {
         // 获取用户信息，本工具集暂不需要用户登录
@@ -41,11 +43,12 @@ App({
     },
     globalData: {
         appName: "集成工具集",
-        statusBarHeight:wx.getSystemInfoSync()['statusBarHeight'],
+        statusBarHeight: systemInfo['statusBarHeight'],
         userInfo: null,
         git: "https://github.com/0604hx/weapp-tools",
         color: "#FFC835",
-        account: {}
+        account: {},
+        systemInfo
     },
 
     /*

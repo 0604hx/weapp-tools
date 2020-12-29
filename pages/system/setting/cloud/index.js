@@ -1,22 +1,13 @@
-// pages/system/setting/cloud/index.js
 Component({
-    /**
-     * 组件的属性列表
-     */
     properties: {
 
     },
 
-    /**
-     * 组件的初始数据
-     */
     data: {
-
+        //阿里云 OSS
+        OSS_ALI_ID:"",
+        OSS_ALI_SECRET:""
     },
-
-    /**
-     * 组件的方法列表
-     */
     methods: {
 
     }

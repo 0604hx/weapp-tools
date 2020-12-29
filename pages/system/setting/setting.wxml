@@ -1,8 +1,8 @@
 <view class="settingDiv">
     <view class="group">云存储</view>
     <van-cell-group title="阿里云 OSS">
-        <van-field value="{{ settings.accessKey }}" label="Key ID" bind:change="onAccessKey" placeholder="请前往阿里云控制台查看" />
-        <van-field value="{{ settings.secretKey }}" label="Key Secret" bind:change="onSecretKey" placeholder="请前往阿里云控制台查看" />
+        <van-field model:value="{{ OSS_ALI_ID }}" label="Key ID" placeholder="请前往阿里云控制台查看" />
+        <van-field model:value="{{ OSS_ALI_SECRET }}" label="Key Secret" placeholder="请前往阿里云控制台查看" />
     </van-cell-group>
 
     <view class="mt20 w100 c">
