@@ -9,8 +9,12 @@
     </van-cell-group>
     <van-cell-group title="数据备份">
         <van-notice-bar left-icon="info-o" scrollable="{{false}}" text="OSS参数为空时备份操作将忽略" />
-        <van-cell center title="个人密码本" class="switch">
+        <!-- <van-cell center title="个人密码本" class="switch">
             <van-switch size="22px"  data-key="OSS_BACKUP_PASSWORD" checked="{{ OSS_BACKUP_PASSWORD }}" 
+                active-color="{{color}}" bind:change="onSwitchChange" />
+        </van-cell> -->
+        <van-cell wx:for="{{ dataBeans }}" wx:key="index" center title="{{ item.name }}" class="switch">
+            <van-switch size="22px"  data-key="{{ item.configKey }}" data-index="{{ index }}" checked="{{ item.value }}" 
                 active-color="{{color}}" bind:change="onSwitchChange" />
         </van-cell>
     </van-cell-group>
@@ -19,3 +23,9 @@
 <view class="flexBtn">
     <van-button icon="success" type="primary" round bind:tap="onSave"></van-button>
 </view>
+
+<wxs module="M">
+    module.exports.key = function(bean){
+        return true
+    }
+</wxs>

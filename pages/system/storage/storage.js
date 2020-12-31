@@ -1,4 +1,4 @@
-const store = require("../../../utils/store/index")
+const store = require("../../../utils/store")
 const util = require("../../../utils/util")
 const app = getApp()
 

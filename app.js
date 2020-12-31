@@ -1,5 +1,6 @@
 const util = require("./utils/util")
 const account = require("./utils/account")
+const configure = require("./utils/configure")
 
 let cloudInited = false
 
@@ -7,6 +8,8 @@ let systemInfo = wx.getSystemInfoSync()
 
 App({
     onLaunch: function () {
+        this.globalData.config = configure.load()
+
         // 获取用户信息，本工具集暂不需要用户登录
         wx.getSetting({
             success: res => {

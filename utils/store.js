@@ -1,4 +1,5 @@
-const util = require("../util")
+const util = require("./util")
+const backup = require("./backup")
 const FILE_SUFFIX = wx.getSystemInfoSync().platform == "devtools"?"-DEV":""
 
 /**
@@ -44,7 +45,16 @@ module.exports = {
     toStorage (key, data, onOk, onFail=defFailAct){
         key = buildKey(key)
         console.debug(`保存到 Storage, key=`, key)
-        wx.setStorage({ data, key, success: onOk, fail: onFail })
+        wx.setStorage({ 
+            data, 
+            key, 
+            success: res=>{
+                !onOk || onOk(res)
+                //触发自动备份
+                backup.onDataChange(key, 0)
+            }, 
+            fail: onFail 
+        })
     },
     /**
      * 从 storage 加载数据
