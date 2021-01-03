@@ -1,6 +1,7 @@
 const util = require("./util")
 const backup = require("./backup")
-const FILE_SUFFIX = wx.getSystemInfoSync().platform == "devtools"?"-DEV":""
+
+wx.backup = backup
 
 /**
  * 默认执行错误时弹出对话框提示
@@ -27,11 +28,11 @@ let buildKey = (key, joinStr=".") =>{
     return tmp.join(joinStr)
 }
 /**
- * 构建本地文件名（为了不让开发环境跟实际环境数据混淆，在开发环境下文件名加上了 -DEV 的标识）
+ * 构建本地文件名
  * @param {*} name 
  */
 let buildFilePath = name=>{
-    return `${wx.env.USER_DATA_PATH}/${buildKey(name)}${FILE_SUFFIX}.json`
+    return util.buildPath(`${buildKey(name)}.json`)
 }
 
 module.exports = {

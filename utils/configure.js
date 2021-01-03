@@ -18,6 +18,7 @@ let defaultConfig = () => {
     let config = {
         //------------------------ 云存储 ------------------------
         //阿里云 OSS
+        OSS_ALI_REGION:"shenzhen",
         OSS_ALI_ID: "",
         OSS_ALI_SECRET: ""
     }

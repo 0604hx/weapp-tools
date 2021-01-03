@@ -1,0 +1,15 @@
+<view class="table">
+      <view class="tr">
+          <view class="th w50">数据类型</view>
+          <view class="th">备份记录</view>
+      </view>
+      <view class="tr" wx:for="{{ histories }}" wx:key="item">
+          <view class="td w50">{{ item.name }}</view>
+          <view class="td l">
+              <view wx:for="{{ item.history }}"  wx:key="index" wx:for-item="history">
+                  <tag plain>{{ index }}</tag>
+                  {{ history }}
+              </view>
+          </view>
+      </view>
+    </view>

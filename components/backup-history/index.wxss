@@ -1,0 +1,36 @@
+.table {
+    border: 1px solid #eaeaea;
+    border-right: 0;
+    border-bottom: 0;
+    width: 98%;
+    margin-left: 1%;
+    font-size: 12px;
+
+}
+.tr {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.table .th {
+    font-size: blod;
+}
+.th, .td {
+    padding: 10px;
+    border-bottom: 1px solid #eaeaea;
+    border-right: 1px solid #eaeaea;
+    text-align: center;
+    width: 100%;
+}
+.table .w20 {
+    width: 20%;
+}
+.table .w30 {
+    width: 30%;
+}
+.table .w40 {
+    width: 40%;
+}
+.table .w50 {
+    width: 50%;
+}

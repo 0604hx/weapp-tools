@@ -190,6 +190,7 @@ Page({
         else
             items.push(item)
 
+        fixColor(items)
         this._updateItemsAndHide(items)
     },
     onRemove (){

@@ -89,6 +89,16 @@ module.exports = {
         return ["png", "jpg", "jpeg", "gif", "bmp"].indexOf(fileType)>=0
     },
     /**
+     * 构建本地文件路径
+     * @param {*} name 
+     */
+    buildPath (name){
+        return `${wx.env.USER_DATA_PATH}/${name}`
+    },
+    filename (path){
+        return path.split('/').pop()
+    },
+    /**
      * 打开文档
      * 如果是图片则使用 wx.previewImage （不支持带中文的图片预览=.=）
      * 否则尝试使用 wx.openDocument
