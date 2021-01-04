@@ -16,7 +16,6 @@ Component({
                             return newO
                         })
                     })
-                    console.debug(this.data.histories)
                 }
             })
         }

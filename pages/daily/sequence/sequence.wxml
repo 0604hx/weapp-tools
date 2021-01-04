@@ -1,0 +1,22 @@
+<!--自定义顶部状态栏-->
+<!-- <view class="nav" style="padding-top:{{statusBarHeight}}px;opacity: 1; background:#fcfcfc;border-bottom:1px solid #f1f2f3;">
+    <view style="padding:5px;display: flex;">
+        <view style="width:140px; padding-left:8px;" class="l">
+            <van-button icon="arrow-left" plain size="small" round>返回</van-button>
+            <van-icon size="28px" style="vertical-align: middle;" name="add-o" />
+        </view>
+        <view style="flex:1" class="c" style="font-size:16px;margin:auto;">
+            时序数据
+        </view>
+        <view style="width:140px">
+        </view>
+    </view>
+</view> -->
+
+<van-cell-group>
+    <van-cell title="测试的" is-link />
+</van-cell-group>
+
+<view class="flexBtn">
+    <van-button icon="plus" type="primary" round bind:tap="toDetail"></van-button>
+</view>

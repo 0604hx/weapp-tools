@@ -64,7 +64,6 @@ Page({
             if(e.type=='close') return this.setData({ backupHistoryShow: false })
         }else{
             this.backupHistory.refresh()
-            console.debug(this.backupHistory)
         }
         
         this.setData({ backupHistoryShow: true })

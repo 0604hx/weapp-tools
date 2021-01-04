@@ -8,7 +8,8 @@
         "pages/daily/password/password",
         "pages/system/profile/profile",
         "pages/system/setting/setting",
-        "pages/system/storage/storage"
+        "pages/system/storage/storage",
+        "pages/daily/sequence/sequence"
     ],
     "window": {
         "backgroundTextStyle": "dark",

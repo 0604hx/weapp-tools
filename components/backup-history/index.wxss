@@ -13,7 +13,8 @@
     justify-content: space-between;
 }
 .table .th {
-    font-size: blod;
+    font-weight: 600;
+    background: #fafafa;
 }
 .th, .td {
     padding: 10px;

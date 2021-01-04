@@ -116,3 +116,9 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 .ml10 {
     margin-left: 10px;
 }
+.title {
+    font-weight: 500;
+    font-size: 16px;
+    color: #333;
+    padding: 6px 0px 10px 0px;
+}

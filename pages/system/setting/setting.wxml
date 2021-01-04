@@ -1,7 +1,7 @@
 <view class="settingDiv">
     <view class="group">
         云存储
-        <text class="h">用于数据备份及还原</text>
+        <text class="h">用于数据备份及还原（bucket 名须为 weapp-tools）</text>
     </view>
     <van-cell-group title="阿里云 OSS">
         <van-cell title="所在地域" class="switch" is-link value="{{ OSS_ALI_REGION }}" bind:click="onSheetSelect" />
@@ -37,10 +37,10 @@
 
 <van-popup
     show="{{ backupHistoryShow }}"
-    position="bottom" closeable custom-style="height: 60%" bind:close="showBackupHistory">
+    position="bottom" closeable custom-style="height: 70%" bind:close="showBackupHistory">
     <view class="content mt20">
-        <view class="b">数据备份历史</view>
-        <backup-history id="backupHistory" />
+        <view class="title">数据备份历史</view>
+        <backup-history class="mt20" id="backupHistory" />
     </view>
 </van-popup>
 
