@@ -13,10 +13,45 @@
     </view>
 </view> -->
 
-<van-cell-group>
-    <van-cell title="测试的" is-link />
-</van-cell-group>
+    <!-- <van-cell wx:for="{{ items }}" wx:key="index" title="{{ item.name }}" is-link bind:click="toAdd" data-index="{{ index }}">
+    </van-cell> -->
+<van-swipe-cell right-width="{{ 130 }}" wx:for="{{ items }}" wx:key="index" data-index="{{index}}">
+        <van-cell center is-link title="{{item.name}}" value="{{ M.valueText(item.data) }}" label="{{ M.summary(item.data) }}">
+            <!-- <view slot="title">
+                <text class="title-text">{{item.name}}</text>
+                <tag wx:if="{{ item.data.length }}" plain type="primary">{{ item.data.length }}</tag>
+            </view> -->
+        </van-cell>
+    <view slot="right" class="van-swipe-cell__right swipe">
+        <van-button type="danger" data-index="{{index}}" bind:click="toDelete" square>删除</van-button>
+        <van-button type="info" data-index="{{index}}"  bind:click="toAdd" square>编辑</van-button>
+    </view>
+</van-swipe-cell>
 
 <view class="flexBtn">
-    <van-button icon="plus" type="primary" round bind:tap="toDetail"></van-button>
+    <van-button icon="plus" type="primary" round bind:tap="toAdd"></van-button>
 </view>
+
+<van-popup
+    show="{{ addShow }}"
+    position="top" closeable custom-style="height: 200px" bind:close="toAdd">
+    <view class="content mt20">
+        <view class="title">名称</view>
+        <van-field placeholder="数据项名称"  auto-focus="{{ true }}" model:value="{{ name }}" />
+
+        <van-button block type="primary" bind:click="toAdd">保存</van-button>
+    </view>
+</van-popup>
+
+<wxs module="M">
+    module.exports.summary = function(data){
+        if(data.length==0)  return ""
+        //取最后一个元素
+        var d = data[data.length-1]
+        return data.length+"条记录 ("+d.k+" 更新)"
+    }
+    module.exports.valueText = function(data){
+        if(data.length == 0)    return ""
+        return data[data.length-1].v
+    }
+</wxs>

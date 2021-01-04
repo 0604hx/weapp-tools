@@ -1,0 +1,18 @@
+.van-swipe-cell__left,
+.van-swipe-cell__right {
+  display: inline-block;
+  width: 130px;
+  height: 44px;
+  font-size: 15px;
+  line-height: 44px;
+  color: #fff;
+  text-align: center;
+}
+.swipe .van-button {
+    width: 65px;
+    height: 44px;
+}
+.title-text {
+    font-size: 15px;
+    margin-right: 10px;
+}
