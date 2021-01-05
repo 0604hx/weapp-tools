@@ -24,7 +24,8 @@ Page({
         name:"",
         editIndex: -1,
         addShow: false,
-        inputUp
+        inputShow: false,       //是否显示输入框
+        value: ""
     },
     onLoad (e){
         store.fromFile("", items=>{
@@ -33,10 +34,14 @@ Page({
         })
     },
     onHide (){
+        console.debug(`onHide 触发...`)
         if(updateCount > 0){
             util.debug(`检测到有 ${updateCount} 处数据变动，即将持久化数据...`)
             this.saveData()
         }
+    },
+    onUnload (){
+        console.debug(`onUnload 触发...`)
     },
     toDelete (e){
         let index = e.target.dataset.index
@@ -52,9 +57,10 @@ Page({
     toAdd (e){
         if(e.type == 'close')   return this.setData({ addShow: false })
 
-        let { addShow, editIndex, items, name } = this.data
+        let { addShow } = this.data
 
         if(addShow){
+            let { editIndex, items, name } = this.data
             if(!name)   return util.warn(`名称不能为空`)
 
             //编辑
@@ -67,22 +73,46 @@ Page({
             onUpdate()
         }
         else{
-            editIndex = e.target.dataset.index
-            if(editIndex == undefined)  editIndex = -1
-            name = editIndex>=0? items[editIndex].name : ""
-
-            console.debug(`数据项：`, editIndex, name)
-            this.setData({ addShow : true, editIndex , name })
+            this._showDialog(e, { addShow: true })
         }
     },
-    toInput (){
+    toInput (e){
+        console.debug(e)
+        if(e.type == 'close')   return this.setData({ inputShow: false })
 
+        let { inputShow } = this.data
+        if(inputShow){
+            let { editIndex, items, value } = this.data
+            if(!!value){
+                let data = items[editIndex].data
+                data.push({k: util.getDateTime(), v: value})
+
+                let update = { inputShow: false }
+                update[`items[${editIndex}].data`] = data
+                this.setData(update)
+
+                onUpdate()
+            }
+            else
+                util.warn(`数据不能为空`)
+        }
+        else{
+            this._showDialog(e, { inputShow: true })
+        }
+
+    },
+    _showDialog (e, ps){
+        let editIndex = e.target.dataset.index
+        if(editIndex == undefined)  editIndex = -1
+        let name = editIndex>=0? this.data.items[editIndex].name : ""
+
+        this.setData(Object.assign(ps, {editIndex , name }))
     },
     /**
      * 持久化数据到文件
      */
     saveData (){
-        store.toFile("", items, res=> {
+        store.toFile("", this.data.items, res=> {
             onUpdate(true)
             util.debug(`时序数据保存成功`, res)
         })

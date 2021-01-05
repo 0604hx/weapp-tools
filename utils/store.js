@@ -8,8 +8,8 @@ wx.backup = backup
  * @param {*} e 
  */
 let defFailAct = e=>{
-    console.debug("执行出错",  e)
-    util.confirm("执行失败", e?(e.errMsg? e.errMsg: e):"操作执行失败，请检查后重试或联系管理员")
+    console.debug("执行读取数据出错",  e)
+    // util.confirm("执行失败", e?(e.errMsg? e.errMsg: e):"操作执行失败，请检查后重试或联系管理员")
 }
 
 /**

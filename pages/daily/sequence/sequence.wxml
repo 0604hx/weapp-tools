@@ -13,13 +13,13 @@
     </view>
 </view> -->
 
-<van-swipe-cell right-width="{{ 130 }}" wx:for="{{ items }}" wx:key="index" data-index="{{index}}">
-    <van-cell center is-link title="{{item.name}}" value="{{ M.valueText(item.data) }}" label="{{ M.summary(item.data) }}">
-    </van-cell>
+<van-swipe-cell right-width="{{ 180 }}" wx:for="{{ items }}" wx:key="index" data-index="{{index}}">
+    <van-cell center is-link title="{{item.name}}" title-width="250px" 
+        value="{{ M.valueText(item.data) }}" label="{{ M.summary(item.data) }}" />
     <view slot="right" class="van-swipe-cell__right swipe">
         <van-button type="danger" data-index="{{index}}" bind:click="toDelete" square>删除</van-button>
         <van-button type="info" data-index="{{index}}"  bind:click="toAdd" square>编辑</van-button>
-        <van-button type="info" data-index="{{index}}"  bind:click="toInput" square>录入</van-button>
+        <van-button type="default" icon="plus" data-index="{{index}}"  bind:click="toInput" square></van-button>
     </view>
 </van-swipe-cell>
 
@@ -29,7 +29,7 @@
 
 <van-popup
     show="{{ addShow }}"
-    position="top" closeable custom-style="height: 200px" bind:close="toAdd">
+    position="top" closeable custom-style="height: 180px" bind:close="toAdd">
     <view class="content mt20">
         <view class="title">名称</view>
         <van-field placeholder="数据项名称"  auto-focus="{{ true }}" model:value="{{ name }}" />
@@ -38,15 +38,26 @@
     </view>
 </van-popup>
 
+<van-popup
+    show="{{ inputShow }}"
+    position="top" closeable custom-style="height: 180px" bind:close="toInput">
+    <view class="content mt20">
+        <view class="title">新增 {{name}} 的时序数据</view>
+        <van-field placeholder="值"  auto-focus="{{ true }}" model:value="{{ value }}" />
+
+        <van-button block type="primary" bind:click="toInput">确定</van-button>
+    </view>
+</van-popup>
+
 <wxs module="M">
     module.exports.summary = function(data){
-        if(data.length==0)  return ""
+        if(data.length==0)  return "左滑以录入数据"
         //取最后一个元素
         var d = data[data.length-1]
         return data.length+"条记录 ("+d.k+" 更新)"
     }
     module.exports.valueText = function(data){
-        if(data.length == 0)    return ""
+        if(data.length == 0)    return "无数据"
         return data[data.length-1].v
     }
 </wxs>
