@@ -6,25 +6,37 @@ const app = getApp()
 let create = (name="")=>{
     return  {name, data:[] }
 }
-let createWithData = (name="")=>{
-    return {name, data:[{k:"2021-01-03", v:"150"}, {k:"2021-01-04", v:"146"}]}
+
+let updateCount = 0
+let onUpdate = (reset=false)=>{
+    if(reset == true)   
+        updateCount = 0
+    else
+        updateCount ++
 }
+
 Page({
     data: {
         statusBarHeight: app.globalData.statusBarHeight,
         
-        items: [createWithData("体重"), create("身高")],
+        items: [],
 
         name:"",
         editIndex: -1,
-        addShow: false
+        addShow: false,
+        inputUp
     },
     onLoad (e){
-        util.debug(`时序页面加载完成`)
         store.fromFile("", items=>{
-            util.debug(`时序数据加载完成...`)
             this.setData({items})
+            onUpdate(true)
         })
+    },
+    onHide (){
+        if(updateCount > 0){
+            util.debug(`检测到有 ${updateCount} 处数据变动，即将持久化数据...`)
+            this.saveData()
+        }
     },
     toDelete (e){
         let index = e.target.dataset.index
@@ -34,10 +46,10 @@ Page({
             items.splice(index, 1)
             this.setData({items})
             util.ok(`删除成功`)
+            onUpdate()
         })
     },
     toAdd (e){
-        console.log(e)
         if(e.type == 'close')   return this.setData({ addShow: false })
 
         let { addShow, editIndex, items, name } = this.data
@@ -52,9 +64,7 @@ Page({
             else
                 items.push(create(name))
             this.setData({ items, addShow:false, name:"" })
-            //更新数据
-            util.debug(`编辑完成，即将持久化到文件...`)
-            store.toFile("", items, res=> util.debug(`时序数据保存成功`, res))
+            onUpdate()
         }
         else{
             editIndex = e.target.dataset.index
@@ -64,5 +74,17 @@ Page({
             console.debug(`数据项：`, editIndex, name)
             this.setData({ addShow : true, editIndex , name })
         }
+    },
+    toInput (){
+
+    },
+    /**
+     * 持久化数据到文件
+     */
+    saveData (){
+        store.toFile("", items, res=> {
+            onUpdate(true)
+            util.debug(`时序数据保存成功`, res)
+        })
     }
 })
