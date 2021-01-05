@@ -1,4 +1,5 @@
 const util = require("../../../utils/util")
+const store = require("../../../utils/store")
 
 const app = getApp()
 
@@ -19,7 +20,11 @@ Page({
         addShow: false
     },
     onLoad (e){
-
+        util.debug(`时序页面加载完成`)
+        store.fromFile("", items=>{
+            util.debug(`时序数据加载完成...`)
+            this.setData({items})
+        })
     },
     toDelete (e){
         let index = e.target.dataset.index
@@ -47,6 +52,9 @@ Page({
             else
                 items.push(create(name))
             this.setData({ items, addShow:false, name:"" })
+            //更新数据
+            util.debug(`编辑完成，即将持久化到文件...`)
+            store.toFile("", items, res=> util.debug(`时序数据保存成功`, res))
         }
         else{
             editIndex = e.target.dataset.index

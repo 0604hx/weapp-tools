@@ -29,6 +29,10 @@ const formatNumber = n => {
     return n[1] ? n : '0' + n
 }
 
+const getFullTime = (date = new Date())=>{
+    return [date.getHours(), date.getMinutes(), date.getSeconds(),date.getMilliseconds()].map(formatNumber).join(":")
+}
+
 module.exports = {
     /**
      * 获取格式化后的日期字符串（yyyy-MM-dd）
@@ -59,6 +63,14 @@ module.exports = {
     },
     toLine (s){
         return s.join(NEW_LINE)
+    },
+    /**
+     * debug 输出日志信息（附件当前时间）
+     * @param {*} msg 
+     * @param {*} obj 
+     */
+    debug (){
+        console.debug(`[${getFullTime()}]`, ...arguments)
     },
     /**
      * 获取文件后缀名

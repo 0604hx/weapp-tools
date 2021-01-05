@@ -1,6 +1,9 @@
 const configure = require("../../utils/configure")
 
 Component({
+    options: {
+        addGlobalClass: true
+    },
     data: {
         histories: {}
     },

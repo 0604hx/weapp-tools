@@ -11,7 +11,8 @@ let CONFIG_KEY = "configKey"
  *  CONFIG_KEY  配置中的字段名，默认不用填写（系统由 id 自动计算得到）
  */
 let DATAS = [
-    { id:"daily.password", name:"个人密码本", type:0 }
+    { id:"daily.password", name:"个人密码本", type:0 },
+    { id:"daily.sequence", name:"时序数据", type: 1}
 ]
 
 let defaultConfig = () => {
