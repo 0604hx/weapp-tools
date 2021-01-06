@@ -62,6 +62,8 @@ Page({
         if(addShow){
             let { editIndex, items, name } = this.data
             if(!name)   return util.warn(`名称不能为空`)
+            //判断是否重复
+            if(items.findIndex(t=> t.name==name) != editIndex)  return util.warn(`${name}已存在`)
 
             //编辑
             if(editIndex >= 0){

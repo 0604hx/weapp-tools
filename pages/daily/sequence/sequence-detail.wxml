@@ -1,0 +1,37 @@
+<!--自定义顶部状态栏-->
+<view class="nav" style="padding-top:{{statusBarHeight+10}}px; background:{{color}};opacity: 1;">
+    <view style="font-size:16px; padding:5px;display: flex;">
+        <view style="width:100px;" class="l">
+            <navigator open-type="navigateBack">
+                <van-icon size="22px" name="arrow-left" />
+            </navigator>
+            <!-- <van-icon size="26px" color="white" name="user-circle-o" /> -->
+            <!-- <van-icon size="26px" color="white" name="setting-o" bind:click="toSetting" style="margin-left:10px" /> -->
+        </view>
+        <view style="flex:1" class="c">
+            {{ sequence.name }}
+        </view>
+        <view style="width:100px"></view>
+    </view>
+</view>
+
+<van-grid column-num="2" border="{{ false }}">
+  <van-grid-item icon="records" text="{{ M.total(sequence.data) }}" />
+  <van-grid-item icon="chart-trending-o" text="{{ sequence.avg }} 平均值" />
+</van-grid>
+
+<view class="chart">
+    <f2 class="f2-chart" onInit="{{ onInitChart }}" />
+</view>
+
+<view class="detail">
+    <van-cell-group title="历史记录">
+        <van-cell title="测试" />
+    </van-cell-group>
+</view>
+
+<wxs module="M">
+    module.exports.total = function(d){
+        return (d?d.length:"")+" 记录数"
+    }
+</wxs>

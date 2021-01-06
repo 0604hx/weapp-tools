@@ -1,0 +1,13 @@
+{
+    "navigationStyle":"custom",
+    "usingComponents": {
+        "van-icon": "@vant/weapp/icon/index",
+        "van-panel": "@vant/weapp/panel/index",
+        "van-cell": "@vant/weapp/cell/index",
+        "van-swipe-cell": "@vant/weapp/swipe-cell/index",
+        "van-cell-group": "@vant/weapp/cell-group/index",
+        "van-grid": "@vant/weapp/grid/index",
+        "van-grid-item": "@vant/weapp/grid-item/index",
+        "f2": "@antv/wx-f2"
+    }
+}

@@ -1,0 +1,10 @@
+.chart {
+    height: 300px;
+}
+.f2-chart {
+    width: 100%;
+    height: 500rpx;
+}
+.detail {
+    /* transform: translateY(300px); */
+}

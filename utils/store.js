@@ -44,7 +44,7 @@ module.exports = {
      * @param {*} onFail 
      */
     toStorage (key, data, onOk, onFail=defFailAct){
-        key = buildKey(key)
+        key = !!key? key: buildKey(key)
         console.debug(`保存到 Storage, key=`, key)
         wx.setStorage({ 
             data, 
@@ -63,7 +63,7 @@ module.exports = {
      * @param {*} onOk  注意：若storage不存在，不执行该方法
      */
     fromStorage (key, onOk){
-        key = buildKey(key)
+        key = !!key? key: buildKey(key)
         wx.getStorage({key, success:res=> !onOk || onOk(res.data)})
     },
     /**
@@ -86,7 +86,7 @@ module.exports = {
      * @param {*} onFail 
      */
     toFile (name, data, onOk, onFail=defFailAct){
-        let filePath = buildFilePath(name)
+        let filePath = !!name? util.buildPath(name): buildFilePath(name)
         console.debug(`保存到文件，name=`, filePath)
         wx.getFileSystemManager().writeFile({
             filePath,
@@ -100,12 +100,12 @@ module.exports = {
     },
     /**
      * 从文件中读取内容
-     * @param {*} name 
+     * @param {*} name      默认会以当前url
      * @param {*} onOk 
      * @param {*} onFail 
      */
     fromFile (name, onOk, onFail=defFailAct){
-        let filePath = buildFilePath(name)
+        let filePath = !!name? util.buildPath(name): buildFilePath(name)
         wx.getFileSystemManager().readFile({
             filePath,
             encoding:"utf8",

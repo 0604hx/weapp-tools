@@ -38,6 +38,12 @@ Gitee:  [https://gitee.com/0604hx/weapp-tools](https://gitee.com/0604hx/weapp-to
 
 ## 附录
 
+### 第三方库
+
+[vant-weapp](https://github.com/youzan/vant-weapp)
+
+[wx-f2](https://github.com/antvis/wx-f2)
+
 ### project.config.json 配置说明
 
 **packOptions.ignore**

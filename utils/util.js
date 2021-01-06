@@ -73,6 +73,18 @@ module.exports = {
         console.debug(`[${getFullTime()}]`, ...arguments)
     },
     /**
+     * 计算平均值
+     * @param {*} items 
+     */
+    avg (items, key, parser=parseInt){
+        if(typeof(items) == 'object' && items.forEach){
+            let amount = parseInt(0.0)
+            items.forEach(i=> amount+= parser(key? i[key]: i))
+            return amount / items.length
+        }
+        return items
+    },
+    /**
      * 获取文件后缀名
      * @param {*} filename 
      */

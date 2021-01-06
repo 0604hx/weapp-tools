@@ -9,7 +9,8 @@
         "pages/system/profile/profile",
         "pages/system/setting/setting",
         "pages/system/storage/storage",
-        "pages/daily/sequence/sequence"
+        "pages/daily/sequence/sequence",
+        "pages/daily/sequence/sequence-detail"
     ],
     "window": {
         "backgroundTextStyle": "dark",
