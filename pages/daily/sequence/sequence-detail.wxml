@@ -1,7 +1,7 @@
 <!--自定义顶部状态栏-->
 <view class="nav" style="padding-top:{{statusBarHeight+10}}px; background:{{color}};opacity: 1;">
     <view style="font-size:16px; padding:5px;display: flex;">
-        <view style="width:100px;" class="l">
+        <view style="width:30px;" class="l">
             <navigator open-type="navigateBack">
                 <van-icon size="22px" name="arrow-left" />
             </navigator>
@@ -11,22 +11,25 @@
         <view style="flex:1" class="c">
             {{ sequence.name }}
         </view>
-        <view style="width:100px"></view>
+        <view style="width:30px"></view>
     </view>
 </view>
 
-<van-grid column-num="2" border="{{ false }}">
-  <van-grid-item icon="records" text="{{ M.total(sequence.data) }}" />
-  <van-grid-item icon="chart-trending-o" text="{{ sequence.avg }} 平均值" />
-</van-grid>
+<view style="border-bottom:1px solid #f1f2f3;">
+    <van-grid column-num="2" border="{{ false }}">
+        <van-grid-item icon="records" text="{{ M.total(sequence.data) }}" />
+        <van-grid-item icon="chart-trending-o" text="{{ sequence.avg }} 平均值" />
+    </van-grid>
+</view>
 
-<view class="chart">
-    <f2 class="f2-chart" onInit="{{ onInitChart }}" />
+<view class="chart c">
+    <van-loading wx:if="{{ loading }}" size="50px" vertical>图表数据计算中...</van-loading>
+    <f2 class="f2-chart {{ loading?'hide':''}}" onInit="{{ onInitChart }}" />
 </view>
 
 <view class="detail">
     <van-cell-group title="历史记录">
-        <van-cell title="测试" />
+        <van-cell wx:for="{{ sequence.data }}" wx:key="index" title="{{ item.k }}" value="{{item.v}}" />
     </van-cell-group>
 </view>
 

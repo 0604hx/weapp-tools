@@ -8,6 +8,7 @@
         "van-cell-group": "@vant/weapp/cell-group/index",
         "van-grid": "@vant/weapp/grid/index",
         "van-grid-item": "@vant/weapp/grid-item/index",
+        "van-loading": "@vant/weapp/loading/index",
         "f2": "@antv/wx-f2"
     }
 }

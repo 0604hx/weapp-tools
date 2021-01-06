@@ -9,7 +9,9 @@ Page({
     data: {
         appName: app.globalData.appName,
         statusBarHeight: app.globalData.statusBarHeight,
-        color: "#fafafa",//app.globalData.color,
+        color: "#f1f2f3",//app.globalData.color,
+
+        loading: true,
 
         sequence: {},
         onInitChart (F2, config){
@@ -24,16 +26,18 @@ Page({
         util.debug(`查看${index}的详情...`)
         store.fromFile("daily.sequence.json", items=>{
             let sequence = items[parseInt(index)] || {name:"未知序列", data:[]}
-            sequence.data || sequence.data.reverse()
+            if(sequence.data && sequence.data.reverse)
+                sequence.data = sequence.data.reverse()
             sequence.avg = util.avg(sequence.data, 'v')
             console.debug(sequence)
             this.setData({ sequence })
 
-            setTimeout(this.drawChart, 1000)
+            //延迟4秒左右再进行图表的绘制，避免 chart 还未初始化（不得不吐槽下 f2-wx 的这个设计，默认不正常延迟）
+            setTimeout(this.drawChart, 3000 + parseInt(Math.random()*1000))
         })
     },
     drawChart (){
-        console.debug(`开始渲染...`)
+        let { sequence } = this.data
         let values = []
         const data = this.data.sequence.data.map(d => {
             values.push(d.v)
@@ -42,28 +46,51 @@ Page({
                 date: d.k.split(" ")[0]
             }
         })
-        // const data = [
-        //     { genre: 'Sports', sold: 275 },
-        //     { genre: 'Strategy', sold: 115 },
-        //     { genre: 'Action', sold: 120 },
-        //     { genre: 'Shooter', sold: 350 },
-        //     { genre: 'Other', sold: 150 },
-        // ]
-        let max = Math.max(...values)*1.1
-        let min = Math.min(...values)/1.2
-        console.log(data, max, min)
+        let max = parseInt(Math.max(...values)*1.1)
+        let min = parseInt(Math.min(...values)/1.2)
+
         chart.source(data, {
             date: {
                 type: 'timeCat',
                 range: [ 0, 1 ],
-                tickCount: 3
+                tickCount: data.length
             },
             value: {
                 max, min,
                 tickCount: 4
             }
         })
-        chart.line().position('date*value')
-        chart.render();
+
+        chart.axis('date', {
+            label: function label(text, index, total) {
+                const textCfg = {}
+                if (index === 0) {
+                    textCfg.textAlign = 'left'
+                } else if (index === total - 1) {
+                    textCfg.textAlign = 'right'
+                }
+                return textCfg
+            }
+        })
+        //显示平均线
+        chart.guide().line({
+            start: ['min', sequence.avg],
+            end: ['max', sequence.avg],
+            style: {
+                stroke: '#d0502d',
+                lineDash: [ 1, 3, 3 ], // 虚线的设置
+                strokeOpacity: 0.6, // 辅助框的背景透明度
+                lineWidth: 1,
+                lineCap: 'round'
+            }
+        })
+        chart.line().position('date*value').shape('smooth')//.color(app.globalData.color)
+        chart.point().position('date*value').shape('smooth').style({
+            stroke: '#fff',
+            lineWidth: 1
+        })
+
+        this.setData({ loading: false })
+        chart.render()
     }
 })
