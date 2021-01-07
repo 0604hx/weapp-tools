@@ -3,8 +3,8 @@
     "pages": [
         "pages/index/index",
         "pages/daily/fetusWeight/fetus-weight",
-        "pages/about/about",
-        "pages/issue/issue",
+        "pages/other/about/about",
+        "pages/other/issue/issue",
         "pages/daily/password/password",
         "pages/system/profile/profile",
         "pages/system/setting/setting",

@@ -1,10 +1,10 @@
 <view>
-    <van-notice-bar class="mt20" color="#1989fa" background="#ecf9ff" left-icon="info-o" scrollable="{{false}}"
+    <van-notice-bar left-icon="info-o" scrollable="{{false}}"
         text="意见标题为必填项，您的意见是我们进步的动力"
     />
     <van-panel>
         <van-cell slot="header" title="意见标题">
-            <van-icon name="question-o" bind:click="toHistory" size="20px" dot />
+            <van-icon name="clock-o" bind:click="toHistory" size="20px" dot />
         </van-cell>
         <van-field model:value="{{ title }}" border="{{ true }}" custom-style="background:#fcfcfc;" />
     </van-panel>

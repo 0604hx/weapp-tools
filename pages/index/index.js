@@ -28,9 +28,9 @@ Page({
             {
                 name:"其他", summary:"",
                 items:[
-                    { name:"意见反馈", icon:"反馈", url:"/pages/issue/issue", dot: true},
+                    { name:"意见反馈", icon:"反馈", url:"/pages/other/issue/issue", dot: true},
                     { name:"查看源码", icon:"github", onClick:"github"},
-                    { name:"关于我们", icon:"关于", url:"/pages/about/about"}
+                    { name:"关于我们", icon:"关于", url:"/pages/other/about/about"}
                 ]
             }
         ]
