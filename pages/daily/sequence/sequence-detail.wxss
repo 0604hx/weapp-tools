@@ -5,6 +5,9 @@
     width: 100%;
     height: 500rpx;
 }
+.loading {
+    padding-top: 100px;
+}
 .detail {
     /* transform: translateY(300px); */
 }

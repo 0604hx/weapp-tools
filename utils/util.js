@@ -80,7 +80,7 @@ module.exports = {
         if(typeof(items) == 'object' && items.forEach){
             let amount = parseInt(0.0)
             items.forEach(i=> amount+= parser(key? i[key]: i))
-            return amount / items.length
+            return (amount / items.length).toFixed(2)
         }
         return items
     },

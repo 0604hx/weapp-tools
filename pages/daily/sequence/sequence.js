@@ -33,15 +33,12 @@ Page({
             onUpdate(true)
         })
     },
+    // navigateBack 方式页面切换时只触发 onUnload 而不触发 onHide 故监听两个事件...
     onHide (){
-        console.debug(`onHide 触发...`)
-        if(updateCount > 0){
-            util.debug(`检测到有 ${updateCount} 处数据变动，即将持久化数据...`)
-            this.saveData()
-        }
+        this.saveData()
     },
     onUnload (){
-        console.debug(`onUnload 触发...`)
+        this.saveData()
     },
     toDelete (e){
         let index = e.target.dataset.index
@@ -114,6 +111,9 @@ Page({
      * 持久化数据到文件
      */
     saveData (){
+        if(updateCount <= 0)    return
+        util.debug(`[SEQUENCE] 检测到有 ${updateCount} 处数据变动，即将持久化数据...`)
+
         store.toFile("", this.data.items, res=> {
             onUpdate(true)
             util.debug(`时序数据保存成功`, res)

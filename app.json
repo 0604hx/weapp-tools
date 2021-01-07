@@ -10,7 +10,8 @@
         "pages/system/setting/setting",
         "pages/system/storage/storage",
         "pages/daily/sequence/sequence",
-        "pages/daily/sequence/sequence-detail"
+        "pages/daily/sequence/sequence-detail",
+        "pages/business/img2pdf/pdf"
     ],
     "window": {
         "backgroundTextStyle": "dark",

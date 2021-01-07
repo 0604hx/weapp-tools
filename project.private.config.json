@@ -1,0 +1,64 @@
+{
+    "condition": {
+        "plugin": {
+            "list": []
+        },
+        "game": {
+            "list": []
+        },
+        "gamePlugin": {
+            "list": []
+        },
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "胎儿体重测算",
+                    "pathName": "pages/daily/fetusWeight/fetus-weight",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "密码本",
+                    "pathName": "pages/daily/password/password",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "SYS-首页",
+                    "pathName": "pages/system/profile/profile",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "SYS-本地存储信息",
+                    "pathName": "pages/system/storage/storage",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "SYS-设置",
+                    "pathName": "pages/system/setting/setting",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "时序数据",
+                    "pathName": "pages/daily/sequence/sequence",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "时序数据-详情",
+                    "pathName": "pages/daily/sequence/sequence-detail",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "商务-图片转PDF",
+                    "pathName": "pages/business/img2pdf/pdf",
+                    "scene": null
+                }
+            ]
+        }
+    }
+}
