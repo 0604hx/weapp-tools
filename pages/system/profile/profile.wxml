@@ -17,7 +17,7 @@
                     {{ userInfo.nickName }}
                     <text class="tip ml20">欢迎您</text>
                 </view>
-                <view class="tip">注册日期：{{account.createOn}}</view>
+                <view class="tip" wx:if="{{account.createOn}}">注册日期：{{ C.formatTimestamp(account.createOn)}}</view>
             </view>
         </view>
     </view>
@@ -48,3 +48,5 @@
 <view class="flexBtn h">
     版本号 {{version}}
 </view>
+
+<wxs src="../../common.wxs" module="C"></wxs>

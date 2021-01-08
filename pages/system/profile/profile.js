@@ -39,7 +39,11 @@ Page({
         this.setData({
             userInfo    : res.userInfo,
             hasUserInfo : true,
-            account     : app.globalData.account
+            account     : res.account
         })
+        if(!res.account || !res.account.openId){
+            //当检测到 account 属性无效时，延迟执行（等待 app.js 中的 afterLogin 函数执行成功）
+            setTimeout(()=> this.setData({ account : app.globalData.account }), 3000)
+        }
     }
 })

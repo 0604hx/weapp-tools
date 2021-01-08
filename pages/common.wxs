@@ -1,10 +1,54 @@
 /**
-    格式化文件大小，参数为字节
-    */
-   module.exports.filesize = function(size, fixed=2){
+格式化文件大小，参数为字节
+*/
+var filesize = function(size, fixed=2){
     var G=0, M=0, KB=0
     size >= (1 << 30) && (G = (size / (1 << 30)).toFixed(2))
     size >= (1 << 20) && (size < (1 << 30)) && (M = (size / (1 << 20)).toFixed(fixed))
     size >= (1 << 10) && (size < (1 << 20)) && (KB = (size / (1 << 10)).toFixed(fixed))
     return G>0 ? G+' G' : M>0 ? M+' M' : KB>0 ? KB+' KB' : size+' B'
+}
+
+var formatDate = function(date, type=0){
+    if(type == 0)
+        return [date.getFullYear(), date.getMonth()+1, date.getDate()].map(formatTen).join("-")
+    else
+        return [date.getHours(), date.getMinutes(),date.getSeconds()].map(formatTen).join(":")
+}
+
+/**
+ * 
+ * @param stamp 
+ * @param type  0=日期，1=时间，2=日期+时间
+ */
+var formatTimestamp = function(stamp, type=0){
+    var d = getDate(stamp)
+    if(type == 0)
+        return formatDate(d, 0)
+    else if(type==1)
+        return formatDate(d, 1)
+    else
+        return formatDate(d, 0)+" "+formatDate(d, 1)
+}
+
+/**
+ * 处理数字，如果少于指定位则前面加0补全
+ * @param n 
+ * @param fixed 补零数，默认为2
+ */
+var formatNumber = function (n, fixed=2) {
+    var nn = Math.pow(10, fixed) + n
+    console.log("formatNum", nn, n, fixed)
+    return nn.toString().substr(1)
+}
+
+var formatTen = function(n){
+    n = n.toString()
+    return n[1] ? n : '0' + n
+}
+
+module.exports = {
+    filesize        : filesize,
+    formatNumber    : formatNumber,
+    formatTimestamp : formatTimestamp
 }

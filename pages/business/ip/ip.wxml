@@ -36,10 +36,10 @@
                 <view class="td">运营商/ISP</view>
                 <view class="td l">{{ region.isp }}</view>
             </view>
-            <view class="tr">
+            <!-- <view class="tr">
                 <view class="td">自治系统/ASN</view>
                 <view class="td l">{{ region.asn }}</view>
-            </view>
+            </view> -->
         </view>
     </view>
 </section>

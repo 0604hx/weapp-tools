@@ -52,6 +52,7 @@ module.exports = {
         return formatDateOrTime(date) + " " + formatDateOrTime(date, 1)
     },
     formatTimestamp(timestamp){
+        if(!timestamp)  return ""
         return this.getDateTime(new Date(timestamp>10**12? timestamp : timestamp*1000))
     },
     /**

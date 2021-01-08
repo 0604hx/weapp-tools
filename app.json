@@ -16,7 +16,8 @@
     ],
     "window": {
         "backgroundTextStyle": "dark",
-        "navigationBarBackgroundColor": "#f8f8f8",
+        "navigationBarBackgroundColor-bk": "#f8f8f8",
+        "navigationBarBackgroundColor": "#FFC835",
         "navigationBarTitleText": "集成工具集",
         "navigationBarTextStyle": "black",
         "enablePullDownRefresh": false,

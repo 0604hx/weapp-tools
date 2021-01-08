@@ -51,8 +51,7 @@ let apis = {
         },
         parse: (ip, res)=>{
             if(res.ip && res.ip == ip){
-                let d = res.data
-                return {country:d.country, province:d.region, city: d.city, isp:d.isp, ip}
+                return {country:res.country, province:res.region, city: res.city, isp:res.isp, ip}
             }
             return noData(ip)
         }

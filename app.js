@@ -89,8 +89,6 @@ App({
         this.globalData.userInfo = userInfo
 
         account.dealWithLogin(userInfo, d=> {
-            //对一些日期进行格式化
-            if("createOn" in d) d.createOn = util.formatTimestamp(d.createOn)
             this.globalData.account = d
         })
     },
