@@ -1,0 +1,49 @@
+<!--#F4D000、#FFDE00-->
+<van-search placeholder="请输入IP地址" model:value="{{ ip }}" background="{{ color }}"
+    show-action
+    bind:search="onSearch"
+    bind:cancel="onSearch"
+/>
+<view class="content" style="font-size:14px">
+    <view class="title">查询网站</view>
+    <radio-group bindchange="onApiChange">
+        <radio wx:for="{{ apis }}" wx:key="index" style="margin-right:20px" value="{{ item.value }}" checked="{{ api == item.value }}">
+            {{item.name}}
+        </radio>
+    </radio-group>
+</view>
+
+<section title="查询结果">
+    <view style="padding:8px">
+        <view class="table">
+            <view class="tr">
+                <view class="th">数据项</view>
+                <view class="th">值</view>
+            </view>
+            <view class="tr">
+                <view class="td">国家/地区</view>
+                <view class="td l">{{ region.country }}</view>
+            </view>
+            <view class="tr">
+                <view class="td">省份</view>
+                <view class="td l">{{ region.province }}</view>
+            </view>
+            <view class="tr">
+                <view class="td">城市</view>
+                <view class="td l">{{ region.city }}</view>
+            </view>
+            <view class="tr">
+                <view class="td">运营商/ISP</view>
+                <view class="td l">{{ region.isp }}</view>
+            </view>
+            <view class="tr">
+                <view class="td">自治系统/ASN</view>
+                <view class="td l">{{ region.asn }}</view>
+            </view>
+        </view>
+    </view>
+</section>
+
+<section wx:if="{{ !!response }}" title="接口返回">
+    <view class="h" style="white-space:pre-wrap;background:#fafafa;margin:0px 10px 0px 10px;">{{ response }}</view>
+</section>

@@ -21,11 +21,11 @@ exports.main = async (data, context) => {
         data.openId = OPENID
         data.ip     = CLIENTIP
         let query = {openId: OPENID}
-        const counter = await db.collection(TABLE_ACCOUNT).where(query).count()
-        let isNew = counter.total <= 0
+        const histories = await db.collection(TABLE_ACCOUNT).where(query).limit(1).get()
+        let isNew = histories.data.length <= 0
         // 新注册用户
         if(isNew){
-            data.createOn     = time
+            data.createOn       = time
             data.count          = 0
         }else{
             data.count          = _.inc(1)
@@ -33,7 +33,9 @@ exports.main = async (data, context) => {
         const dbResult = await (isNew ? db.collection(TABLE_ACCOUNT).add({ data }) : db.collection(TABLE_ACCOUNT).where(query).update({ data }) )
         console.debug(`更新数据`, query, dbResult)
         return Object.assign(query, {
-            admin: false,           //是否为管理员，目前均为 false            
+            admin       : false,           //是否为管理员，目前均为 false    
+            ip          : CLIENTIP,        //返回客户端IP地址  
+            createOn    : isNew? time: histories.data[0].createOn
         })
     }
     else

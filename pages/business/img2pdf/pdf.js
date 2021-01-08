@@ -1,3 +1,5 @@
+const store = require(".././../../utils/store")
+
 Page({
     data: {
 
@@ -20,7 +22,10 @@ Page({
             img.onload = function (res) {
                 console.log('onload成功', res, img)
                 //res.path[0].height
-                ctx.drawImage(img, 0, 0, 300, 300)
+                ctx.drawImage(img, 0, 0, 375, 300)
+                // console.debug(ctx.toDataURL('application/pdf'))
+                // store.toFile("dataurl.img.pdf", ctx.toDataURL('application/pdf'), d=> console.debug(d))
+                // store.toFile("buffer.img.pdf", ctx.toBuffer(), d=> console.debug(d))
             }
         })
     }

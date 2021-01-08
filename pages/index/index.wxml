@@ -22,7 +22,7 @@
     <!-- 如果只是展示用户头像昵称，可以使用 <open-data /> 组件 -->
     <van-panel wx:for="{{ tools }}" wx:for-item="tool" wx:for-index="toolIndex" wx:key="toolIndex" 
         title="{{tool.name}}" desc="{{tool.summary}}">
-        <van-grid>
+        <van-grid border="{{ false }}">
             <van-grid-item wx:for="{{tool.items}}" icon="{{ M.url(item.icon) }}" wx:key="index" bind:click="{{item.onClick}}"
                 url="{{item.url}}" text="{{item.name}}" badge="{{item.tip}}" dot="{{item.dot}}" />
         </van-grid>

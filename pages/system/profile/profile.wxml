@@ -17,6 +17,7 @@
                     {{ userInfo.nickName }}
                     <text class="tip ml20">欢迎您</text>
                 </view>
+                <view class="tip">注册日期：{{account.createOn}}</view>
             </view>
         </view>
     </view>

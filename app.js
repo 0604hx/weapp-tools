@@ -49,7 +49,7 @@ App({
         statusBarHeight: systemInfo['statusBarHeight'],
         userInfo: null,
         git: "https://github.com/0604hx/weapp-tools",
-        color: "#FFC835",
+        color: "#FFC835",       // 另外可选颜色：#F4D000
         account: {},
         systemInfo,
         isDev: systemInfo.brand == 'devtools'
@@ -89,6 +89,8 @@ App({
         this.globalData.userInfo = userInfo
 
         account.dealWithLogin(userInfo, d=> {
+            //对一些日期进行格式化
+            if("createOn" in d) d.createOn = util.formatTimestamp(d.createOn)
             this.globalData.account = d
         })
     },

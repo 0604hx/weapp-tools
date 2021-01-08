@@ -11,6 +11,7 @@ Page({
     data: {
         // ============= 用户授权信息 =============
         userInfo: {},
+        account: {},
         hasUserInfo: false,
         // ============= 用户授权信息 =============
         
@@ -36,8 +37,9 @@ Page({
     },
     onUserInfoLoaded (res){
         this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
+            userInfo    : res.userInfo,
+            hasUserInfo : true,
+            account     : app.globalData.account
         })
     }
 })

@@ -1,0 +1,10 @@
+{
+    "navigationBarTitleText": "IP地址归属地查询",
+    "navigationBarBackgroundColor": "#FFC835",
+    "navigationBarTextStyle": "black",
+    "usingComponents": {
+        "van-search": "@vant/weapp/search/index",
+        "van-radio": "@vant/weapp/radio/index",
+        "van-radio-group": "@vant/weapp/radio-group/index"
+    }
+}

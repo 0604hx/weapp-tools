@@ -37,7 +37,9 @@ module.exports = {
                 }
             )
         }
-        else
+        else{
             console.debug(`用户信息于 ${util.formatTimestamp(state.expire)} 过期，本次跳过...`)
+            cb(state)
+        }
     }
 }

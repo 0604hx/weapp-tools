@@ -11,7 +11,8 @@
         "pages/system/storage/storage",
         "pages/daily/sequence/sequence",
         "pages/daily/sequence/sequence-detail",
-        "pages/business/img2pdf/pdf"
+        "pages/business/img2pdf/pdf",
+        "pages/business/ip/ip"
     ],
     "window": {
         "backgroundTextStyle": "dark",

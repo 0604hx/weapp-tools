@@ -83,7 +83,13 @@ Page({
         })
 
         console.debug(`更新序列：`, this.data)
-        //延迟4秒左右再进行图表的绘制，避免 chart 还未初始化（不得不吐槽下 f2-wx 的这个设计，默认不正常延迟）
+        /*
+            延迟3秒左右再进行图表的绘制，避免 chart 还未初始化（不得不吐槽下 f2-wx 的这个设计，默认不正常延迟）
+            
+            另外一种更便利的做法：
+                1、将 drawChart 函数赋值到全局变量（参考 chart 对象）
+                2、F2-chart 初始化完成后，执行上述全局方法
+         */
         if(chartLoaded)
             this.drawChart()
         else
