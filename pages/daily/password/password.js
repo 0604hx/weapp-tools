@@ -52,7 +52,7 @@ Page({
         pwdShow: false,
         working: false,
         
-        index:undefined,    //当前编辑序号
+        editIndex:undefined,    //当前编辑序号
         type:"",
         site:"",
         name:"",
@@ -137,11 +137,12 @@ Page({
         if(!!pwdShow)   return this.setData({pwdShow: false})
 
         //判断 index
-        let index = e.target.dataset.index
+        let editIndex = e.target.dataset.index
         // index 为空则为新建密码
-        let data = index == undefined? createPwd() : this.data.items[index]
+        let data = editIndex == undefined? createPwd() : this.data.items[editIndex]
         data.pwdShow = true
-        data.index = index
+        //2021年1月9日 实测当 editIndex 为 undefined 时调用 setData 无法正常在视图层更新 editIndex 相关组件，故换为-1
+        data.editIndex = editIndex==undefined? -1: editIndex
         this.setData(data)
     },
     insertStar (e){
@@ -180,12 +181,12 @@ Page({
      *      目前暂不考虑内容安全检测
      */
     onSave (){
-        let { index, site, name, mima, type, items } = this.data
+        let { editIndex, site, name, mima, type, items } = this.data
         if(!( site && name))    return util.warn(`平台及登录账号不能为空`)
 
         let item = { site, name, mima, type }
-        if(index >= 0){
-            items[index] = item
+        if(editIndex >= 0){
+            items[editIndex] = item
         }
         else
             items.push(item)
@@ -194,9 +195,9 @@ Page({
         this._updateItemsAndHide(items)
     },
     onRemove (){
-        let { items, index } = this.data
-        util.confirm(`删除密码`, `确定删除"${items[index].site}"的密码项吗？`, ()=>{
-            items.splice(index, 1)
+        let { items, editIndex } = this.data
+        util.confirm(`删除密码`, `确定删除"${items[editIndex].site}"的密码项吗？`, ()=>{
+            items.splice(editIndex, 1)
 
             this._updateItemsAndHide(items)
         })

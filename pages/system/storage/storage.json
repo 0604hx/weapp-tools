@@ -5,6 +5,7 @@
         "van-circle": "@vant/weapp/circle/index",
         "van-panel": "@vant/weapp/panel/index",
         "van-cell": "@vant/weapp/cell/index",
+        "van-swipe-cell": "@vant/weapp/swipe-cell/index",
         "van-cell-group": "@vant/weapp/cell-group/index",
         "van-loading": "@vant/weapp/loading/index",
         "van-popup": "@vant/weapp/popup/index"

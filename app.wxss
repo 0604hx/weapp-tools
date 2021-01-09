@@ -127,3 +127,19 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     color: #333;
     padding: 6px 0px 10px 0px;
 }
+/* 滑动Cell组件*/
+.van-swipe-cell__left,
+.van-swipe-cell__right {
+  display: inline-block;
+  width: 60px;
+  height: 65px;
+  font-size: 15px;
+  line-height: 65px;
+  color: #fff;
+  text-align: center;
+}
+
+.swipe .van-button {
+    width: 60px;
+    height: 65px;
+}

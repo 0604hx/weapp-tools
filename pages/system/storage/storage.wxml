@@ -24,11 +24,18 @@
             </van-circle>
         </view>
     </view>
-    <van-cell-group title="文件列表（暂不支持包含中文名的文件预览）">
-        <van-cell wx:for="{{ fileList }}" wx:key="index" title-width="60%" title="{{ item.filePath }}" center="{{ true }}" 
+    <van-cell-group title="文件列表（暂不支持包含中文名的图片预览）">
+        <van-swipe-cell right-width="{{ 60 }}" wx:for="{{ fileList }}" wx:key="index">
+            <van-cell title-width="60%" title="{{ item.filePath }}" center="{{ true }}" 
             bind:click="openFile" data-name="{{ item.filePath }}"
             value="{{C.filesize(item.size)}}" label="{{ item.createTime }}" is-link />
+
+            <view slot="right" class="van-swipe-cell__right swipe">
+                <van-button type="danger" data-index="{{index}}" bind:click="toDelete">删除</van-button>
+            </view>
+        </van-swipe-cell>
     </van-cell-group>
+    
 </van-panel>
 
 <van-popup

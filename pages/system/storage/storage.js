@@ -65,6 +65,22 @@ Page({
             }
         })
     },
+    toDelete (e){
+        let index = e.target.dataset.index
+        let { fileList } = this.data
+        let file = fileList[index]
+
+        util.confirm(`删除文件`, file.filePath, ()=>{
+            wx.getFileSystemManager().unlink({
+                filePath: util.buildPath(file.filePath),
+                success: ()=>{
+                    util.ok(`删除成功`)
+                    fileList.splice(index, 1)
+                    this.setData({ fileList })
+                }
+            })
+        })
+    },
     onPullDownRefresh: function () {
         this.refresh()
     }
