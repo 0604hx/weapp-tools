@@ -1,0 +1,29 @@
+.notice {
+    padding: 8px 16px 8px 16px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    background-color: #f7f8fa;
+    border-bottom: 1px solid #fafafa;
+    position: relative;
+}
+.icon {
+    display: flex;
+    vertical-align:middle;
+    align-items: center;
+    margin-right: 6px;
+}
+.close {
+    position: absolute;
+    top:8px;
+    right:16px;
+}
+.content {
+    flex: 1;
+}
+.content.closable {
+    padding-right: 12px;
+}
+.notice.hide {
+    display: none;
+}

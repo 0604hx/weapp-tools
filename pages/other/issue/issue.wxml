@@ -1,7 +1,6 @@
 <view>
-    <van-notice-bar left-icon="info-o" scrollable="{{false}}"
-        text="意见标题为必填项，您的意见是我们进步的动力"
-    />
+    <notice>意见标题为必填项，您的意见是我们进步的动力</notice>
+    
     <van-panel>
         <van-cell slot="header" title="意见标题">
             <van-icon name="clock-o" bind:click="toHistory" size="20px" dot />

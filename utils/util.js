@@ -33,6 +33,22 @@ const getFullTime = (date = new Date())=>{
     return [date.getHours(), date.getMinutes(), date.getSeconds(),date.getMilliseconds()].map(formatNumber).join(":")
 }
 
+/**
+ * 根据当前页面 url 构建名称（去除 pages/ 字符后按 / 分割并去重）
+ * @param {*} key 
+ * @param {*} joinStr 
+ */
+let buildUrlKey = (key, joinStr=".") =>{
+    let pages = getCurrentPages()
+    let page = pages[pages.length-1]
+    let names = {}
+    page.route.substr(6).split("/").forEach(v=> names[v]=0)
+    let tmp = Object.keys(names)
+    if(!!key)
+        tmp.push(key)
+    return tmp.join(joinStr)
+}
+
 module.exports = {
     /**
      * 获取格式化后的日期字符串（yyyy-MM-dd）
@@ -59,6 +75,7 @@ module.exports = {
      * 日期格式为 yyyy年MM月dd日
      */
     getFullDate,
+    buildUrlKey,
     splitByLine (s){
         return s.split(NEW_LINE)
     },

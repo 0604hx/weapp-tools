@@ -5,7 +5,6 @@
         "van-field": "@vant/weapp/field/index",
         "van-cell": "@vant/weapp/cell/index",
         "van-cell-group": "@vant/weapp/cell-group/index",
-        "van-notice-bar": "@vant/weapp/notice-bar/index",
         "van-switch": "@vant/weapp/switch/index",
         "van-action-sheet": "@vant/weapp/action-sheet/index",
         "van-popup": "@vant/weapp/popup/index",

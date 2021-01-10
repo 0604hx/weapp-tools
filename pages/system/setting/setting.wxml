@@ -9,7 +9,7 @@
         <van-field model:value="{{ OSS_ALI_SECRET }}" label="Key Secret" placeholder="请前往阿里云控制台查看" />
     </van-cell-group>
     <van-cell-group title="数据备份" class="switch">
-        <van-notice-bar left-icon="info-o" scrollable="{{false}}" text="OSS参数为空时备份操作将忽略" />
+        <notice close="always" color>OSS参数为空时备份操作将忽略</notice>
         <van-cell wx:for="{{ dataBeans }}" wx:key="index" center title="{{ item.name }}">
             <van-switch size="22px"  data-key="{{ item.configKey }}" data-index="{{ index }}" checked="{{ item.value }}" 
                 active-color="{{color}}" bind:change="onSwitchChange" />

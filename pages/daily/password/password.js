@@ -17,6 +17,7 @@ const categories = [
     { value:1, color:"#1989fa", text:"工作" },
     { value:2, color:"#ff976a", text:"其他" }
 ]
+const tips = `账号/密码建议使用提示字符+隐秘符号（记忆辅助，点击输入框右侧星星可插入）的方式存储，如 ironman 记为 ir▆▆▆▆n`
 
 const hideChars = {'site':"☆", mima:"▆", name:"☆"}    //▆ ▅ □ ☆
 
@@ -44,6 +45,7 @@ Page({
     data: {
         //=========== 常量 ===========
         categories,
+        tips,
         //=========== 常量 ===========
 
         keyword:"",

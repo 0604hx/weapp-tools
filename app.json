@@ -28,6 +28,7 @@
     "usingComponents": {
         "van-button": "@vant/weapp/button/index",
         "tag": "/miniprogram_npm/@vant/weapp/tag/index",
-        "section": "./components/section/section"
+        "section": "./components/section/section",
+        "notice": "./components/notice/notice"
     }
 }

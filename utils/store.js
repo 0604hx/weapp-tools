@@ -13,26 +13,11 @@ let defFailAct = e=>{
 }
 
 /**
- * 根据当前页面 url 构建名称（去除 pages/ 字符后按 / 分割并去重）
- * @param {*} key 
- * @param {*} joinStr 
- */
-let buildKey = (key, joinStr=".") =>{
-    let pages = getCurrentPages()
-    let page = pages[pages.length-1]
-    let names = {}
-    page.route.substr(6).split("/").forEach(v=> names[v]=0)
-    let tmp = Object.keys(names)
-    if(!!key)
-        tmp.push(key)
-    return tmp.join(joinStr)
-}
-/**
  * 构建本地文件名
  * @param {*} name 
  */
 let buildFilePath = name=>{
-    return util.buildPath(`${buildKey(name)}.json`)
+    return util.buildPath(`${util.buildUrlKey(name)}.json`)
 }
 
 module.exports = {
@@ -44,7 +29,7 @@ module.exports = {
      * @param {*} onFail 
      */
     toStorage (key, data, onOk, onFail=defFailAct){
-        key = !!key? key: buildKey(key)
+        key = !!key? key: util.buildUrlKey(key)
         console.debug(`保存到 Storage, key=`, key)
         wx.setStorage({ 
             data, 
@@ -63,7 +48,7 @@ module.exports = {
      * @param {*} onOk  注意：若storage不存在，不执行该方法
      */
     fromStorage (key, onOk){
-        key = !!key? key: buildKey(key)
+        key = !!key? key: util.buildUrlKey(key)
         wx.getStorage({key, success:res=> !onOk || onOk(res.data)})
     },
     /**

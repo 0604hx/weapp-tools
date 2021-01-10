@@ -1,0 +1,7 @@
+<view class="notice {{show?'':'hide'}}" style="color:{{textColor}}">
+    <van-icon name="info-o" class="icon" size="16px"></van-icon>
+    <view class="content {{ close!='none'?'closable':'' }}">
+        <slot></slot>
+    </view>
+    <van-icon wx:if="{{ close!='none' }}" name="cross" size="16px" bind:click="onClose" class="close" />
+</view>
