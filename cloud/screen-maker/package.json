@@ -10,6 +10,7 @@
     "license": "ISC",
     "dependencies": {
         "canvas": "^2.6.1",
-        "wx-server-sdk": "~2.3.2"
+        "monent": "^2.0.0",
+        "wx-server-sdk": "^2.3.2"
     }
 }

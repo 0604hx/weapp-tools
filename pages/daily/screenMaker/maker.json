@@ -1,0 +1,11 @@
+{
+    "navigationBarTitleText": "微信支付账单生成器",
+    "usingComponents": {
+        "van-panel": "@vant/weapp/panel/index",
+        "van-field": "@vant/weapp/field/index",
+        "van-cell-group": "@vant/weapp/cell-group/index",
+        "van-cell": "@vant/weapp/cell/index",
+        "van-dialog": "@vant/weapp/dialog/index",
+        "van-icon": "@vant/weapp/icon/index"
+    }
+}

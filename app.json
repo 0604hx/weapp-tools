@@ -12,7 +12,8 @@
         "pages/daily/sequence/sequence",
         "pages/daily/sequence/sequence-detail",
         "pages/business/img2pdf/pdf",
-        "pages/business/ip/ip"
+        "pages/business/ip/ip",
+        "pages/daily/screenMaker/maker"
     ],
     "window": {
         "backgroundTextStyle": "dark",

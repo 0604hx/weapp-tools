@@ -12,6 +12,7 @@ $RECYCLE.BIN/
 
 # Node.js
 node_modules/
+node_modules.zip
 miniprogram_npm/
 
 package-lock.json
