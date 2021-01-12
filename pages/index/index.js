@@ -21,7 +21,8 @@ Page({
                 items:[
                     { name:"胎儿体重测算", icon:"胎儿", url:"/pages/daily/fetusWeight/fetus-weight"},
                     { name:"密码本", icon:"密码", url:"/pages/daily/password/password", dot: true},
-                    { name:"时序数据", icon:"时序数据库", url:"/pages/daily/sequence/sequence", tip:"New"}
+                    { name:"时序数据", icon:"时序数据库", url:"/pages/daily/sequence/sequence", tip:"New"},
+                    { name:"微信支付生成", icon:"微信支付", url:"/pages/daily/screenMaker/maker", tip:"New"}
                     // { name:"HEIC转换", icon:"美术图片", onClick:"todo", dot: true},
                 ]
             },

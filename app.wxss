@@ -112,6 +112,9 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 .mb20 {
     margin-bottom: 20px;
 }
+.p10 {
+    padding:10px;
+}
 .content {
     padding: var(--cell-vertical-padding,5px) var(--cell-horizontal-padding,16px);
 }

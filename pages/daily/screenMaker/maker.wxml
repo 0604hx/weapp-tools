@@ -1,5 +1,5 @@
 <van-cell-group>
-    <notice>目前仅支持 iOS 系统样式</notice>
+    <notice>目前仅支持iOS系统样式（此功能仅供娱乐）</notice>
     <van-field model:value="{{ target }}" label="付款说明" border="{{ border }}" />
     <van-field model:value="{{ money }}" label="付款金额" type="digit" border="{{ border }}" />
     <van-field model:value="{{ summary }}" label="收款方备注" border="{{ border }}" />
@@ -18,7 +18,7 @@
     </van-cell>
 </van-cell-group>
 
-<view class="mt20">
+<view class="mt20 p10">
     <van-button block bind:click="toCreate" loading="{{working}}" type="primary">生成截图</van-button>
 </view>
 

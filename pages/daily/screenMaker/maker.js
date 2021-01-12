@@ -63,6 +63,17 @@ Page({
             ps,
             imgData=>{
                 this.setData({ working: false, hasImg: true, imgData })
+                let filePath = util.buildPath(`${ps.action}-${ps.model}.png`)
+                //保存到本地
+                wx.getFileSystemManager().writeFile({
+                    filePath,
+                    data: imgData,
+                    encoding: 'base64',
+                    success: res=>{
+                        util.ok(`图片已生成`)
+                        util.openFile(filePath, "png")
+                    }
+                })
             },
             e=> {
                 console.debug(e)
