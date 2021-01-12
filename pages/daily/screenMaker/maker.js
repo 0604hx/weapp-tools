@@ -67,11 +67,15 @@ Page({
                 //保存到本地
                 wx.getFileSystemManager().writeFile({
                     filePath,
-                    data: imgData,
-                    encoding: 'base64',
+                    data: wx.base64ToArrayBuffer(imgData.slice(22)),
+                    encoding: 'binary',
                     success: res=>{
-                        util.ok(`图片已生成`)
                         util.openFile(filePath, "png")
+                        setTimeout(()=> util.ok(`图片已生成`), 1000)
+                    },
+                    fail: fileE=> {
+                        console.error(fileE)
+                        util.error(fileE.errMsg)
                     }
                 })
             },
