@@ -1,6 +1,6 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-const configs = require("./marker.json")
+const configs = require("./maker.json")
 
 const fs = require('fs')
 
@@ -11,7 +11,7 @@ let TOP     = "top"
 let CENTER  = "center"
 let START   = "start"
 
-let SAVE_TO_LOCAL = false
+let SAVE_TO_LOCAL = process.env.saveToLocal || false
 let TABLE = "screen-maker"
 
 
@@ -26,7 +26,7 @@ let spaceLetter = text=> text.split("").join(String.fromCharCode(8202))
  */
 let saveToLocal = (canvas, name)=>{
     if(SAVE_TO_LOCAL){
-        const out = fs.createWriteStream(__dirname + `/output/${name}.png`)
+        const out = fs.createWriteStream(__dirname + `/output/${name}-${new Date().getTime()}.png`)
         const stream = canvas.createPNGStream()
         stream.pipe(out)
         out.on('finish', () =>  console.debug(`图片保存到 ${out.path}`))
@@ -41,6 +41,28 @@ let saveToDb = async ps=>{
     const db = cloud.database()
 
     db.collection(TABLE).add({ data: ps }).then(res=> console.debug(`写入数据库成功`, res))
+}
+
+/**
+ * 填充文字（兼容加粗处理），通过设置字体（ bold 14px '宋体'）无法达到加粗的效果
+ * @param {*} ctx           
+ * @param {*} font          字体
+ * @param {*} text          文本
+ * @param {*} x             横轴起始位置
+ * @param {*} y             纵轴起始位置
+ * @param {*} maxWidth      文本最大宽度
+ * @param {*} isBold        是否加粗
+ */
+let drawText = (ctx, font, text, x, y, maxWidth, isBold=false)=>{
+    ctx.font = font
+    // 加粗字体的处理
+    if(isBold){
+        ctx.strokeStyle = ctx.fillStyle
+        // linux 系统下线条更粗
+        ctx.lineWidth = process.platform=='linux'? 1:0.5
+        ctx.strokeText(text, x, y)
+    }
+    ctx.fillText(text, x, y, maxWidth)
 }
 
 /**
@@ -98,12 +120,12 @@ let createWechatPay = async (ps)=>{
                 ctx.textAlign = v[4] || START
 				ctx.fillStyle = v[5] || "#010101"
 				if(key == 'uuid' && ps[key].length>26){
-					//对于 UUID 的绘制需要分两行
-					ctx.fillText(ps[key].substr(0,26), v[0],v[1], v[2])
-					ctx.fillText(ps[key].substr(26), v[0], v[1]+v[3]+10, v[2])
+                    //对于 UUID 的绘制需要分两行
+                    drawText(ctx, font, ps[key].substr(0,26), v[0], v[1], v[2])
+                    drawText(ctx, font, ps[key].substr(26), v[0], v[1]+v[3]+10, v[2])
 				}
-				else
-					ctx.fillText(ps[key], v[0], v[1], v[2])
+                else
+                    drawText(ctx, font, ps[key], v[0], v[1], v[2], v[6]===true)
             }
         }
     }
@@ -114,8 +136,7 @@ let createWechatPay = async (ps)=>{
         if(v){
             console.debug(`[文本填充] network=${network} (${v})`)
             ctx.textAlign = TOP
-			ctx.font = `bold 22px "${family}"`
-            ctx.fillText(network, v[0]+2, v[1]-2, v[2])
+            drawText(ctx, `22px "${family}"`, network, v[0]+2, v[1]-2, v[2], true)
         }
     }
 
@@ -156,11 +177,11 @@ exports.main = async (ps, context) => {
 
     ps.doneOn = new Date().getTime()
 
-    saveToDb(ps)
-
-    if(result != undefined)
+    if(result != undefined){
+        saveToDb(ps)
         return result
-    
+    }
+        
     return {
         errCode: -1,
         errMsg:"无效的操作"

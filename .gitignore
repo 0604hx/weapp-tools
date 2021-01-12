@@ -12,7 +12,8 @@ $RECYCLE.BIN/
 
 # Node.js
 node_modules/
-node_modules.zip
+node_modules*.zip
+node_modules*.7z
 miniprogram_npm/
 
 package-lock.json
@@ -20,3 +21,6 @@ project.config.json
 project.private.config.json
 
 cloud/screen-maker/output/
+
+*-ignore.js
+/dist

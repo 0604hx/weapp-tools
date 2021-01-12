@@ -1,3 +1,30 @@
-<van-cell-group title="账单信息">
-    
+<van-cell-group>
+    <notice>目前仅支持 iOS 系统样式</notice>
+    <van-field model:value="{{ target }}" label="付款说明" border="{{ border }}" />
+    <van-field model:value="{{ money }}" label="付款金额" type="digit" border="{{ border }}" />
+    <van-field model:value="{{ summary }}" label="收款方备注" border="{{ border }}" />
+    <van-field model:value="{{ pay }}" label="支付方式" border="{{ border }}" />
+    <van-field model:value="{{ date }}" label="付款时间" border="{{ border }}" />
+    <van-field model:value="{{ uuid }}" label="付款单号" type="textarea" autosize border="{{ border }}">
+        <van-icon slot="right-icon" name="replay" bind:click="refreshUUID"></van-icon>
+    </van-field>
+    <van-field model:value="{{ time }}" label="手机时间" border="{{ border }}" />
+    <van-cell class="switch" label="显示WIFI" border="{{ border }}">
+        <van-switch size="22px" checked="{{ wifi}}" active-color="{{color}}" bind:change="onWifi" />
+    </van-cell>
+    <van-field model:value="{{ network }}" label="网络信号" border="{{ border }}" />
+    <van-cell class="switch" label="手机电量" border="{{ border }}">
+        <van-stepper model:value="{{ battery }}" min="20" max="100" integer />
+    </van-cell>
 </van-cell-group>
+
+<view class="mt20">
+    <van-button block bind:click="toCreate" loading="{{working}}" type="primary">生成截图</van-button>
+</view>
+
+<section class="mt20" style="padding:10px">
+    <image wx:if="{{ hasImg }}" mode="aspectFit" style="width:100%; height:750px;" src="{{imgData}}"></image>
+    <view wx:else class="h c">
+        生成的图片显示在这里
+    </view>
+</section>

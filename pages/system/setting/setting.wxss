@@ -18,9 +18,3 @@
 .settingDiv {
     margin-bottom: 80px;
 }
-.switch .van-cell__value.van-cell__value {
-    max-height: 24px !important;
-}
-.switch .van-cell__title.van-cell__title {
-    color:#646566;
-}

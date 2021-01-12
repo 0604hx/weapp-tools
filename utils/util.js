@@ -49,6 +49,20 @@ let buildUrlKey = (key, joinStr=".") =>{
     return tmp.join(joinStr)
 }
 
+let chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+/**
+ * 生成随机字符
+ * @param {*} len 
+ * @param {*} type 
+ */
+let random = (len=6, type=0)=>{
+    let max = type==0? 10: type==2? 36: 62
+    let v = ""
+    for(let i=0;i<len;i++)
+        v += chars[Math.floor(Math.random()*max)]
+    return v
+}
+
 module.exports = {
     /**
      * 获取格式化后的日期字符串（yyyy-MM-dd）
@@ -76,6 +90,7 @@ module.exports = {
      */
     getFullDate,
     buildUrlKey,
+    random,
     splitByLine (s){
         return s.split(NEW_LINE)
     },

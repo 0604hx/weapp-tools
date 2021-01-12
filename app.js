@@ -96,9 +96,10 @@ App({
      * 调用云函数
      * @param {*} name         云函数名称
      * @param {*} data          参数
-     * @param {*} callBack 
+     * @param {*} onOk 
+     * @param {*} onFail
      */
-    callCloud  (name, data, callBack){
+    callCloud  (name, data, onOk, onFail){
         if(!cloudInited) {
             wx.cloud.init()
             cloudInited = true
@@ -111,11 +112,12 @@ App({
             data,
             success: (res)=>{
                 console.debug(`来自云函数${name}的调用结果：`, res.result)
-                callBack(res.result)
+                onOk(res.result)
             },
             fail: err=>{
                 console.error("云函数调用失败", err.errCode, err.errMsg)
                 console.log(err)
+                !onFail || onFail(err)
             }
         })
     }

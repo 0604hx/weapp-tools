@@ -127,6 +127,11 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     color: #333;
     padding: 6px 0px 10px 0px;
 }
+/*
+--------------------------------------------------------------------
+修改 weapp-vant 的样式
+--------------------------------------------------------------------
+*/
 /* 滑动Cell组件*/
 .van-swipe-cell__left,
 .van-swipe-cell__right {
@@ -142,4 +147,10 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 .swipe .van-button {
     width: 60px;
     height: 65px;
+}
+.switch .van-cell__value.van-cell__value {
+    max-height: 24px !important;
+}
+.switch .van-cell__title.van-cell__title, .switch .van-cell__title .van-cell__label {
+    color:#646566 !important;
 }
