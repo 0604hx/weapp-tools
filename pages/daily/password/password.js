@@ -2,12 +2,6 @@ const store = require("../../../utils/store")
 const util = require("../../../utils/util")
 const { aes, md5 } = require("../../../utils/secret")
 
-// 赋值到 wx 方便调试
-// wx.store = store
-// wx.aes = aes
-wx.util = util
-
-
 let createPwd = ()=> {
     return {type: 0, site:"", name:"", mima:""}
 }

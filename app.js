@@ -1,10 +1,16 @@
 const util = require("./utils/util")
 const account = require("./utils/account")
 const configure = require("./utils/configure")
+const md5 = require("./utils/plugins/md5.min")
 
 let cloudInited = false
-
 let systemInfo = wx.getSystemInfoSync()
+let cloudLimit = {
+    enable: true,           //是否开启
+    latest: 0,                //最后调用时间
+    interval: 3,              //相邻两个云函数调用间隔下限，单位秒
+    history: {}               //调用历史，key 为函数名，value 为 md5 后的参数
+}
 
 App({
     onLaunch: function () {
@@ -43,6 +49,13 @@ App({
                 }
             }
         })
+
+        //将 util 赋值到 window 对象方便开发过程中调试
+        if(this.globalData.isDev){
+            wx.util = util
+            wx.store = require('./utils/store')
+            console.debug(`注册全局对象 util、store 到 wx ...`)
+        }
     },
     globalData: {
         appName: "集成工具集",
@@ -94,12 +107,27 @@ App({
     },
     /**
      * 调用云函数
+     * 
+     * 2021-01-13   增加调用频率、重复的限制
+     *  
      * @param {*} name         云函数名称
      * @param {*} data          参数
      * @param {*} onOk 
      * @param {*} onFail
      */
     callCloud  (name, data, onOk, onFail){
+        if(cloudLimit.enable){
+            let isLimit = 0
+            let time = new Date().getTime() 
+            if(time - cloudLimit.latest < cloudLimit.interval * 1000){
+                isLimit = 1
+            }
+            cloudLimit.latest   = time + 1000
+            if(isLimit>0){
+                util.warn(isLimit = 1?"操作太密集，请休息下":"调用云函数的参数无变动")
+                return
+            }
+        }
         if(!cloudInited) {
             wx.cloud.init()
             cloudInited = true

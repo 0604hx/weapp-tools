@@ -16,7 +16,6 @@ let MIME_TYPES = {
     pdf: "application/pdf"
 }
 
-
 let SAVE_TO_LOCAL   = process.env.saveToLocal || false  //是否保存数据到本地
 let SAVE_TO_CLOUD   = process.env.saveToCloud || false  //是否保存到云存储
 let MASK            = process.env.mask || false         //是否覆盖原来的图片信息（启用后将删除微信支付截图中的 当前状态、收款方备注 并全部用 canvas 绘制）
@@ -200,7 +199,12 @@ let _dealResult = async (canvas, ps)=>{
 
         return await cloud.uploadFile({
             cloudPath: `maker/${ps.action}-${ps.model}-${new Date().getTime()}.${ps.format}`, 
-            // fileContent: _detectStream(canvas, ps)
+            /*
+            2021年01月13日 此处传入 ReadableStream 无法正常保存到文件
+            猜测原因： fileContent 需要的是 fs.ReadStream，是 ReadableStream 的子类
+
+            fileContent: _detectStream(canvas, ps)
+            */
             fileContent: 
                 ps.format == 'pdf'?
                     canvas.toBuffer(MIME_TYPES.pdf, {
@@ -233,6 +237,7 @@ let _dealResult = async (canvas, ps)=>{
 //     "wifi": false,
 //     "network": "4G",
 //     "battery": 80,
+//     "status":"支付成功",
 //     "summary": "二维码收款",
 //     "date": "2021-01-11 13:38:45",
 //     "pay": "兴业银行信用卡(5094)",

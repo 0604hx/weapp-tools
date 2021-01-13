@@ -6,11 +6,19 @@ GitHub: [https://github.com/0604hx/weapp-tools](https://github.com/0604hx/weapp-
 Gitee:  [https://gitee.com/0604hx/weapp-tools](https://gitee.com/0604hx/weapp-tools)
 
 ## 工具目录
+> 📅 表示计划中
 
 **日常生活类**
 
   [胎儿体重测算](pages/daily/fetusWeight)
 | [个人密码本](pages/daily/password)
+| [时序数据](pages/daily/sequence)
+| [微信支付截图生成器](pages/daily/screenMaker)
+
+**职场工具**
+
+[IP归属查询](pages/business/ip)
+| [📅图片转PDF](pages/business/img2pdf)
 
 **其他**
 

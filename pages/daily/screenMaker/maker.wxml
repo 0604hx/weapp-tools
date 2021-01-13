@@ -1,7 +1,8 @@
-<van-cell-group>
+<van-cell-group class="thin">
     <notice>目前仅支持iOS系统样式（此功能仅供娱乐）</notice>
     <van-field model:value="{{ target }}" label="付款说明" border="{{ border }}" />
     <van-field model:value="{{ money }}" label="付款金额" type="digit" border="{{ border }}" />
+    <van-field model:value="{{ status }}" label="当前状态" border="{{ border }}" />
     <van-field model:value="{{ summary }}" label="收款方备注" border="{{ border }}" />
     <van-field model:value="{{ pay }}" label="支付方式" border="{{ border }}" />
     <van-field model:value="{{ date }}" label="付款时间" border="{{ border }}" />
@@ -18,11 +19,11 @@
     </van-cell>
 </van-cell-group>
 
-<view class="mt20 p10">
+<view class="mt10 p10">
     <van-button block bind:click="toCreate" loading="{{working}}" type="primary">生成截图</van-button>
 </view>
 
-<section class="mt20" style="padding:10px">
+<section class="mt10" style="padding:10px">
     <image wx:if="{{ hasImg }}" mode="aspectFit" style="width:100%; height:750px;" src="{{imgData}}" bindtap="toView"></image>
     <view wx:else class="h c">
         生成的图片显示在这里

@@ -3,7 +3,6 @@
  */
 const CryptoJS = require("./plugins/CryptoJS")
 const md5 = require("./plugins/md5.min")
-wx.Crypto = CryptoJS
 
 const SALT = "WeappTools2020"                     //加密加盐
 
