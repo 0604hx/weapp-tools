@@ -15,7 +15,10 @@
 
 <section title="查询结果">
     <view style="padding:8px">
-        <view class="table">
+        <view wx:if="{{ loading }}" class="mt20 c">
+            <van-loading size="50px" vertical>接口调用中...</van-loading>
+        </view>
+        <view wx:else class="table">
             <view class="tr">
                 <view class="th">数据项</view>
                 <view class="th">值</view>

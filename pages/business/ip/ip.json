@@ -5,6 +5,7 @@
     "usingComponents": {
         "van-search": "@vant/weapp/search/index",
         "van-radio": "@vant/weapp/radio/index",
-        "van-radio-group": "@vant/weapp/radio-group/index"
+        "van-radio-group": "@vant/weapp/radio-group/index",
+        "van-loading": "@vant/weapp/loading/index"
     }
 }

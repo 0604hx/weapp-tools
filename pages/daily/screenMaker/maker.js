@@ -1,6 +1,8 @@
 const util = require("../../../utils/util")
 const app = getApp()
 
+const FORMAT = "png"
+
 let buildUUID = ps=>{
     let uuid = ""
     if(ps.action == 'wechat-pay'){
@@ -15,7 +17,7 @@ let buildTime = ()=>util.getTime().substr(0, 5)
 let buildParams = (action='wechat-pay')=>{
     return {
         action,
-        model: 'iphone',                          //基准样式
+        model: 'iphone',                         //基准样式
         target:'扫二维码付款-给',                 //收款方信息，如：扫二维码付款-给
         money:'-100.00',                         //支付金额
         time: buildTime(),                       //手机屏幕上方的时间（只显示时+分）
@@ -26,6 +28,9 @@ let buildParams = (action='wechat-pay')=>{
         date: util.getDateTime(),                //支付日期
         pay:"零钱",                              //支付方式
         uuid:"",                                 //支付单号
+        status:"支付成功",
+        format: FORMAT,                          //文件格式，默认为 png，可选为 jpg、pdf
+        resultType:"base64"                      //返回值，可选：空（返回 Buffer）、base64、cloud（返回云存储的文件ID）
     }
 }
 
@@ -40,7 +45,7 @@ Page({
     onLoad (e){
         let data = buildParams()
         data.uuid = buildUUID(data)
-
+        console.debug(`默认参数`, data)
         this.setData( data )
     },
     onWifi (e){
@@ -52,6 +57,11 @@ Page({
 
         this.setData({ uuid: buildUUID(this.data) })
     },
+    toView (){
+        let { filePath } = this.data
+        if(!!filePath)
+            util.openFile(filePath, FORMAT)
+    },
     toCreate (){
         let ps = buildParams()
         util.copyTo(ps, this.data)
@@ -62,15 +72,27 @@ Page({
             'screen-maker', 
             ps,
             imgData=>{
-                this.setData({ working: false, hasImg: true, imgData })
                 let filePath = util.buildPath(`${ps.action}-${ps.model}.png`)
+                let isString = typeof(imgData) == 'string'
+                let data = { working: false, filePath }
+                if(isString){
+                    data.hasImg = true
+                    data.imgData = imgData
+                }
+                this.setData(data)
+
+                if(app.globalData.isDev){
+                    console.debug(`本地模式下，发现有无法保存图片文件的bug，故跳过...`)
+                    return
+                }
+
                 //保存到本地
                 wx.getFileSystemManager().writeFile({
                     filePath,
-                    data: wx.base64ToArrayBuffer(imgData.slice(22)),
+                    data: isString? wx.base64ToArrayBuffer(imgData.slice(22)) : imgData,
                     encoding: 'binary',
                     success: res=>{
-                        util.openFile(filePath, "png")
+                        this.toView()
                         setTimeout(()=> util.ok(`图片已生成`), 1000)
                     },
                     fail: fileE=> {

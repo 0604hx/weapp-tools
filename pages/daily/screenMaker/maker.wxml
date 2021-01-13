@@ -23,7 +23,7 @@
 </view>
 
 <section class="mt20" style="padding:10px">
-    <image wx:if="{{ hasImg }}" mode="aspectFit" style="width:100%; height:750px;" src="{{imgData}}"></image>
+    <image wx:if="{{ hasImg }}" mode="aspectFit" style="width:100%; height:750px;" src="{{imgData}}" bindtap="toView"></image>
     <view wx:else class="h c">
         生成的图片显示在这里
     </view>

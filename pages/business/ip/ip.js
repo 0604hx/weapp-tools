@@ -58,7 +58,7 @@ let apis = {
     }
 }
 
-let query = (ip, api, onOk, onFail)=>{
+let query = (ip, api, onOk)=>{
     if(!ip) return util.warn(`请输入IP地址`)
     if(!isIp(ip))   return util.warn(`IP地址有误`)
 
@@ -72,11 +72,18 @@ let query = (ip, api, onOk, onFail)=>{
         method: api.method || "GET",
         header,
         success: res=>{
-            console.debug(res)
-            if(res.statusCode == 200)
-                !onOk || onOk(api.parse(ip, res.data), JSON.stringify(res.data, null, 4))
-            else
+            let region = {}
+            let response = ""
+            if(res.statusCode == 200){
+                region = api.parse(ip, res.data)
+                response = JSON.stringify(res.data, null, 4)
+            }
+            else{
                 util.warn(`网络请求失败`)
+                response = res.data
+            }
+
+            !onOk || onOk(region, response)
         }
     })
 }
@@ -90,7 +97,8 @@ Page({
         ip:"",
         region: {},
         response: undefined,
-        api:"huomao"
+        api:"huomao",
+        loading: false
     },
     onSearch (e){
         if(e.type == 'search'){
@@ -99,7 +107,10 @@ Page({
     },
     queryDo (){
         let { ip, api } = this.data
-        query(ip, api, (region, response)=>this.setData({ region, response }))
+        this.setData({ loading: true })
+        query(ip, api, (region, response)=>{
+            this.setData({ region, response, loading: false })
+        })
     },
     onApiChange (e){
         let api = e.detail.value
