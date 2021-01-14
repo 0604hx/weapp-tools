@@ -31,16 +31,16 @@ if(!app.getNoticeConfig){
     }
 }
 
-let isOnce = c=> c=='once'
-
 let ONCE = "once"
 let ALWAYS = "always"
 let NONE = "none"
 
+let isOnce = c=> c==ONCE
+
 Component({
     properties: {
         uuid: {type:String, value:""},
-        close:{type:String, value:"once"},
+        close:{type:String, value: ONCE},
         color:{type:Boolean, value: false},     //是否使用主题色（app.globalData.color）
     },
     data: {

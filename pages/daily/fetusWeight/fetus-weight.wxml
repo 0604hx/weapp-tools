@@ -9,7 +9,7 @@
         </van-cell-group>
 
         <view slot="footer">
-            <van-button type="info" block bind:click="configure">开始测算</van-button>
+            <van-button type="primary" block bind:click="configure">开始测算</van-button>
         </view>
     </van-panel>
 

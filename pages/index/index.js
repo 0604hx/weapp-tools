@@ -69,6 +69,11 @@ Page({
     onLoad: function () {
         this.loadUserInfo()  
     },
+    onShareAppMessage (e){
+        return {
+            title: app.globalData.appName
+        }
+    },
 
     github: app.copyGit,
     todo: app.todo,

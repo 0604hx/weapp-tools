@@ -48,6 +48,15 @@ Page({
         console.debug(`默认参数`, data)
         this.setData( data )
     },
+    /**
+     * 分享链接，详见：https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onShareAppMessage-Object-object
+     * @param {*} e 
+     */
+    onShareAppMessage (e){
+        return {
+            title: `微信支付账单生成器-集成工具集`
+        }
+    },
     onWifi (e){
         this.setData({ wifi: e.detail })
     },

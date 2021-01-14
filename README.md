@@ -59,6 +59,8 @@ Gitee:  [https://gitee.com/0604hx/weapp-tools](https://gitee.com/0604hx/weapp-to
 
 ```json
 "ignore": [
-    {"type": "suffix", "value": ".md"}
+    {"type": "suffix", "value": ".md"},
+    {"type": "folder", "value": "documents" },
+    {"type": "folder", "value": "cloud" }
 ]
 ```

@@ -190,8 +190,12 @@ Page({
         fixColor(items)
         this._updateItemsAndHide(items)
     },
-    onRemove (){
+    onRemove (e){
         let { items, editIndex } = this.data
+        //判断 index
+        let eventIndex = e? e.target.dataset.index : undefined
+        if(eventIndex>=0)   editIndex = eventIndex
+
         util.confirm(`删除密码`, `确定删除"${items[editIndex].site}"的密码项吗？`, ()=>{
             items.splice(editIndex, 1)
 

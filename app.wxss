@@ -52,6 +52,11 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     transform: translate(-50%, -50%) scale(1);
     -webkit-transform: translate(-50%, -50%) scale(1);
 }
+.hover {
+    border: 1px solid #FFC835;
+    background-color: #FFC83560 !important;
+    background: #FFC83560 !important;
+}
 /*
 --------------------------------------------------------------------
 */
