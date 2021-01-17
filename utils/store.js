@@ -1,7 +1,8 @@
 const util = require("./util")
 const backup = require("./backup")
 
-wx.backup = backup
+// 方便调试，将 backup 赋值到 wx 对象下
+// wx.backup = backup
 
 /**
  * 默认执行错误时弹出对话框提示
@@ -23,9 +24,9 @@ let buildFilePath = name=>{
 module.exports = {
     /**
      * 将数据保存到 storage
-     * @param {*} key      命名方式为：{当前页名称}.{key}
-     * @param {*} data 
-     * @param {*} onOk 
+     * @param {*} key       若为空则自动根据当前页计算，命名方式为：{当前页名称}.{key}
+     * @param {*} data      待保存的数据
+     * @param {*} onOk      
      * @param {*} onFail 
      */
     toStorage (key, data, onOk, onFail=defFailAct){
@@ -65,20 +66,25 @@ module.exports = {
     },
     /**
      * 将数据写入到文件（将转换为 JSON 格式）
-     * @param {*} name 
+     * @param {*} name      如果传递的文件名以 .json 结尾则自动删除该字样作为 key
      * @param {*} data 
      * @param {*} onOk 
      * @param {*} onFail 
      */
     toFile (name, data, onOk, onFail=defFailAct){
-        let filePath = !!name? util.buildPath(name): buildFilePath(name)
-        console.debug(`保存到文件，name=`, filePath)
+        let key = !!name? name: util.buildUrlKey(name)
+        if(key.endsWith(util.JSON)) key = key.substr(0, key.length - 5)
+
+        let filePath = util.buildPath(key+util.JSON)
+        console.debug(`保存到文件，name=`, filePath,"key=", key)
         wx.getFileSystemManager().writeFile({
             filePath,
             data: JSON.stringify(data),
             success: d=>{
                 console.debug(`文件写入成功`, d)
                 !onOk || onOk(d)
+                //触发自动备份
+                backup.onDataChange(key, 1)
             },
             fail: onFail
         })

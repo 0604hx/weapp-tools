@@ -91,6 +91,7 @@ module.exports = {
     getFullDate,
     buildUrlKey,
     random,
+    JSON: ".json",
     splitByLine (s){
         return s.split(NEW_LINE)
     },

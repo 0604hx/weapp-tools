@@ -2,7 +2,7 @@
     <view class="content" wx:if="{{ storage.keys }}">
         <view class="c">
             <van-circle value="{{ M.value(storage.currentSize, storage.limitSize) }}" layer-color="#eeeeee" color="{{ color }}"
-                stroke-width="10" size="120">
+                stroke-width="10" size="120" type="2d">
                 <text class="h">已用 {{ C.filesize(storage.currentSize * 1024, 1) }}</text>
             </van-circle>
             <view class="h">共 {{ keySize }} 个KEY</view>
@@ -19,7 +19,7 @@
     <view class="content">
         <view class="c">
             <van-circle value="{{ M.value(filesize, fileMax) }}" layer-color="#eeeeee" color="{{ color }}"
-                stroke-width="10" size="120">
+                stroke-width="10" size="120" type="2d">
                 <text class="h">已用 {{ C.filesize(filesize, 1) }}</text>
             </van-circle>
         </view>

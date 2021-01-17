@@ -14,7 +14,7 @@ Page({
         fileList:{},
         filesize:0,         //文件总大小
 
-        fileMax: 190 * 1024 * 1024,
+        fileMax: 200 * 1024 * 1024,
 
         //预览纯文本文件
         textShow: false,

@@ -5,7 +5,10 @@
     <van-field model:value="{{ status }}" label="当前状态" border="{{ border }}" />
     <van-field model:value="{{ summary }}" label="收款方备注" border="{{ border }}" />
     <van-field model:value="{{ pay }}" label="支付方式" border="{{ border }}" />
-    <van-field model:value="{{ date }}" label="付款时间" border="{{ border }}" />
+    <van-cell class="switch" title-width="7.0em" title="付款时间" bind:click="toPayDate" border="{{ border }}">
+        <view class="l" style="color:#323232">{{ date }}</view>
+    </van-cell>
+    <!-- <van-field model:value="{{ date }}" label="付款时间" border="{{ border }}" /> -->
     <van-field model:value="{{ uuid }}" label="付款单号" type="textarea" autosize border="{{ border }}">
         <van-icon slot="right-icon" name="replay" bind:click="refreshUUID"></van-icon>
     </van-field>
@@ -29,3 +32,7 @@
         生成的图片显示在这里
     </view>
 </section>
+
+<van-popup show="{{ payShow }}" position="bottom" bind:close="onPayDate">
+    <van-datetime-picker value="{{ curDate }}" bind:confirm="onPayDate" bind:cancel="onPayDate" />
+</van-popup>

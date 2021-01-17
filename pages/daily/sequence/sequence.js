@@ -96,7 +96,7 @@ Page({
                 util.warn(`数据不能为空`)
         }
         else{
-            this._showDialog(e, { inputShow: true })
+            this._showDialog(e, { inputShow: true, value:"" })
         }
 
     },

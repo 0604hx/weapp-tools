@@ -40,12 +40,19 @@ Page({
         border: true,
         working: false,
         hasImg: false,
-        imgData: ""
+        imgData: "",
+
+        payShow: false,
+        minDate: 0,
+        maxDate: 0
     },
     onLoad (e){
         let data = buildParams()
         data.uuid = buildUUID(data)
         console.debug(`默认参数`, data)
+
+        data.maxDate = new Date().getTime()
+        data.minDate = data.maxDate - 365*24*60*60*1000 
         this.setData( data )
     },
     /**
@@ -59,6 +66,17 @@ Page({
     },
     onWifi (e){
         this.setData({ wifi: e.detail })
+    },
+    toPayDate (){
+        this.setData({ payShow: true, curDate: new Date(this.data.date).getTime() })
+    },
+    onPayDate (e){
+        console.debug(e)
+        if(e.type == 'confirm') {
+            this.setData( { date: util.getDateTime(e.detail+30*1000), payShow: false } )
+            return this.refreshUUID()
+        }
+        this.setData({ payShow: false })
     },
     refreshUUID (){
         let { date } = this.data

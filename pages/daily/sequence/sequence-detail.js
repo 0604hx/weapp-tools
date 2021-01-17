@@ -11,11 +11,21 @@ let chartLoaded = false
 let computeSpan = items=>{
     try{
         let timeSpan = new Date(items[0].k).getTime() - new Date(items[items.length-1].k).getTime()
-        return (timeSpan/1000/3600/24).toFixed(1)+" 天"
+        return Math.ceil(timeSpan/1000/3600/24)+" 天"
     }
     catch(e){
         return "无"
     }
+}
+let _detectMask = ds=>{
+    let mask = `YYYY`
+    if(!ds || ds.length == 0)   return mask
+
+    let firstDate = ds[ds.length-1].date.split("-")
+    if(firstDate.length>1)  mask += "-MM"
+    if(firstDate.length>2)  mask += "-DD"
+
+    return mask
 }
 
 let updateCount = 0
@@ -110,7 +120,8 @@ Page({
             date: {
                 type: 'timeCat',
                 range: [ 0, 1 ],
-                tickCount: data.length
+                tickCount: 4,
+                mask: _detectMask(data)
             },
             value: {
                 max: parseInt(max*1.1), 

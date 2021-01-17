@@ -5,10 +5,10 @@ let CONFIG_KEY = "configKey"
 
 /**
  * 定义了需要备份或者还原的数据对象
- *  id          数据编号（通常是跟页面 url 相关联）
- *  name        中文名称
- *  type        类型，0=Storage，1=本地文件
- *  CONFIG_KEY  配置中的字段名，默认不用填写（系统由 id 自动计算得到）
+ *  id                      数据编号（通常是跟页面 url 相关联）
+ *  name                 中文名称
+ *  type                   类型，0=Storage，1=本地文件
+ *  CONFIG_KEY      配置中的字段名，默认不用填写（系统由 id 自动计算得到）
  */
 let DATAS = [
     { id:"daily.password", name:"个人密码本", type:0 },

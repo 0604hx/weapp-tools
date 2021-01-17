@@ -26,6 +26,8 @@ module.exports = {
 
             this.doBackup(id, type)
         }
+        else
+            console.debug(`未找到配置项${id} 或者用户未开启自动备份...`)
     },
     /**
      * 为了不让开发环境跟实际环境数据混淆，在开发环境下备份目录加上了 -DEV 的标识
@@ -39,7 +41,7 @@ module.exports = {
             //保存数据到本地
             wx.getFileSystemManager().writeFileSync(file, wx.getStorageSync(id), 'utf8')
         }else{
-            file = id
+            file = util.buildPath(id.indexOf(util.JSON)>0? id: `${id}${util.JSON}`)
         }
         let dir = "backup"+(getApp().globalData.isDev? "-dev":"")
         oss.Aliyun.upload(file, `${dir}/${util.filename(file)}`)

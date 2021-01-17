@@ -8,6 +8,8 @@
         "van-dialog": "@vant/weapp/dialog/index",
         "van-icon": "@vant/weapp/icon/index",
         "van-switch": "@vant/weapp/switch/index",
+        "van-popup": "@vant/weapp/popup/index",
+        "van-datetime-picker": "@vant/weapp/datetime-picker/index",
         "van-stepper": "@vant/weapp/stepper/index"
     }
 }
