@@ -20,7 +20,9 @@ package-lock.json
 project.config.json
 project.private.config.json
 
+# cloud function
 cloud/screen-maker/output/
+cloud/tools/MicrosoftYaHei.txt
 
 *-ignore.js
 /dist
