@@ -1,31 +1,51 @@
+const util = require("../../../utils/util")
 const store = require(".././../../utils/store")
 
 Page({
     data: {
+        border: true,
+        img:"",
+        imgSize: 0,
 
+        title:"",
+        subject:"",
+        creator:"",
+        keywod:""
     },
     onLoad (){
-        const query = wx.createSelectorQuery()
-        query.select('#imgCanvas')
-        .fields({ node: true, size: true })
-        .exec((res) => {
-            const canvas = res[0].node
-            const ctx = canvas.getContext('2d')
+        
+    },
+    toSelectImg (e){
+        console.debug(e)
+        wx.chooseImage({
+            success: res=>{
+                let f = res.tempFiles[0]
+                let data = { img: f.path, imgSize: f.size}
+                
+                this.setData(data)
+            }
+        })
+    },
+    toWork (){
+        let { img } = this.data
+        if(!img) return util.warn(`请先选择图片`)
 
-            const dpr = wx.getSystemInfoSync().pixelRatio
-            canvas.width = res[0].width * dpr
-            canvas.height = res[0].height * dpr
-            ctx.scale(dpr, dpr)
-            
-            let img = canvas.createImage();
-            img.src = 'https://nerve-images.oss-cn-shenzhen.aliyuncs.com/public/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180524124345.jpg'
-            img.onload = function (res) {
-                console.log('onload成功', res, img)
-                //res.path[0].height
-                ctx.drawImage(img, 0, 0, 375, 300)
-                // console.debug(ctx.toDataURL('application/pdf'))
-                // store.toFile("dataurl.img.pdf", ctx.toDataURL('application/pdf'), d=> console.debug(d))
-                // store.toFile("buffer.img.pdf", ctx.toBuffer(), d=> console.debug(d))
+        wx.getFileSystemManager().readFile({
+            filePath: img,
+            encoding:'base64',
+            success: res=>{
+                console.debug(`图片读取成功`, res.data.substr(0, 100))
+                
+                let ps = { imgData: res.data, action:"img2pdf" }
+                //构建元数据
+                let { title, subject, keywod, creator } = this.data
+                ps.metadata = { title, subject, creator, keywod }
+
+                this.setData({ working: true })
+                getApp().callCloud("tools", ps, result=>{
+                    console.debug(result)
+                    this.setData({ working: false })
+                })
             }
         })
     }

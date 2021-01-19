@@ -1,1 +1,22 @@
-<canvas type="2d" id="imgCanvas" class="w100" style="height:200px"></canvas>
+<view catchtap="toSelectImg" class="p10 h c" style="height: 320px">
+    <view wx:if="{{ img }}">
+        <image mode="aspectFit" style="width:100%; height:300px;" src="{{img}}"></image>
+        <view>图片大小：{{C.filesize(imgSize)}}</view>
+    </view>
+    <view wx:else>
+        <van-icon name="add-o" size="120px" style="margin:90px" />
+    </view>
+</view>
+
+<van-cell-group title="PDF 元数据">
+    <van-field model:value="{{ title }}" label="标题" border="{{ border }}" />
+    <van-field model:value="{{ subject }}" label="主题" border="{{ border }}" />
+    <van-field model:value="{{ creator }}" label="作者" border="{{ border }}" />
+    <van-field model:value="{{ keyword }}" label="关键词" border="{{ border }}" />
+
+    <view class="mt10 p10">
+        <van-button block bind:click="toWork" loading="{{working}}" type="primary">执行转换</van-button>
+    </view>
+</van-cell-group>
+
+<wxs src="../../common.wxs" module="C"></wxs>
