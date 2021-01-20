@@ -1,3 +1,5 @@
+const fs = require('fs')
+const { jsPDF } = require('jspdf')
 /**
  * 如何生成字体文件
  * 1、安装 https://zhuanlan.zhihu.com/p/52903224 教程生成包含字体的 JS 文件
@@ -29,7 +31,7 @@ async function _downloadAndAddFont(pdfDoc){
             let _file = fs.createWriteStream(fontFile)
             let url = `https://nerve-images.oss-cn-shenzhen.aliyuncs.com/public/raw/MicrosoftYaHei-jsPDF.txt`
             console.debug(`[字体] 检测到字体文件 ${fontFile} 不存在，现在从远程下载...`)
-            require("request")({url, proxy: 'http://172.1.1.1:6565'}).pipe(_file).on('close', err=>{
+            require("request")({url}).pipe(_file).on('close', err=>{
                 console.debug(`[字体] 字体文件 ${fontFile} 下载：`, !err? "成功": err)
                 if(!err){
                     _addFont(ok)
@@ -45,8 +47,13 @@ async function _downloadAndAddFont(pdfDoc){
  *                 metadata     元数据对象（title、subject、author、keywords、creator、producer）
  *                 orientation  页面方向，默认为纵向p，可选为横向 l
  */
-async function imgToPDF(ps){
-    if(!ps.imgData) throw new Error(`图片数据不能为空`)
+async function imgToPDF(ps, cloud){
+    if(!ps.fileId) throw new Error(`图片文件ID不能为空`)
+
+    const res = await cloud.downloadFile({
+        fileID: ps.fileId
+    })
+    const imgContent = res.fileContent.toString('base64')
 
     ps.metadata = Object.assign(
         {
@@ -59,22 +66,29 @@ async function imgToPDF(ps){
         },
         ps.metadata||{}
     )
+    if(isNaN(ps.padding))
+        ps.padding = 10
+    
     console.debug(`图片转PDF作业开始，元数据：`, ps.metadata)
     const doc = new jsPDF({ compress: true, orientation: ps.orientation||"portrait" });
     console.debug(`创建 PDF 文档...`)
 
-    await _downloadAndAddFont(doc)
-    let imgData = doc.getImageProperties(ps.imgData)
+    let imgData = doc.getImageProperties(imgContent)
     console.debug(`图片参数：width=${imgData.width} height=${imgData.height}`, imgData.alias, imgData.palette, imgData.predictor)
     
-    let widthRatio = doc.internal.pageSize.width / imgData.width
-    let heightRatio = doc.internal.pageSize.height / imgData.height
+    let widthRatio = (doc.internal.pageSize.width - ps.padding*2) / imgData.width
+    let heightRatio = (doc.internal.pageSize.height - ps.padding*2) / imgData.height
     let ratio = Math.min(widthRatio, heightRatio)
 
-    doc.addImage(ps.imgData, "png", 0, 0, imgData.width * ratio, imgData.height * ratio)
+    doc.addImage(imgContent, "png", ps.padding, ps.padding, imgData.width * ratio, imgData.height * ratio)
     console.debug(`图片插入成功，即将保存PDF...`)
 
-    doc.save(`img2pdf-${new Date().getTime()}.pdf`)
+    let result = await cloud.uploadFile({
+        cloudPath: `tools/pdf/img2pdf-result-${new Date().getTime()}.pdf`,
+        fileContent: Buffer.from(doc.output('arraybuffer'))
+    })
+    console.debug(`文件上传成功`, result)
+    return result.fileID
 }
 
 module.exports = {

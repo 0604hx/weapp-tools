@@ -105,6 +105,13 @@ App({
             this.globalData.account = d
         })
     },
+    initCloud (){
+        if(!cloudInited) {
+            wx.cloud.init()
+            cloudInited = true
+            console.debug(`初始化云开发环境...`)
+        }
+    },
     /**
      * 调用云函数
      * 
@@ -128,12 +135,8 @@ App({
                 return
             }
         }
-        if(!cloudInited) {
-            wx.cloud.init()
-            cloudInited = true
-            console.debug(`初始化云开发环境...`)
-        }
-    
+        this.initCloud()
+        
         console.debug(`开始执行云函数调用 name=${name} ...`)
         wx.cloud.callFunction({
             name,
@@ -145,6 +148,7 @@ App({
             fail: err=>{
                 console.error("云函数调用失败", err.errCode, err.errMsg)
                 console.log(err)
+                util.error(err.errMsg, `云函数调用失败`)
                 !onFail || onFail(err)
             }
         })

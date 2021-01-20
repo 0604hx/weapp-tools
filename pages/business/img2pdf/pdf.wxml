@@ -9,10 +9,10 @@
 </view>
 
 <van-cell-group title="PDF 元数据">
-    <van-field model:value="{{ title }}" label="标题" border="{{ border }}" />
-    <van-field model:value="{{ subject }}" label="主题" border="{{ border }}" />
-    <van-field model:value="{{ creator }}" label="作者" border="{{ border }}" />
-    <van-field model:value="{{ keyword }}" label="关键词" border="{{ border }}" />
+    <van-field model:value="{{ title }}" label="文档标题" border="{{ border }}" />
+    <van-field model:value="{{ subject }}" label="文档主题" border="{{ border }}" />
+    <van-field model:value="{{ creator }}" label="文档作者" border="{{ border }}" />
+    <van-field model:value="{{ keyword }}" label="文档关键词" border="{{ border }}" />
 
     <view class="mt10 p10">
         <van-button block bind:click="toWork" loading="{{working}}" type="primary">执行转换</van-button>

@@ -1,5 +1,6 @@
 const util = require("../../../utils/util")
-const store = require(".././../../utils/store")
+
+const app = getApp()
 
 Page({
     data: {
@@ -26,27 +27,55 @@ Page({
             }
         })
     },
+    onFail (e, fileList){
+        if(e){
+            console.debug(`操作失败`, e)
+            util.error(e.errMsg)
+        }
+        this.setData({ working: false })
+        if(fileList && fileList.length)
+            wx.cloud.deleteFile({ fileList , success: delRes=> console.debug(`文件删除成功`, delRes)})
+    },
     toWork (){
         let { img } = this.data
         if(!img) return util.warn(`请先选择图片`)
 
-        wx.getFileSystemManager().readFile({
+        this.setData({ working: true })
+        //由于微信限制了数据包大小（实测上限100Kb）
+        app.initCloud()
+        wx.cloud.uploadFile({
             filePath: img,
-            encoding:'base64',
+            cloudPath: `tools/pdf/${util.random(16, 2)}.${util.suffix(img)}`,
             success: res=>{
-                console.debug(`图片读取成功`, res.data.substr(0, 100))
-                
-                let ps = { imgData: res.data, action:"img2pdf" }
+                console.debug(`文件上传成功`, res)
+                let fileList = [res.fileID]
+
+                let ps = { fileId: res.fileID, action:"imgToPDF", module:"pdf" }
                 //构建元数据
                 let { title, subject, keywod, creator } = this.data
                 ps.metadata = { title, subject, creator, keywod }
 
-                this.setData({ working: true })
                 getApp().callCloud("tools", ps, result=>{
                     console.debug(result)
-                    this.setData({ working: false })
-                })
-            }
+                    if(result.errCode==-1)  return this.onFail(result)
+
+                    // fileList.push(result)    //无法删除云函数上传的文件
+
+                    wx.cloud.downloadFile({
+                        fileID: result,
+                        success: res2=>{
+                            console.debug(`文件下载成功：`, res2.tempFilePath)
+
+                            this.onFail(undefined, fileList)
+                            util.openFile(res2.tempFilePath, "pdf")
+                            util.ok(`PDF已生成`)
+                            this.setData({ img: "" })
+                        },
+                        fail: downloadE=>this.onFail(downloadE, fileList)
+                    })
+                }, apiE=>this.onFail(apiE, fileList))
+            },
+            fail: this.onFail
         })
     }
 })

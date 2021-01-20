@@ -30,7 +30,7 @@ Page({
                 name:"职场工具", summary:"办公类",
                 items:[
                     { name:"IP归属查询", icon:"IP", url:"/pages/business/ip/ip", tip:"New"},
-                    { name:"图片转PDF", icon:"PDF", onClick:"todo"},
+                    { name:"图片转PDF", icon:"PDF", tip:"New", url:"/pages/business/img2pdf/pdf"},
                 ]
             },
             {

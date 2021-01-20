@@ -10,7 +10,6 @@
     "license": "ISC",
     "dependencies": {
         "jspdf": "^2.3.0",
-        "request": "^2.88.2",
         "wx-server-sdk": "~2.3.2"
     }
 }

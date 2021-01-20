@@ -2,5 +2,7 @@
     margin-top:10px;
     width: 100%;
     font-size: 14px;
-    background: #fafafa;
+    /* background: #f3f3f3; */
+    white-space:normal;
+    color: #666;
 }

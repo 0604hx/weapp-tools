@@ -23,6 +23,7 @@ project.private.config.json
 # cloud function
 cloud/screen-maker/output/
 cloud/tools/MicrosoftYaHei.txt
+cloud/tools/img2pdf-*.pdf
 
 *-ignore.js
 /dist

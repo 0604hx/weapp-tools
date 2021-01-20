@@ -1,54 +1,56 @@
-<van-panel title="Storage/本地缓存" desc="上限为 {{C.filesize(storage.limitSize * 1024, 0)}}（单个 KEY 最大存储 1 M）">
-    <view class="content" wx:if="{{ storage.keys }}">
-        <view class="c">
-            <van-circle value="{{ M.value(storage.currentSize, storage.limitSize) }}" layer-color="#eeeeee" color="{{ color }}"
-                stroke-width="10" size="120" type="2d">
-                <text class="h">已用 {{ C.filesize(storage.currentSize * 1024, 1) }}</text>
-            </van-circle>
-            <view class="h">共 {{ keySize }} 个KEY</view>
-        </view>
-        <!-- <view>
-            <tag wx:for="{{ storage.keys }}" wx:key="index" plain>{{item}}</tag>
-        </view> -->
-    </view>
-</van-panel>
-
-<view class="mt20"></view>
-
-<van-panel title="本地文件" desc="本地缓存文件共计，小程序（含小游戏）最多可存储 200MB">
-    <view class="content">
-        <view class="c">
-            <van-circle value="{{ M.value(filesize, fileMax) }}" layer-color="#eeeeee" color="{{ color }}"
-                stroke-width="10" size="120" type="2d">
-                <text class="h">已用 {{ C.filesize(filesize, 1) }}</text>
-            </van-circle>
-        </view>
-    </view>
-    <van-cell-group title="文件列表（暂不支持包含中文名的图片预览）">
-        <van-swipe-cell right-width="{{ 60 }}" wx:for="{{ fileList }}" wx:key="index">
-            <van-cell title-width="60%" title="{{ item.filePath }}" center="{{ true }}" 
-            bind:click="openFile" data-name="{{ item.filePath }}"
-            value="{{C.filesize(item.size)}}" label="{{ item.createTime }}" is-link />
-
-            <view slot="right" class="van-swipe-cell__right swipe">
-                <van-button type="danger" data-index="{{index}}" bind:click="toDelete">删除</van-button>
+<view>
+    <van-panel title="Storage/本地缓存" desc="上限为 {{C.filesize(storage.limitSize * 1024, 0)}}（单个 KEY 最大存储 1 M）">
+        <view class="content" wx:if="{{ storage.keys }}">
+            <view class="c">
+                <van-circle value="{{ M.value(storage.currentSize, storage.limitSize) }}" layer-color="#eeeeee" color="{{ color }}"
+                    stroke-width="10" size="120">
+                    <text class="h">已用 {{ C.filesize(storage.currentSize * 1024, 1) }}</text>
+                </van-circle>
+                <view class="h">共 {{ keySize }} 个KEY</view>
             </view>
-        </van-swipe-cell>
-    </van-cell-group>
-    
-</van-panel>
+            <!-- <view>
+                <tag wx:for="{{ storage.keys }}" wx:key="index" plain>{{item}}</tag>
+            </view> -->
+        </view>
+    </van-panel>
+
+    <view class="mt20"></view>
+
+    <van-panel title="本地文件" desc="本地缓存文件共计，小程序（含小游戏）最多可存储 200MB">
+        <view class="content">
+            <view class="c">
+                <van-circle value="{{ M.value(filesize, fileMax) }}" layer-color="#eeeeee" color="{{ color }}"
+                    stroke-width="10" size="120">
+                    <text class="h">已用 {{ C.filesize(filesize, 1) }}</text>
+                </van-circle>
+            </view>
+        </view>
+        <van-cell-group title="文件列表（暂不支持包含中文名的图片预览）">
+            <van-swipe-cell right-width="{{ 60 }}" wx:for="{{ fileList }}" wx:key="index">
+                <van-cell title-width="60%" title="{{ item.filePath }}" center="{{ true }}" 
+                bind:click="openFile" data-name="{{ item.filePath }}"
+                value="{{C.filesize(item.size)}}" label="{{ item.createTime }}" is-link />
+
+                <view slot="right" class="van-swipe-cell__right swipe">
+                    <van-button type="danger" data-index="{{index}}" bind:click="toDelete">删除</van-button>
+                </view>
+            </van-swipe-cell>
+        </van-cell-group>
+        
+    </van-panel>
+</view>
 
 <van-popup
     show="{{ textShow }}"
     position="bottom" closeable custom-style="height:80%" bind:close="openTextFile">
-    <view class="content mt20">
+    <cover-view class="content mt20" style="height:100%; visibility: visible;">
         <tag size="large" type="primary">{{filename}}</tag>
 
         <view class="c mt20" wx:if="{{ !fileLoaded }}"><van-loading /></view>
         <view wx:else class="textView">
             <text>{{ fileContent }}</text>
         </view>
-    </view>
+    </cover-view>
 </van-popup>
 
 <wxs src="../../common.wxs" module="C"></wxs>

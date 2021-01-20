@@ -68,7 +68,7 @@ Page({
         this.setData({ wifi: e.detail })
     },
     toPayDate (){
-        this.setData({ payShow: true, curDate: new Date(this.data.date).getTime() })
+        this.setData({ curDate: new Date(this.data.date).getTime(), payShow: true })
     },
     onPayDate (e){
         console.debug(e)
