@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "@antv/wx-f2": "^2.1.1",
-    "@vant/weapp": "^1.6.2"
+    "@vant/weapp": "^1.6.6"
   }
 }

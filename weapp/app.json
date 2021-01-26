@@ -31,5 +31,6 @@
         "tag": "/miniprogram_npm/@vant/weapp/tag/index",
         "section": "./components/section/section",
         "notice": "./components/notice/notice"
-    }
+    },
+    "lazyCodeLoading":"requiredComponents"
 }
