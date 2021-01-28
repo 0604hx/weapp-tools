@@ -11,6 +11,10 @@
     </view>
 </view> 
 
+<notice>
+    点击导航栏的日期查看更多菜单
+</notice>
+
 <!--TODO 图表-->
 <!-- <view class="chartDiv c">
     <view class="loading" wx:if="{{ loading }}">
@@ -34,7 +38,7 @@
         </van-grid-item>
         <van-grid-item icon="chart-trending-o">
             <view slot="text">
-                <text class="money">-2000</text>
+                <text class="money">{{ compareLast }}</text>
                 <view>环比上月</view>
             </view>
         </van-grid-item>
@@ -50,10 +54,8 @@
             <tag plain style="font-weight: normal" class="ml10">{{item.day}}号</tag>
         <view class="need money">{{ item.value }}</view>
     </view>
-    <view class="block"
-        catchlongpress="onRemove" bind:tap="toDetail" hover-class="hover">
-        <van-icon name="passed" size="18px" custom-class="icon-left" />
-        天誉花园房贷
-        <view class="need money">745</view>
-    </view>
+</view>
+
+<view class="flexBtn">
+    <van-button icon="plus" type="primary" round bind:tap="toAdd"></van-button>
 </view>

@@ -54,6 +54,9 @@ Page({
         items:[],
         monthTotal: 0,                    //本月共计
         monthRemain: 0,                 //本月剩余
+        compareLast:0,                   //环比上个月
+
+        menuShow: false,
     },
     onLoad (optinos) {
         this._onData(demoData)
@@ -78,6 +81,15 @@ Page({
         
         let monthD = history[month]
         let monthRemain = monthD.items.filter(i=> !i.done).map(t=> t.value).reduce((prev, next)=> prev+next)
-        this.setData({ items: monthD.items, monthTotal: monthD.total, monthRemain })
+        let compareLast = 0
+        let lastMonth = buildMonthDate(-1)
+        if(history[lastMonth]){
+            //计算上个月的总金额
+            lastMonth = monthD.total - history[lastMonth].total
+        }
+        this.setData({ items: monthD.items, monthTotal: monthD.total, monthRemain, compareLast })
+    },
+    toMenu (e){
+        if(e.type=='close') return this.setData({ menuShow: false })
     }
 })
