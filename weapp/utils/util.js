@@ -89,6 +89,7 @@ module.exports = {
      * 日期格式为 yyyy年MM月dd日
      */
     getFullDate,
+    formatNumber,
     buildUrlKey,
     random,
     JSON: ".json",

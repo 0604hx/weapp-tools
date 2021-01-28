@@ -25,6 +25,9 @@
     width: 1.4em !important;
     height: 1.4em !important;
 }
+.indexDiv .van-grid-item__icon {
+    margin-left: -0.35em !important;
+}
 
 .van-panel .van-cell__title {
     font-size: 1.1em;

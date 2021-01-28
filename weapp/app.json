@@ -13,11 +13,11 @@
         "pages/daily/sequence/sequence-detail",
         "pages/business/img2pdf/pdf",
         "pages/business/ip/ip",
-        "pages/daily/screenMaker/maker"
+        "pages/daily/screenMaker/maker",
+        "pages/daily/monthly/monthly"
     ],
     "window": {
         "backgroundTextStyle": "dark",
-        "navigationBarBackgroundColor-bk": "#f8f8f8",
         "navigationBarBackgroundColor": "#FFC835",
         "navigationBarTitleText": "集成工具集",
         "navigationBarTextStyle": "black",
@@ -32,5 +32,5 @@
         "section": "./components/section/section",
         "notice": "./components/notice/notice"
     },
-    "lazyCodeLoading":"requiredComponents"
+    "lazyCodeLoading": "requiredComponents"
 }

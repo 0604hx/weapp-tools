@@ -5,8 +5,9 @@ info（蓝）      #1989fa
 warning（橙）   #ff976a
 danger（红）    #ee0a24
 */
-@import "/resources/table.wxss";
-@import "/resources/iconfont.wxss";
+@import "./resources/table.wxss";
+@import "./resources/content.wxss";
+@import "./resources/iconfont.wxss";
 
 
 .container {

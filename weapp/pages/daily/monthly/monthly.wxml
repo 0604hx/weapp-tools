@@ -1,0 +1,59 @@
+<view class="nav" style="padding-top:{{statusBarHeight}}px;opacity: 1; background:{{color}};border-bottom:1px solid #f1f2f3;">
+    <view style="padding:5px;display: flex;">
+        <navigator open-type="navigateBack" style="width:40px; padding-left:8px; display:flex;">
+            <van-icon name="arrow-left" size="18px" />
+        </navigator>
+        <view style="flex:1" class="c" style="font-size:14px;margin:auto;">
+            每月还款记录
+            <view style=" color:#333;border:1px solid #1234;"> 2021年01月 </view>
+        </view>
+        <view style="width:40px"></view>
+    </view>
+</view> 
+
+<!--TODO 图表-->
+<!-- <view class="chartDiv c">
+    <view class="loading" wx:if="{{ loading }}">
+        <van-loading size="50px" vertical>图表数据计算中...</van-loading>
+    </view>
+</view> -->
+
+<view class="dataDiv">
+    <van-grid column-num="3" border="{{ false }}">
+        <van-grid-item icon="warning-o">
+            <view slot="text">
+                <text class="money">{{ monthTotal }}</text>
+                <view>本月应还</view>
+            </view>
+        </van-grid-item>
+        <van-grid-item icon="clock-o">
+            <view slot="text">
+                <text class="money need">{{ monthRemain }}</text>
+                <view>剩余待还</view>
+            </view>
+        </van-grid-item>
+        <van-grid-item icon="chart-trending-o">
+            <view slot="text">
+                <text class="money">-2000</text>
+                <view>环比上月</view>
+            </view>
+        </van-grid-item>
+    </van-grid>
+</view>
+
+<view class="blockDiv">
+    <view class="block" wx:for="{{ items }}" wx:key="index"
+        catchlongpress="onRemove" bind:tap="toDetail" hover-class="hover">
+        <van-icon name="{{ item.done?'checked':'passed' }}" color="{{ item.done? 'green':'inherit'}}" 
+            size="18px" custom-class="icon-left" />
+            {{ item.name }}
+            <tag plain style="font-weight: normal" class="ml10">{{item.day}}号</tag>
+        <view class="need money">{{ item.value }}</view>
+    </view>
+    <view class="block"
+        catchlongpress="onRemove" bind:tap="toDetail" hover-class="hover">
+        <van-icon name="passed" size="18px" custom-class="icon-left" />
+        天誉花园房贷
+        <view class="need money">745</view>
+    </view>
+</view>

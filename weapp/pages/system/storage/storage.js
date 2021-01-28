@@ -42,9 +42,12 @@ Page({
         this.refresh()
     },
     openFile (e){
-        let filename = e.target.dataset.name
+        let { filename, size}  = e.target.dataset
         let fileType = util.suffix(filename).toLowerCase()
         if(TEXTS.indexOf(fileType)>=0){
+            if(size > 1024*1024){
+                return util.error(`不支持预览超 1M 的文件`)
+            }
             this.openTextFile(filename)
         }
         else

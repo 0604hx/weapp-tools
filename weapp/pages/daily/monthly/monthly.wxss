@@ -1,0 +1,25 @@
+.chartDiv {
+    height: 300px;
+}
+.loading {
+    padding-top: 100px;
+}
+.dataDiv .van-grid-item__text {
+    text-align: center;
+    color: #999;
+}
+.dataDiv .money {
+    font-size: 18px;
+    font-weight: bold;
+    color: #456;
+}
+.need {
+    color: #ec5858 !important;
+}
+.dataDiv {
+    border:1px solid #f1f2f3; border-width:1px 0px 1px 0px;
+}
+.blockDiv .money {
+    position: absolute;
+    right:30px;
+}

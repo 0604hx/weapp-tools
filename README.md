@@ -10,20 +10,21 @@ Gitee:  [https://gitee.com/0604hx/weapp-tools](https://gitee.com/0604hx/weapp-to
 
 **日常生活类**
 
-  [胎儿体重测算](pages/daily/fetusWeight)
-| [个人密码本](pages/daily/password)
-| [时序数据](pages/daily/sequence)
-| [微信支付截图生成器](pages/daily/screenMaker)
+  [胎儿体重测算](weapp/pages/daily/fetusWeight)
+| [个人密码本](weapp/pages/daily/password)
+| [时序数据](weapp/pages/daily/sequence)
+| [微信支付截图生成器](weapp/pages/daily/screenMaker)
+| [📅分期还款笔记](weapp/pages/daily/monthly)
 
 **职场工具**
 
-[IP归属查询](pages/business/ip)
-| [📅图片转PDF](pages/business/img2pdf)
+[IP归属查询](weapp/pages/business/ip)
+| [图片转PDF](weapp/pages/business/img2pdf)
 
 **其他**
 
-  [意见反馈](pages/issue)
-| [关于](pages/about)
+  [意见反馈](weapp/pages/other/issue)
+| [关于](weapp/pages/other/about)
 
 
 ## 在线体验
@@ -41,7 +42,7 @@ Gitee:  [https://gitee.com/0604hx/weapp-tools](https://gitee.com/0604hx/weapp-to
 
 
 ## 首页预览
-
+> 更多运行时预览图片请转 [screen](documents/screen)
 ![首页](documents/screen/index.png)
 
 ## 附录

@@ -29,14 +29,22 @@
 
 <van-popup
     show="{{ addShow }}"
-    position="bottom" closeable custom-style="height: 320px" bind:close="toAdd">
+    position="bottom" closeable custom-style="height: 260px" bind:close="toAdd">
     <view class="content mt20">
-        <view class="title">名称</view>
-        <van-field placeholder="数据项名称"  auto-focus="{{ true }}" model:value="{{ name }}" />
-
-        <van-grid column-num="1" border="{{ false }}" class="mt20">
+        <view class="title">{{ editIndex >=0 ?"编辑":"新增"}}时序数据</view>
+        <van-cell title="日期格式" title-width="80px" class="switch">
+            <radio-group bindchange="onKeySelect">
+                <radio wx:for="{{ keys }}" wx:key="index" value="{{ index }}" checked="{{ key == index }}">
+                    {{item}}
+                </radio>
+            </radio-group>
+            <view class="h">默认为完整的日期+时间</view>
+        </van-cell>
+        <van-field label="项目名称" placeholder="数据项名称（不可重复）"  model:value="{{ name }}" />
+        
+        <van-grid column-num="1" border="{{ false }}">
             <van-grid-item text="保存" data-type="edit" bind:click="toAdd">
-                <van-icon slot="icon" name="passed" size="40px" />
+                <van-icon slot="icon" name="passed" color="{{ color }}" size="46px" />
             </van-grid-item>
         </van-grid>
     </view>
@@ -44,14 +52,15 @@
 
 <van-popup
     show="{{ inputShow }}"
-    position="bottom" closeable custom-style="height: 180px" bind:close="toInput">
+    position="bottom" closeable custom-style="height: 230px" bind:close="toInput">
     <view class="content mt20">
         <view class="title">新增 {{name}} 的时序数据</view>
-        <van-field placeholder="值"  auto-focus="{{ true }}" model:value="{{ value }}" />
+        <van-field placeholder="值"  model:value="{{ value }}" />
 
-        <van-button block type="primary" bind:click="toInput">确定</van-button>
         <van-grid column-num="1" border="{{ false }}">
-            <van-grid-item icon="passed" icon-color="green" text="确定" data-type="edit" bind:click="toInput" />
+            <van-grid-item text="确定" bind:click="toInput">
+                <van-icon slot="icon" name="passed" color="{{ color }}" size="46px" />
+            </van-grid-item>
         </van-grid>
     </view>
 </van-popup>

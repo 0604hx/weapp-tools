@@ -3,7 +3,7 @@
         <view class="content" wx:if="{{ storage.keys }}">
             <view class="c">
                 <van-circle value="{{ M.value(storage.currentSize, storage.limitSize) }}" layer-color="#eeeeee" color="{{ color }}"
-                    stroke-width="10" size="120">
+                    stroke-width="10" size="120" type="2d">
                     <text class="h">已用 {{ C.filesize(storage.currentSize * 1024, 1) }}</text>
                 </van-circle>
                 <view class="h">共 {{ keySize }} 个KEY</view>
@@ -20,7 +20,7 @@
         <view class="content">
             <view class="c">
                 <van-circle value="{{ M.value(filesize, fileMax) }}" layer-color="#eeeeee" color="{{ color }}"
-                    stroke-width="10" size="120">
+                    stroke-width="10" size="120" type="2d">
                     <text class="h">已用 {{ C.filesize(filesize, 1) }}</text>
                 </van-circle>
             </view>
@@ -28,7 +28,7 @@
         <van-cell-group title="文件列表（暂不支持包含中文名的图片预览）">
             <van-swipe-cell right-width="{{ 60 }}" wx:for="{{ fileList }}" wx:key="index">
                 <van-cell title-width="60%" title="{{ item.filePath }}" center="{{ true }}" 
-                bind:click="openFile" data-name="{{ item.filePath }}"
+                bind:click="openFile" data-filename="{{ item.filePath }}" data-size="{{item.size}}"
                 value="{{C.filesize(item.size)}}" label="{{ item.createTime }}" is-link />
 
                 <view slot="right" class="van-swipe-cell__right swipe">
@@ -43,14 +43,14 @@
 <van-popup
     show="{{ textShow }}"
     position="bottom" closeable custom-style="height:80%" bind:close="openTextFile">
-    <cover-view class="content mt20" style="height:100%; visibility: visible;">
+    <view class="content mt20" style="height:100%; visibility: visible;">
         <tag size="large" type="primary">{{filename}}</tag>
 
         <view class="c mt20" wx:if="{{ !fileLoaded }}"><van-loading /></view>
         <view wx:else class="textView">
             <text>{{ fileContent }}</text>
         </view>
-    </cover-view>
+    </view>
 </van-popup>
 
 <wxs src="../../common.wxs" module="C"></wxs>
