@@ -38,17 +38,19 @@ const demoData = {
  * 构建日期字符串，格式为 YYYYMM
  * @param {*} step 
  */
-let buildMonthDate = (step=0)=>{
-    let d = new Date()
+let buildMonthDate = (step=0, date)=>{
+    let d = date? new Date(date): new Date()
     d.setMonth(d.getMonth() + step)
 
-    return `${d.getFullYear()}${util.formatNumber(d.getMonth())}`
+    return `${d.getFullYear()}${util.formatNumber(d.getMonth()+1)}`
 }
 
 Page({
     data: {
         statusBarHeight: app.globalData.statusBarHeight,
         color: app.globalData.color, //#fcfcfc
+
+        month: "",
 
         loading: true,
         items:[],
@@ -57,6 +59,7 @@ Page({
         compareLast:0,                   //环比上个月
 
         menuShow: false,
+        curMonth: new Date().getTime(),
     },
     onLoad (optinos) {
         this._onData(demoData)
@@ -87,9 +90,17 @@ Page({
             //计算上个月的总金额
             lastMonth = monthD.total - history[lastMonth].total
         }
-        this.setData({ items: monthD.items, monthTotal: monthD.total, monthRemain, compareLast })
+        this.setData({ month, items: monthD.items, monthTotal: monthD.total, monthRemain, compareLast })
     },
     toMenu (e){
         if(e.type=='close') return this.setData({ menuShow: false })
+        
+        let data = { menuShow: true }
+        this.setData(data)
+    },
+    onMonthSelect (e){
+        console.debug(`日期选择：`, e)
+        let month = buildMonthDate(0, e.detail)
+        this.setData({ curMonth: e.detail, month, menuShow: false })
     }
 })

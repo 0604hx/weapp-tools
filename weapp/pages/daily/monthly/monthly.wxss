@@ -23,3 +23,7 @@
     position: absolute;
     right:30px;
 }
+.menu, .menu .van-grid-item__content {
+    background-color: #FFC835 !important;
+    background: #FFC835 !important;
+}
