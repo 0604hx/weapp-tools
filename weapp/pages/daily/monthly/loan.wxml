@@ -1,0 +1,52 @@
+<notice>{{ tips }}</notice>
+<van-collapse value="{{ activeList }}" bind:change="onChange">
+  <van-collapse-item wx:for="{{ items }}" title="{{ item.name }}" name="{{ index }}" wx:key="index">
+        <view class="table" data-index="{{ index }}" bindlongpress="toEdit">
+            <view class="tr">
+                <view class="td">每期还款金额</view>
+                <view class="td l">{{ item.value }}</view>
+            </view>
+            <view class="tr">
+                <view class="td">开始日期</view>
+                <view class="td l">{{ item.begin }}</view>
+            </view>
+            <view class="tr">
+                <view class="td">截止日期</view>
+                <view class="td l">{{ item.end }}</view>
+            </view>
+            <view class="tr">
+                <view class="td">开始日期</view>
+                <view class="td l">{{ item.begin }}</view>
+            </view>
+            <view class="tr">
+                <view class="td">贷款总金额</view>
+                <view class="td l">{{ item.amount }}</view>
+            </view>
+            <view class="tr">
+                <view class="td">每月账单日</view>
+                <view class="td l">{{ item.day }}</view>
+            </view>
+        </view>
+  </van-collapse-item>
+</van-collapse>
+
+<van-popup
+    show="{{ editShow }}"
+    position="bottom" closeable custom-style="height: 440px" bind:close="toEdit">
+    <view class="content mt20">
+        <view class="title">编辑贷款信息</view>
+        <van-cell-group>
+            <van-field label="贷款项目" model:value="{{ name }}" />
+            <van-field label="开始日期" model:value="{{ begin }}" />
+            <van-field label="截止日期" model:value="{{ end }}" />
+            <van-field label="总金额" model:value="{{ amount }}" />
+            <van-field label="每期还款" model:value="{{ value }}" />
+            <van-field label="账单日" model:value="{{ day }}" />
+        </van-cell-group>
+
+        <van-grid column-num="2" gutter="20" border="{{ false }}">
+            <van-grid-item icon="delete" icon-color="red" data-type="delete" bind:click="toEdit" text="删除该贷款" />
+            <van-grid-item icon="passed" icon-color="green" text="保存修改" data-type="edit" bind:click="toEdit" />
+        </van-grid>
+    </view>
+</van-popup>

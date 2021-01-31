@@ -2,6 +2,8 @@ const util = require("../../../utils/util")
 const app = getApp()
 
 const HISTORY = "history"
+const LOAN_PAGE = '/pages/daily/monthly/loan'
+let originData = {}          //原始数据
 
 const demoData = {
     "loan": [
@@ -50,6 +52,7 @@ Page({
         statusBarHeight: app.globalData.statusBarHeight,
         color: app.globalData.color, //#fcfcfc
 
+        loanUrl: LOAN_PAGE,
         month: "",
 
         loading: true,
@@ -62,13 +65,29 @@ Page({
         curMonth: new Date().getTime(),
     },
     onLoad (optinos) {
-        this._onData(demoData)
-    },
-    _onData (d){
-        //判断是否存在本月数据
+        console.debug(`onLoad....`, optinos)
         let month = buildMonthDate()
-        if(!d.loan) d.loan = []
-        let { history, loan } = d
+        originData = demoData
+        this.setData({ month })
+        //如果没有贷款信息，则弹出对话框询问是否跳转到贷款管理页面
+        if(!originData.loan || !originData.loan.length > 0){
+            originData.loan = []
+            util.confirm(`暂无贷款信息`, `系统检测到还没录入贷款信息，现在去录入吗？`, ()=> this.toLoan())
+        }
+        this._onData()
+    },
+    onShow (e){
+        console.debug(`onShow....`, e)
+        //判断上层页面是否为贷款管理
+        let pages = getCurrentPages()
+        if(pages.length >= 2 && pages[pages.length-2].route==LOAN_PAGE){
+            console.debug(app.globalData.loans)
+        }
+    },
+    _onData (){
+        //判断是否存在本月数据
+        let { month } = this.data
+        let { history, loan } = originData
 
         if(!history[month]){
             console.debug(`检测到本月无数据，即将自动创建...`)
@@ -85,18 +104,27 @@ Page({
         let monthD = history[month]
         let monthRemain = monthD.items.filter(i=> !i.done).map(t=> t.value).reduce((prev, next)=> prev+next)
         let compareLast = 0
-        let lastMonth = buildMonthDate(-1)
+        let lastMonth = buildMonthDate(-1, month)
         if(history[lastMonth]){
             //计算上个月的总金额
             lastMonth = monthD.total - history[lastMonth].total
         }
-        this.setData({ month, items: monthD.items, monthTotal: monthD.total, monthRemain, compareLast })
+
+        this.setData({ items: monthD.items, monthTotal: monthD.total, monthRemain, compareLast })
     },
     toMenu (e){
         if(e.type=='close') return this.setData({ menuShow: false })
         
         let data = { menuShow: true }
         this.setData(data)
+    },
+    /**
+     * 跳转到贷款管理页面
+     * 将贷款数据赋值到 app.globalData 中
+     */
+    toLoan (){
+        app.globalData.loans = originData.loan
+        app.jumpTo(LOAN_PAGE)
     },
     onMonthSelect (e){
         console.debug(`日期选择：`, e)
