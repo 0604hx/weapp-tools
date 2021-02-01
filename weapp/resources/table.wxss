@@ -48,3 +48,10 @@
 .table .w50 {
     width: 50%;
 }
+/* 带 open 样式的表格上下均无边框 */
+.table.open {
+    border-top: 0 !important;
+}
+.table.open .tr:last-child .td {
+    border-bottom: 0 !important;
+}

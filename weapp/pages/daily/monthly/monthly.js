@@ -1,7 +1,6 @@
 const util = require("../../../utils/util")
 const app = getApp()
 
-const HISTORY = "history"
 const LOAN_PAGE = '/pages/daily/monthly/loan'
 let originData = {}          //原始数据
 
@@ -80,6 +79,7 @@ Page({
         console.debug(`onShow....`, e)
         //判断上层页面是否为贷款管理
         let pages = getCurrentPages()
+        console.debug(pages)
         if(pages.length >= 2 && pages[pages.length-2].route==LOAN_PAGE){
             console.debug(app.globalData.loans)
         }
@@ -87,20 +87,16 @@ Page({
     _onData (){
         //判断是否存在本月数据
         let { month } = this.data
-        let { history, loan } = originData
+        let { history } = originData
 
         if(!history[month]){
             console.debug(`检测到本月无数据，即将自动创建...`)
-            let monthData = { total: 0, items: []}
-            loan.forEach(l=>{
-                monthData.total += l.value
-                monthData.items.push({ name: l.name, value: l.value, day: l.day, done: ""})
-            })
-            history[month] = monthData
-
-            util.warn(`本月清单已创建`)
+            this._refreshMonth()
         }
         
+        this._figureData(history, month)
+    },
+    _figureData (history, month){
         let monthD = history[month]
         let monthRemain = monthD.items.filter(i=> !i.done).map(t=> t.value).reduce((prev, next)=> prev+next)
         let compareLast = 0
@@ -111,6 +107,25 @@ Page({
         }
 
         this.setData({ items: monthD.items, monthTotal: monthD.total, monthRemain, compareLast })
+    },
+    /**
+     * 刷新本月还款信息
+     */
+    refreshMonth (){
+        util.confirm(`刷新还款信息`, `刷新后将覆盖现有的数据，确定吗？`, this._refreshMonth)
+    },
+    _refreshMonth (){
+        let month = buildMonthDate()
+        let { history, loan } = originData
+        let monthData = { total: 0, items: []}
+        loan.forEach(l=>{
+            monthData.total += l.value
+            monthData.items.push({ name: l.name, value: l.value, day: l.day, done: ""})
+        })
+        history[month] = monthData
+
+        util.warn(`本月清单已创建`)
+        this._figureData(history, month)
     },
     toMenu (e){
         if(e.type=='close') return this.setData({ menuShow: false })

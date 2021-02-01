@@ -71,26 +71,9 @@
             bind:confirm="onMonthSelect"
         />
         <view class="mt10">
-            <van-grid column-num="1" border="{{ false }}">
-                <van-grid-item icon="gold-coin-o" dot text="贷款管理" />
-            </van-grid>
-        </view>
-    </view>
-</van-popup>
-
-<van-popup
-    show="{{ menuShow }}" custom-class="menu" overlay-style="top:{{statusBarHeight+50}}px !important;"
-    position="top" custom-style="height: 320px;top:{{statusBarHeight+48}}px !important;" bind:close="toMenu">
-    <view class="content">
-        <van-datetime-picker
-            type="year-month"
-            value="{{ curMonth }}"  visible-item-count="4"
-            confirm-button-text="切换月份"
-            bind:confirm="onMonthSelect"
-        />
-        <view class="mt10">
-            <van-grid column-num="1" border="{{ false }}">
+            <van-grid column-num="2" border="{{ false }}">
                 <van-grid-item icon="gold-coin-o" bind:click="toLoan" dot text="贷款管理" />
+                <van-grid-item icon="replay" bind:click="refreshMonth" dot text="刷新本月还款" />
             </van-grid>
         </view>
     </view>
