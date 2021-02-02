@@ -3,6 +3,19 @@ const util = require("../../../utils/util")
 
 const app = getApp()
 
+let buildLoan = ()=>{
+    return {
+        //-------------------- START 贷款对象 --------------------
+        name:"",
+        value:0,
+        begin:"",
+        end:"",
+        amount:0,
+        day:1
+        //-------------------- END 贷款对象 --------------------
+    }
+}
+
 Page({
     data: {
         items: [],
@@ -17,21 +30,20 @@ Page({
         dateShow: false,
         dateKey: "",
         curDate:0,
-
-        //-------------------- START 贷款对象 --------------------
-        name:"",
-        value:0,
-        begin:"",
-        end:"",
-        amount:0,
-        day:1
-        //-------------------- END 贷款对象 --------------------
     },
     onLoad (e){
-        this.setData({ items: app.globalData.loans})
+        let data = buildLoan()
+        data.items = app.globalData.loans
+        this.setData( data )
     },
     onChange (e){
         this.setData({ activeList: e.detail })
+    },
+    toAdd (e){
+        let data = buildLoan()
+        data.editShow = true
+        data.editIndex = -1
+        this.setData( data )
     },
     toEdit (e){
         console.debug(e)
@@ -50,16 +62,25 @@ Page({
             let { type } = e.target.dataset
             //删除信息
             if(type == 'delete'){
-                let name = items[editIndex].name
-                util.confirm(`删除贷款信息`, `确定删除${name}吗？`, this.deleteDo)
+                if(editIndex >= 0){
+                    let name = items[editIndex].name
+                    util.confirm(`删除贷款信息`, `确定删除${name}吗？`, ()=> this.deleteDo(name))
+                }
+                else
+                    util.warn(`这是新贷款信息哦`)
             }
             else if(type=='edit'){
+                if(editIndex == -1){
+                    items.push(buildLoan())
+                    editIndex = items.length - 1
+                }
+
                 util.copyTo(items[editIndex], this.data)
                 this.setData({ items, editShow: false })
             }
         }
     },
-    deleteDo (){
+    deleteDo (name){
         let { editIndex, items } = this.data
         items.splice(editIndex, 1)
         util.warn(`删除${name}`)

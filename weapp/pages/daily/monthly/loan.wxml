@@ -30,6 +30,10 @@
   </van-collapse-item>
 </van-collapse>
 
+<view class="flexBtn">
+    <van-button icon="plus" type="primary" round bind:tap="toAdd"></van-button>
+</view>
+
 <van-popup
     show="{{ editShow }}"
     position="bottom" closeable custom-style="height: 460px" bind:close="toEdit">

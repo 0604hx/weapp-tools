@@ -1,8 +1,10 @@
 const util = require("../../../utils/util")
+const { md5 } = require("../../../utils/secret")
 const app = getApp()
 
 const LOAN_PAGE = '/pages/daily/monthly/loan'
 let originData = {}          //原始数据
+let originMd5 = ""
 
 const demoData = {
     "loan": [
@@ -67,6 +69,8 @@ Page({
         console.debug(`onLoad....`, optinos)
         let month = buildMonthDate()
         originData = demoData
+        originMd5 =  md5(originData)
+
         this.setData({ month })
         //如果没有贷款信息，则弹出对话框询问是否跳转到贷款管理页面
         if(!originData.loan || !originData.loan.length > 0){
@@ -76,13 +80,23 @@ Page({
         this._onData()
     },
     onShow (e){
-        console.debug(`onShow....`, e)
-        //判断上层页面是否为贷款管理
-        let pages = getCurrentPages()
-        console.debug(pages)
-        if(pages.length >= 2 && pages[pages.length-2].route==LOAN_PAGE){
-            console.debug(app.globalData.loans)
+        if(app.globalData.loans){
+            console.debug(`检测到 app.globalData.loans 存在...`)
+            if(md5(JSON.stringify(app.globalData.loans)) != md5(JSON.stringify(originData.loans))){
+                console.debug(`检测到 loans 数据有变动...`)
+                originData.loans = app.globalData.loans
+
+                this._onData()
+            }
+            delete app.globalData.loans
+            console.debug(originData)
         }
+    },
+    onHide (){
+        this.saveData()
+    },
+    onUnload (){
+        this.saveData()
     },
     _onData (){
         //判断是否存在本月数据
@@ -125,6 +139,7 @@ Page({
         history[month] = monthData
 
         util.warn(`本月清单已创建`)
+
         this._figureData(history, month)
     },
     toMenu (e){
@@ -145,5 +160,12 @@ Page({
         console.debug(`日期选择：`, e)
         let month = buildMonthDate(0, e.detail)
         this.setData({ curMonth: e.detail, month, menuShow: false })
+
+        this._figureData(originData.history, month)
+    },
+    saveData (){
+        if(md5(originData) != originMd5){
+            console.debug(`数据变动...`)
+        }
     }
 })
