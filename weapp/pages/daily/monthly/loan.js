@@ -4,12 +4,13 @@ const util = require("../../../utils/util")
 const app = getApp()
 
 let buildLoan = ()=>{
+    let begin = util.getDate()
     return {
         //-------------------- START 贷款对象 --------------------
         name:"",
         value:0,
-        begin:"",
-        end:"",
+        begin,
+        end: begin,
         amount:0,
         day:1
         //-------------------- END 贷款对象 --------------------
@@ -33,8 +34,11 @@ Page({
     },
     onLoad (e){
         let data = buildLoan()
-        data.items = app.globalData.loans
+        data.items = app.globalData.loans || []
         this.setData( data )
+    },
+    onUnload (){
+        console.debug("unLoad...", this.data.items, app.globalData.loans)
     },
     onChange (e){
         this.setData({ activeList: e.detail })

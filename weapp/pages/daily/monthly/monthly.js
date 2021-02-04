@@ -73,18 +73,17 @@ Page({
         this.setData({ month })
 
         store.fromFile("", items=>{
+            console.debug(`加载还款数据: `, items)
+            if(!items.history)  items.history = {}
+
             originData = items
             originMd5 =  md5(items)
 
-            //如果没有贷款信息，则弹出对话框询问是否跳转到贷款管理页面
-            if(!originData.loan || !originData.loan.length > 0){
-                originData.loan = []
-                util.confirm(`暂无贷款信息`, `系统检测到还没录入贷款信息，现在去录入吗？`, ()=> this.toLoan())
-            }
             this._onData()
         })
     },
     onShow (e){
+        console.debug("onShow....", e)
         if(app.globalData.loans){
             console.debug(`检测到 app.globalData.loans 存在...`)
             if(md5(JSON.stringify(app.globalData.loans)) != md5(JSON.stringify(originData.loans))){
@@ -107,14 +106,21 @@ Page({
     _onData (){
         //判断是否存在本月数据
         let { month } = this.data
-        let { history } = originData
+        let { history, loan } = originData
 
         if(!history[month]){
-            console.debug(`检测到本月无数据，即将自动创建...`)
-            this._refreshMonth()
+            //如果没有贷款信息，则弹出对话框询问是否跳转到贷款管理页面
+            if(!loan || !loan.length > 0){
+                originData.loan = []
+                util.confirm(`暂无贷款信息`, `系统检测到还没录入贷款信息，现在去录入吗？`, ()=> this.toLoan())
+            }
+            else{
+                console.debug(`检测到本月无数据，即将自动创建...`)
+                this._refreshMonth()
+            }
         }
-        
-        this._figureData(history, month)
+        else
+            this._figureData(history, month)
     },
     _figureData (history, month){
         let monthD = history[month]
