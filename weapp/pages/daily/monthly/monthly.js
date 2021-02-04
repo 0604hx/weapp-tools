@@ -1,10 +1,12 @@
 const util = require("../../../utils/util")
+const store = require("../../../utils/store")
 const { md5 } = require("../../../utils/secret")
 const app = getApp()
 
 const LOAN_PAGE = '/pages/daily/monthly/loan'
 let originData = {}          //原始数据
 let originMd5 = ""
+let visitLoan = false
 
 const demoData = {
     "loan": [
@@ -68,16 +70,19 @@ Page({
     onLoad (optinos) {
         console.debug(`onLoad....`, optinos)
         let month = buildMonthDate()
-        originData = demoData
-        originMd5 =  md5(originData)
-
         this.setData({ month })
-        //如果没有贷款信息，则弹出对话框询问是否跳转到贷款管理页面
-        if(!originData.loan || !originData.loan.length > 0){
-            originData.loan = []
-            util.confirm(`暂无贷款信息`, `系统检测到还没录入贷款信息，现在去录入吗？`, ()=> this.toLoan())
-        }
-        this._onData()
+
+        store.fromFile("", items=>{
+            originData = items
+            originMd5 =  md5(items)
+
+            //如果没有贷款信息，则弹出对话框询问是否跳转到贷款管理页面
+            if(!originData.loan || !originData.loan.length > 0){
+                originData.loan = []
+                util.confirm(`暂无贷款信息`, `系统检测到还没录入贷款信息，现在去录入吗？`, ()=> this.toLoan())
+            }
+            this._onData()
+        })
     },
     onShow (e){
         if(app.globalData.loans){
@@ -91,6 +96,7 @@ Page({
             delete app.globalData.loans
             console.debug(originData)
         }
+        visitLoan = false
     },
     onHide (){
         this.saveData()
@@ -153,7 +159,9 @@ Page({
      * 将贷款数据赋值到 app.globalData 中
      */
     toLoan (){
+        visitLoan = true
         app.globalData.loans = originData.loan
+        
         app.jumpTo(LOAN_PAGE)
     },
     onMonthSelect (e){
@@ -164,8 +172,14 @@ Page({
         this._figureData(originData.history, month)
     },
     saveData (){
+        if(visitLoan)   return
+
         if(md5(originData) != originMd5){
-            console.debug(`数据变动...`)
+            util.debug(`[MONTHLY] 检测到数据变动，即将持久化数据...`)
+
+            store.toFile("", originData, res=> {
+                util.debug(`每月还款记录保存成功`, res)
+            })
         }
     }
 })

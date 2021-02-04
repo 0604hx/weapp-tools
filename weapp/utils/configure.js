@@ -12,7 +12,8 @@ let CONFIG_KEY = "configKey"
  */
 let DATAS = [
     { id:"daily.password", name:"个人密码本", type:0 },
-    { id:"daily.sequence", name:"时序数据", type: 1}
+    { id:"daily.sequence", name:"时序数据", type: 1},
+    { id:"daily.monthly", name:"每月还款记录", type: 1},
 ]
 
 let defaultConfig = () => {
