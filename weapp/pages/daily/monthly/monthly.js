@@ -46,12 +46,10 @@ Page({
         value:""
     },
     onLoad (optinos) {
-        console.debug(`onLoad....`, optinos)
         let month = buildMonthDate()
         this.setData({ month })
 
         store.fromFile("", items=>{
-            console.debug(`加载还款数据: `, items)
             if(!items.history)  items.history = {}
 
             originData = items
@@ -61,17 +59,16 @@ Page({
         }, this._confirmToLoan)
     },
     onShow (e){
-        console.debug("onShow....", e)
         if(app.globalData.loans){
             console.debug(`检测到 app.globalData.loans 存在...`)
             if(md5(JSON.stringify(app.globalData.loans)) != md5(JSON.stringify(originData.loans))){
                 console.debug(`检测到 loans 数据有变动...`)
+                // 运行时发现 app.globalData 中的数据可以双向绑定
                 // originData.loan = app.globalData.loans
 
                 this._onData()
             }
             delete app.globalData.loans
-            console.debug(originData)
         }
         visitLoan = false
     },

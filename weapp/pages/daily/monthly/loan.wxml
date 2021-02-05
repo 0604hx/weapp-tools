@@ -15,10 +15,6 @@
                 <view class="td l">{{ item.end }}</view>
             </view>
             <view class="tr">
-                <view class="td">开始日期</view>
-                <view class="td l">{{ item.begin }}</view>
-            </view>
-            <view class="tr">
                 <view class="td">贷款总金额</view>
                 <view class="td l">{{ item.amount }}</view>
             </view>

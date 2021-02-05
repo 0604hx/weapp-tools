@@ -14,7 +14,7 @@ Gitee:  [https://gitee.com/0604hx/weapp-tools](https://gitee.com/0604hx/weapp-to
 | [个人密码本](weapp/pages/daily/password)
 | [时序数据](weapp/pages/daily/sequence)
 | [微信支付截图生成器](weapp/pages/daily/screenMaker)
-| [📅分期还款笔记](weapp/pages/daily/monthly)
+| [分期还款笔记](weapp/pages/daily/monthly)
 
 **职场工具**
 

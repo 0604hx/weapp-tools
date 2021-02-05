@@ -23,3 +23,11 @@
     }
 }
 ```
+
+## 运行时截图
+
+![初始化](/documents/screen/日常-每月还款-空.png)
+
+![首页](/documents/screen/日常-每月还款.png)
+
+![贷款信息管理](/documents/screen/日常-每月还款-贷款信息.png)

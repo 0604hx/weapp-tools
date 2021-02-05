@@ -6,11 +6,11 @@ let buildLoan = ()=>{
     let begin = util.getDate()
     return {
         name:"",
-        value:0,
+        value:"",
         begin,
         end: begin,
-        amount:0,
-        day:1
+        amount:"",
+        day:""
     }
 }
 
@@ -35,7 +35,6 @@ Page({
         this.setData( data )
     },
     onUnload (){
-        console.debug("unLoad...", this.data.items, app.globalData.loans)
         app.globalData.loans = this.data.items
     },
     onChange (e){
@@ -48,7 +47,6 @@ Page({
         this.setData( data )
     },
     toEdit (e){
-        console.debug(e)
         if(e.type == 'close')   return this.setData({ editShow: false })
 
         if(e.type == 'longpress'){

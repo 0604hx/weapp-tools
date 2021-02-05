@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "每月还款笔记",
+    "navigationBarTitleText": "分期还款笔记",
     "navigationStyle":"custom",
     "usingComponents": {
         "van-datetime-picker": "@vant/weapp/datetime-picker/index",
