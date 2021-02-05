@@ -47,5 +47,7 @@ let aes = {
 
 module.exports = {
     aes,
-    md5
+    md5 (obj){
+        return md5(typeof(obj)=='object'? JSON.stringify(obj): obj)
+    }
 }

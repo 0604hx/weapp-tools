@@ -47,11 +47,12 @@
 
 <view class="blockDiv">
     <view class="block" wx:for="{{ items }}" wx:key="index"
-        catchlongpress="onRemove" bind:tap="toDetail" hover-class="hover">
+        data-index="{{ index }}" catchlongpress="toEdit" hover-class="hover">
         <van-icon name="{{ item.done?'checked':'passed' }}" color="{{ item.done? 'green':'inherit'}}" 
-            size="18px" custom-class="icon-left" />
-            {{ item.name }}
-            <tag plain style="font-weight: normal" class="ml10">{{item.day}}号</tag>
+            size="24px" custom-class="icon-left" bind:click="toDone" data-index="{{ index }}"
+            />
+        {{ item.name }}
+        <tag plain style="font-weight: normal" class="ml10">{{item.day}}号</tag>
         <view class="need money">{{ item.value }}</view>
     </view>
 </view>
@@ -73,9 +74,27 @@
         <view class="mt10">
             <van-grid column-num="2" border="{{ false }}">
                 <van-grid-item icon="gold-coin-o" bind:click="toLoan" dot text="贷款管理" />
-                <van-grid-item icon="replay" bind:click="refreshMonth" dot text="刷新本月还款" />
+                <van-grid-item icon="replay" bind:click="refreshMonth" dot text="刷新当月还款" />
             </van-grid>
         </view>
+    </view>
+</van-popup>
+
+<van-popup
+    show="{{ editShow }}"
+    position="bottom" closeable custom-style="height: 320px" bind:close="toEdit">
+    <view class="content mt20">
+        <view class="title">编辑还款信息</view>
+        <van-cell-group>
+            <van-field label="还款项目" model:value="{{ name }}"/>
+            <van-field label="还款金额" model:value="{{ value }}"  type="digit"/>
+            <van-field label="还款期限" model:value="{{ day }}" type="number"/>
+        </van-cell-group>
+
+        <van-grid column-num="2" gutter="20" border="{{ false }}">
+            <van-grid-item icon="delete" icon-color="red" data-type="delete" bind:click="toEdit" text="删除该还款" />
+            <van-grid-item icon="passed" icon-color="green" text="保存修改" data-type="edit" bind:click="toEdit" />
+        </van-grid>
     </view>
 </van-popup>
 

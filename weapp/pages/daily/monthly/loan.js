@@ -1,4 +1,3 @@
-const { copyTo } = require("../../../utils/util")
 const util = require("../../../utils/util")
 
 const app = getApp()
@@ -6,14 +5,12 @@ const app = getApp()
 let buildLoan = ()=>{
     let begin = util.getDate()
     return {
-        //-------------------- START 贷款对象 --------------------
         name:"",
         value:0,
         begin,
         end: begin,
         amount:0,
         day:1
-        //-------------------- END 贷款对象 --------------------
     }
 }
 
@@ -39,6 +36,7 @@ Page({
     },
     onUnload (){
         console.debug("unLoad...", this.data.items, app.globalData.loans)
+        app.globalData.loans = this.data.items
     },
     onChange (e){
         this.setData({ activeList: e.detail })

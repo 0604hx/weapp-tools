@@ -4,40 +4,9 @@ const { md5 } = require("../../../utils/secret")
 const app = getApp()
 
 const LOAN_PAGE = '/pages/daily/monthly/loan'
-let originData = {}          //原始数据
+let originData = {loan:[], history:{}}          //原始数据
 let originMd5 = ""
 let visitLoan = false
-
-const demoData = {
-    "loan": [
-        { 
-            name:"万科城房贷", 
-            begin:"2018-01-01",                 
-            end:"2048-01-01",
-            amount: 330000,      
-            day:15, 
-            value:1867
-        },
-        { 
-            name:"天誉花园房贷", 
-            begin:"2018-10-01",                 
-            end:"2038-10-01",
-            amount: 100000,      
-            day:28, 
-            value:745
-        }
-    ],
-    "history": {
-        "202012" : { 
-            total: 9000, 
-            items: [
-                { name:"万科城房贷", day: 15, value: 1867, done: 14 },
-                { name:"天誉花园房贷", day: 28, value: 745, done: 28 },
-                { name:"兴业信用卡", day: 16, value: 2550, done: 15 }
-            ]
-        }
-    }
-}
 
 /**
  * 构建日期字符串，格式为 YYYYMM
@@ -48,6 +17,9 @@ let buildMonthDate = (step=0, date)=>{
     d.setMonth(d.getMonth() + step)
 
     return `${d.getFullYear()}${util.formatNumber(d.getMonth()+1)}`
+}
+let buildItem = ()=>{
+    return { name:"",value:0,day:1,done:"" }
 }
 
 Page({
@@ -66,6 +38,12 @@ Page({
 
         menuShow: false,
         curMonth: new Date().getTime(),
+
+        editShow:false,
+        editIndex: -1,
+        name:"",
+        day:"",
+        value:""
     },
     onLoad (optinos) {
         console.debug(`onLoad....`, optinos)
@@ -80,7 +58,7 @@ Page({
             originMd5 =  md5(items)
 
             this._onData()
-        })
+        }, this._confirmToLoan)
     },
     onShow (e){
         console.debug("onShow....", e)
@@ -88,7 +66,7 @@ Page({
             console.debug(`检测到 app.globalData.loans 存在...`)
             if(md5(JSON.stringify(app.globalData.loans)) != md5(JSON.stringify(originData.loans))){
                 console.debug(`检测到 loans 数据有变动...`)
-                originData.loans = app.globalData.loans
+                // originData.loan = app.globalData.loans
 
                 this._onData()
             }
@@ -103,6 +81,9 @@ Page({
     onUnload (){
         this.saveData()
     },
+    _confirmToLoan (){
+        util.confirm(`暂无贷款信息`, `系统检测到还没录入贷款信息，现在去录入吗？`, ()=> this.toLoan())
+    },
     _onData (){
         //判断是否存在本月数据
         let { month } = this.data
@@ -112,7 +93,7 @@ Page({
             //如果没有贷款信息，则弹出对话框询问是否跳转到贷款管理页面
             if(!loan || !loan.length > 0){
                 originData.loan = []
-                util.confirm(`暂无贷款信息`, `系统检测到还没录入贷款信息，现在去录入吗？`, ()=> this.toLoan())
+                this._confirmToLoan()
             }
             else{
                 console.debug(`检测到本月无数据，即将自动创建...`)
@@ -123,8 +104,10 @@ Page({
             this._figureData(history, month)
     },
     _figureData (history, month){
-        let monthD = history[month]
-        let monthRemain = monthD.items.filter(i=> !i.done).map(t=> t.value).reduce((prev, next)=> prev+next)
+        let monthD = history[month] || {items:[], total:0}
+        let monthRemain = 0
+        if(monthD.items.length)
+            monthRemain = monthD.items.filter(i=> !i.done).map(t=> t.value).reduce((prev, next)=> prev+Number(next))
         let compareLast = 0
         let lastMonth = buildMonthDate(-1, month)
         if(history[lastMonth]){
@@ -138,19 +121,27 @@ Page({
      * 刷新本月还款信息
      */
     refreshMonth (){
-        util.confirm(`刷新还款信息`, `刷新后将覆盖现有的数据，确定吗？`, this._refreshMonth)
+        let curMonth = buildMonthDate()
+        let { month } = this.data
+        if(month<curMonth)  return util.warn(`不能刷新历史月份的记录`)
+
+        util.confirm(`刷新还款信息`, `刷新后将覆盖现有的数据，确定吗？`, ()=>{
+            this.setData({ menuShow: false })
+            this._refreshMonth(month)
+        })
     },
-    _refreshMonth (){
-        let month = buildMonthDate()
+    _refreshMonth (month){
+        month = month || buildMonthDate()
+
         let { history, loan } = originData
         let monthData = { total: 0, items: []}
         loan.forEach(l=>{
-            monthData.total += l.value
-            monthData.items.push({ name: l.name, value: l.value, day: l.day, done: ""})
+            monthData.total += Number(l.value)
+            monthData.items.push({ name: l.name, value: Number(l.value), day: Number(l.day), done: ""})
         })
         history[month] = monthData
 
-        util.warn(`本月清单已创建`)
+        util.warn(`${month}清单已创建`)
 
         this._figureData(history, month)
     },
@@ -176,6 +167,66 @@ Page({
         this.setData({ curMonth: e.detail, month, menuShow: false })
 
         this._figureData(originData.history, month)
+    },
+    toAdd (e){
+        let data = buildItem()
+        data.editShow = true
+        data.editIndex = -1
+        this.setData( data )
+    },
+    toEdit (e){
+        if(e.type == 'close')   return this.setData({ editShow: false })
+
+        if(e.type == 'longpress'){
+            let { index } = e.currentTarget.dataset
+            let item = this.data.items[index]
+            let data = Object.assign({ editIndex: index, editShow: true }, item)
+
+            console.debug(`编辑index=${index}`, data)
+            this.setData( data )
+        }
+        else{
+            let { editIndex, items } = this.data
+            let { type } = e.target.dataset
+            //删除信息
+            if(type == 'delete'){
+                if(editIndex >= 0){
+                    let name = items[editIndex].name
+                    util.confirm(`删除还款信息`, `确定删除${name}这则还款信息吗？`, ()=> this.deleteDo(name))
+                }
+                else
+                    util.warn(`请先保存还款信息`)
+            }
+            else if(type=='edit'){
+                if(editIndex == -1){
+                    items.push(buildItem())
+                    editIndex = items.length - 1
+                }
+
+                util.copyTo(items[editIndex], this.data)
+                this.setData({ items, editShow: false })
+            }
+        }
+    },
+    deleteDo (name){
+        let { editIndex, items } = this.data
+        items.splice(editIndex, 1)
+        util.warn(`删除${name}`)
+        
+        this.setData({ items, editShow: false })
+    },
+    toDone (e){
+        let { index } = e.target.dataset
+        let item = this.data.items[index]
+        item.done = item.done? "": new Date().getDate()
+
+        let data = {}
+        data[`items[${index}]`] = item
+        this.setData( data )
+        if(item.done)   
+            util.ok(`${item.name}已还款`)
+        else
+            util.warn(`${item.name}未还款`)
     },
     saveData (){
         if(visitLoan)   return
