@@ -126,10 +126,15 @@ let Aliyun = {
             )
         })
     },
-    buildUrl(names) {
+    buildUrl(names, expire=1800) {
         return new Promise((resolve, reject) => {
-            withSetting(this.keys, (idKey, secretKey) => {
-                let urls = names.map(n => `http://oss-cn-shenzhen.aliyuncs.com/${n}`)
+            withSetting(this.keys, (idKey, secretKey, region) => {
+                expire = parseInt(new Date().getTime()/1000) + expire
+                let urls = names.map(n => {
+                    let h = `${this.config.host.replace("#region#", region)}/${n}`
+                    let canonical = ['GET','','',expire, `/${this.config.bucket}/${n}`].join("\n")
+                    return `${h}?OSSAccessKeyId=${idKey}&Expires=${expire}&Signature=${this.getSignature(canonical, secretKey)}`
+                })
                 resolve(urls)
             })
         })

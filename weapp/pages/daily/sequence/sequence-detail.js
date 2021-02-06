@@ -10,7 +10,12 @@ let chartLoaded = false
 
 let computeSpan = items=>{
     try{
-        let timeSpan = new Date(items[0].k).getTime() - new Date(items[items.length-1].k).getTime()
+        let from = items[0].k
+        let to     = items[items.length-1].k
+        if(from.length > to.length) from = from.substr(0, to.length)
+        if(from.length < to.length) to = to.substr(0, from.length)
+        
+        let timeSpan = new Date(from).getTime() - new Date(to).getTime()
         return Math.ceil(timeSpan/1000/3600/24)+" 天"
     }
     catch(e){
@@ -109,7 +114,7 @@ Page({
         let { max, min, avg } = this.data
         const data = this.data.sequence.data.map(d => {
             return {
-                value: parseInt(d.v),
+                value: Number(d.v),
                 date: d.k.split(" ")[0]
             }
         })

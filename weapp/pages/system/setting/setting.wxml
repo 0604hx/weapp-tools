@@ -10,7 +10,8 @@
     </van-cell-group>
     <van-cell-group title="数据备份" class="switch">
         <notice close="always">OSS参数为空时备份操作将忽略</notice>
-        <van-cell wx:for="{{ dataBeans }}" wx:key="index" center title="{{ item.name }}">
+        <van-cell wx:for="{{ dataBeans }}" wx:key="index" center title="{{ item.name }}" 
+            catchlongpress="toRestore" data-index="{{ index }}">
             <van-switch size="22px"  data-key="{{ item.configKey }}" data-index="{{ index }}" checked="{{ item.value }}" 
                 active-color="{{color}}" bind:change="onSwitchChange" />
         </van-cell>

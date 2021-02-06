@@ -4,7 +4,7 @@
             <van-icon name="arrow-left" size="18px" />
         </navigator>
         <view style="flex:1" class="c" style="font-size:14px;margin:auto;" bindtap="toMenu">
-            每月还款记录
+            分期还款笔记
             <view style=" color:#333;border:0px solid #1234;"> {{ M.toMonth(month) }} </view>
         </view>
         <view style="width:40px"></view>

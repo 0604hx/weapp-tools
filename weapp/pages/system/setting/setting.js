@@ -1,5 +1,6 @@
 const util = require("../../../utils/util")
 const configure = require("../../../utils/configure")
+const backup = require("../../../utils/backup")
 const app = getApp()
 
 Page({
@@ -51,6 +52,17 @@ Page({
         }
         else
             this.setData({ ossAliRegionShow: true })
+    },
+    toRestore (e){
+        let { index } = e.target.dataset
+        let bean = this.data.dataBeans[index]
+        
+        util.confirm(`数据还原`,`确定从远程还原${bean.name}的数据（本地数据将被覆盖）吗？`, ()=>{
+            console.debug(`开始还原：`, bean)
+            backup.restore(bean, ()=>{
+                util.ok(`数据还原成功`)
+            })
+        })
     },
     onSave() {
         configure.save(this.data, ()=> util.ok("保存成功"))

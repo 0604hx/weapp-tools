@@ -4,7 +4,7 @@
           <view class="th">备份记录</view>
       </view>
       <view class="tr" wx:for="{{ histories }}" wx:key="item">
-          <view class="td w30">{{ item.name }}</view>
+          <view class="td w40">{{ item.name }}</view>
           <view class="td l" style="text-align:left">
               <view wx:for="{{ item.history }}" wx:key="index" wx:for-item="history">
                   <tag plain>{{ index }}</tag>
