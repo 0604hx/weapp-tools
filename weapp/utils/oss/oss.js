@@ -80,9 +80,7 @@ let Aliyun = {
     },
     // 用密钥对数据进行加密
     getSignature(policyBase64, secretKey) {
-        const bytes = Crypto.HMAC(
-            Crypto.SHA1, policyBase64,
-            secretKey, {
+        const bytes = Crypto.HMAC( Crypto.SHA1, policyBase64, secretKey, {
                 asBytes: true
             }
         )
@@ -126,6 +124,43 @@ let Aliyun = {
             )
         })
     },
+    /**
+     * 构建私有资源的访问地址，此处只使用 GET
+     * 
+     * 由于不想使用官方提供的 ali-oss SDK（体积足有 370Kb+，而且很多功能用不上，觉得没必要），就按照官网代码的逻辑自己写了简易实现
+     * 附上官方 SDK 的食用方法
+     * ---------------------------- DEMO ------------------------------------
+     * <script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-6.9.0.min.js"></script>
+     * 
+     *  var client = new OSS({
+            region:             'oss-cn-shenzhen',//换成你自己的
+            accessKeyId:        '你自己的AccessKeyId',
+            accessKeySecret:    "你自己的SecretKey",
+            bucket:             'tag-daily'
+        });
+        var url=client.signatureUrl("2020/11-05-124318.png", {expires:3600});   //options可以传入链接的失效时间
+        //得到的链接就可以访问oss的私有权限的图片了
+        console.log(url)
+    * ---------------------------- DEMO ------------------------------------
+    * 
+    * 同时记录官方逻辑的探索历程：
+    *      1、 拼凑字符串的代码在 ali-oss-master\lib\common\signUtils.js 中的 buildCanonicalString 
+    *          简单来说就是将各种参数按照一定的规则拼接（用换行分割），最后得到的如下：
+    *              GET
+
+
+                    1604571718
+                    /tag-daily/2020/11-05-124318.png
+                上述的是极简模式（无任何自定义的 header）
+            2、 使用 getSignature 加密上述字符串即可
+            3、 最终得到的 URL 类似：http://tag-daily.oss-cn-shenzhen.aliyuncs.com/2020/11-05-124318.png?OSSAccessKeyId={KEY_ID}&Expires={10位时间戳}&Signature={步骤2得到的字符}
+            4、 为了减少链接的变动频率，增加缓存（最多缓存 100 个图片）
+    * 
+    * @param {*} keys 
+    * @param {*} accessKey
+    * @param {*} secretKey
+    * @param {*} expire 
+    */
     buildUrl(names, expire=1800) {
         return new Promise((resolve, reject) => {
             withSetting(this.keys, (idKey, secretKey, region) => {
@@ -133,6 +168,7 @@ let Aliyun = {
                 let urls = names.map(n => {
                     let h = `${this.config.host.replace("#region#", region)}/${n}`
                     let canonical = ['GET','','',expire, `/${this.config.bucket}/${n}`].join("\n")
+                    console.debug(canonical)
                     return `${h}?OSSAccessKeyId=${idKey}&Expires=${expire}&Signature=${this.getSignature(canonical, secretKey)}`
                 })
                 resolve(urls)

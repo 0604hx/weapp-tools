@@ -5,6 +5,8 @@ const util = require("./util")
 const configure = require("./configure")
 const oss = require("./oss/oss")
 
+wx.oss = oss
+
 let BACKUP = "BACKUP"
 
 let updateBackupTime = (id, server) => {
@@ -80,7 +82,7 @@ module.exports = {
         let suffix = bean.type == 0? '.storage.txt' : util.JSON
         let file = `${dir}/${bean.id + suffix}`
         console.debug(`尝试还原远程文件 `, file)
-        oss.Aliyun.buildUrl([file], 30).then(urls => {
+        oss.Aliyun.buildUrl([file], 120).then(urls => {
             let url = urls[0]
             console.debug(`下载地址：`, url)
 
@@ -91,32 +93,41 @@ module.exports = {
                     let filePath = res.tempFilePath
                     //判断是否为合法的格式
                     let index = filePath.lastIndexOf(".")
-                    if (filePath.substr(index) != suffix) {
+                    if (filePath.substr(index+1) != util.suffix(file)) {
                         return onFail(`文件格式有误，请确认OSS是否存在对应的备份文件‘${file}’`)
                     }
 
-                    wx.getFileSystemManager().readFile({
-                        filePath,
-                        encoding: "UTF-8",
-                        success: fileRes=>{
-                            console.debug(`文件读取：`, fileRes.data)
-                            // let jsonData = util.bufferToString(fileRes.data)
-                            // if(jsonData[0] != "["){
-                            //     return onFail(`备份文件内容有误（${jsonData[0]}不是合法的数据格式）`)
-                            // }
-  
-                            let success = ()=>{
-                                console.debug(`数据还原成功...`)
-                                onOk()
-                                //导入成功后删除本地文件
-                                wx.getFileSystemManager().unlink({filePath})
-                            }
-                            if(bean.type == 0){
+                    let success = _res=>{
+                        console.debug(`数据还原成功：`, _res)
+                        onOk()
+                        //导入成功后删除本地文件
+                        wx.getFileSystemManager().unlink({ 
+                            filePath, 
+                            fail: unlinkE=> console.debug(`临时文件删除失败`, unlinkE) 
+                        })
+                    }
+
+                    if(bean.type == 0){
+                        wx.getFileSystemManager().readFile({
+                            filePath,
+                            encoding: "UTF-8",
+                            success: fileRes=>{
+                                console.debug(`文件读取：`, fileRes.data)
+                                // let jsonData = util.bufferToString(fileRes.data)
+                                // if(jsonData[0] != "["){
+                                //     return onFail(`备份文件内容有误（${jsonData[0]}不是合法的数据格式）`)
+                                // }
+
                                 wx.setStorage({ data: fileRes.data,  key: bean.id,  success, fail: onFail })
-                            }
-                        },
-                        fail: onFail
-                    })
+                            },
+                            fail: onFail
+                        })
+                    }
+                    // 对于文件型直接覆盖到用户文件下即可
+                    else {
+                        let destPath = util.buildPath(bean.id+util.JSON)
+                        wx.getFileSystemManager().copyFile({ srcPath: filePath, destPath, success, fail: onFail })
+                    }
                 }
             })
         })
