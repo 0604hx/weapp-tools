@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "微信支付账单生成器",
+    "navigationBarTitleText": "账单生成器（仅供娱乐）",
     "usingComponents": {
         "van-panel": "@vant/weapp/panel/index",
         "van-field": "@vant/weapp/field/index",
