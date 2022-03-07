@@ -53,6 +53,34 @@ Gitee:  [https://gitee.com/0604hx/weapp-tools](https://gitee.com/0604hx/weapp-to
 
 [wx-f2](https://github.com/antvis/wx-f2)
 
+### 本地如何运行
+
+1. 拉取代码至本地，在`微信开发者工具`中导入项目
+2. 配置 `project.config.json`，添加如下内容：
+```json
+    "miniprogramRoot": "./weapp",
+    "cloudbaseRoot": "./cloud",
+```
+3. 启用 npm 模块：详情（IDE 右上角）-> 本地配置 -> （勾选）使用 npm 模块
+4. 下载依赖：在 weapp 目录下执行 `npm i` 命令
+5. 工具 -> 构建 npm
+6. 此时可以正常编译，Enjoy 😏
+
+特别提示：
+
+* 本地调试时，控制台会有诸多警告信息，可以通过设置 `levels` （不勾选 warning）进行屏蔽
+
+**我个人使用的编辑器配置**
+
+配置项|值
+------|------
+使用空格代替制表符|是
+字体|Consolas
+字体大小|15
+制表符大小|4
+行距|2
+从内容中检测缩进方式|否
+
 ### project.config.json 配置说明
 
 **packOptions.ignore**

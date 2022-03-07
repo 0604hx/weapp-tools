@@ -20,8 +20,8 @@ Page({
                 name:"日常工具", summary:"日常生活涉及的工具",
                 items:[
                     { name:"胎儿体重测算", icon:"胎儿", url:"/pages/daily/fetusWeight/fetus-weight"},
-                    { name:"密码本", icon:"密码", url:"/pages/daily/password/password", dot: true},
-                    { name:"时序数据", icon:"时序数据库", url:"/pages/daily/sequence/sequence", dot:true},
+                    { name:"密码本", icon:"密码", url:"/pages/daily/password/password"},
+                    { name:"时序数据", icon:"时序数据库", url:"/pages/daily/sequence/sequence"},
                     { name:"截图生成器", icon:"生成支付单", url:"/pages/daily/screenMaker/maker", dot:true},
                     { name:"分期还款笔记", icon:"还款日历", url:"/pages/daily/monthly/monthly", tip:"New"}
                 ]

@@ -73,7 +73,9 @@ Page({
     onPayDate (e){
         console.debug(e)
         if(e.type == 'confirm') {
-            this.setData( { date: util.getDateTime(e.detail+30*1000), payShow: false } )
+            //vant 组件不支持选择秒，故取当前时间的秒
+            let seconds = new Date().getSeconds()*1000
+            this.setData( { date: util.getDateTime(e.detail + seconds), payShow: false } )
             return this.refreshUUID()
         }
         this.setData({ payShow: false })
